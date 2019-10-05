@@ -170,12 +170,31 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DataContexts\AirlineDbContext.cs" />
+    <Compile Include="DataContexts\AirlineMigrations\201910052029032_InitialMigration.cs" />
+    <Compile Include="DataContexts\AirlineMigrations\201910052029032_InitialMigration.Designer.cs">
+      <DependentUpon>201910052029032_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\AirlineMigrations\Configuration.cs" />
+    <Compile Include="DataContexts\IdentityDbContext.cs" />
+    <Compile Include="DataContexts\IdentityMigrations\201910052029337_InitialMigration.cs" />
+    <Compile Include="DataContexts\IdentityMigrations\201910052029337_InitialMigration.Designer.cs">
+      <DependentUpon>201910052029337_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\IdentityMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\AccountModels\AccountViewModels.cs" />
+    <Compile Include="Models\AccountModels\IdentityModels.cs" />
+    <Compile Include="Models\AccountModels\ManageViewModels.cs" />
+    <Compile Include="Models\Entities\Airplane.cs" />
+    <Compile Include="Models\Entities\Airport.cs" />
+    <Compile Include="Models\Entities\Flight.cs" />
+    <Compile Include="Models\Entities\Luggage.cs" />
+    <Compile Include="Models\Entities\Passenger.cs" />
+    <Compile Include="Models\Entities\Reservation.cs" />
+    <Compile Include="Models\Enums\Gender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -238,6 +257,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\Dto\" />
+    <Folder Include="Models\Requests\" />
+    <Folder Include="Models\ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -251,6 +273,14 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DataContexts\AirlineMigrations\201910052029032_InitialMigration.resx">
+      <DependentUpon>201910052029032_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\IdentityMigrations\201910052029337_InitialMigration.resx">
+      <DependentUpon>201910052029337_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
