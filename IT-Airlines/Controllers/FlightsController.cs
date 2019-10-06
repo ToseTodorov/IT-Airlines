@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using IT_Airlines.DataContexts;
 using IT_Airlines.Models.Entities;
+using IT_Airlines.Models.ViewModels;
 
 namespace IT_Airlines.Controllers
 {
@@ -39,6 +40,24 @@ namespace IT_Airlines.Controllers
         // GET: Flights/Create
         public ActionResult Create()
         {
+            IEnumerable<SelectListItem> selectListAirports = from s in db.Airports.ToList()
+                                                             select new SelectListItem
+                                                             {
+                                                                 Value = s.Id.ToString(),
+                                                                 Text = s.ToString()
+                                                             };
+            ViewBag.Airports = new SelectList(selectListAirports, "Value", "Text");
+
+
+            IEnumerable<SelectListItem> selectListAirplanes = from s in db.Airplanes.ToList()
+                                                              select new SelectListItem
+                                                              {
+                                                                  Value = s.Id.ToString(),
+                                                                  Text = s.ToString()
+                                                              };
+            ViewBag.Airplanes = new SelectList(selectListAirplanes, "Value", "Text");
+
+
             return View();
         }
 
@@ -47,16 +66,48 @@ namespace IT_Airlines.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Departure,Landing,NumOfSeats,NumOfFreeSeats,BasePrice")] Flight flight)
+        public ActionResult Create([Bind(Include = "Id,AirportFrom,AirportTo,Airplane,Departure,Landing,BasePrice")] FlightViewModel flightModel)
         {
             if (ModelState.IsValid)
             {
+                
+                Airplane airplane = db.Airplanes.Find(flightModel.Airplane);
+                Flight flight = new Flight()
+                {
+                    Id = flightModel.Id,
+                    AirportFrom = db.Airports.Find(flightModel.AirportFrom),
+                    AirportTo = db.Airports.Find(flightModel.AirportTo),
+                    Airplane = airplane,
+                    Departure = flightModel.Departure,
+                    Landing = flightModel.Landing,
+                    NumOfSeats = airplane.NumOfSeats,
+                    NumOfFreeSeats = airplane.NumOfSeats,
+                    BasePrice = flightModel.BasePrice
+                };
+
                 db.Flights.Add(flight);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(flight);
+            IEnumerable<SelectListItem> selectListAirports = from s in db.Airports.ToList()
+                                                             select new SelectListItem
+                                                             {
+                                                                 Value = s.Code,
+                                                                 Text = s.ToString()
+                                                             };
+            ViewBag.Airports = new SelectList(selectListAirports, "Value", "Text");
+
+
+            IEnumerable<SelectListItem> selectListAirplanes = from s in db.Airplanes.ToList()
+                                                              select new SelectListItem
+                                                              {
+                                                                  Value = s.Code,
+                                                                  Text = s.ToString()
+                                                              };
+            ViewBag.Airplanes = new SelectList(selectListAirplanes, "Value", "Text");
+
+            return View(flightModel);
         }
 
         // GET: Flights/Edit/5
