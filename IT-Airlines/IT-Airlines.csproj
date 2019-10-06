@@ -170,6 +170,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AirplanesController.cs" />
     <Compile Include="Controllers\AirportsController.cs" />
+    <Compile Include="Controllers\FlightsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LuggagesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -177,6 +178,10 @@
     <Compile Include="DataContexts\AirlineMigrations\201910052029032_InitialMigration.cs" />
     <Compile Include="DataContexts\AirlineMigrations\201910052029032_InitialMigration.Designer.cs">
       <DependentUpon>201910052029032_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\AirlineMigrations\201910061659160_Update Flight1.cs" />
+    <Compile Include="DataContexts\AirlineMigrations\201910061659160_Update Flight1.Designer.cs">
+      <DependentUpon>201910061659160_Update Flight1.cs</DependentUpon>
     </Compile>
     <Compile Include="DataContexts\AirlineMigrations\Configuration.cs" />
     <Compile Include="DataContexts\IdentityDbContext.cs" />
@@ -272,6 +277,11 @@
     <Content Include="Views\Luggages\Details.cshtml" />
     <Content Include="Views\Luggages\Edit.cshtml" />
     <Content Include="Views\Luggages\Index.cshtml" />
+    <Content Include="Views\Flights\Create.cshtml" />
+    <Content Include="Views\Flights\Delete.cshtml" />
+    <Content Include="Views\Flights\Details.cshtml" />
+    <Content Include="Views\Flights\Edit.cshtml" />
+    <Content Include="Views\Flights\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -295,6 +305,9 @@
   <ItemGroup>
     <EmbeddedResource Include="DataContexts\AirlineMigrations\201910052029032_InitialMigration.resx">
       <DependentUpon>201910052029032_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\AirlineMigrations\201910061659160_Update Flight1.resx">
+      <DependentUpon>201910061659160_Update Flight1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataContexts\IdentityMigrations\201910052029337_InitialMigration.resx">
       <DependentUpon>201910052029337_InitialMigration.cs</DependentUpon>

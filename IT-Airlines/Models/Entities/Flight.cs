@@ -22,11 +22,19 @@ namespace IT_Airlines.Models.Entities
 
         [Required]
         [DataType(DataType.DateTime)]
-        public DateTime TakeOffTime { get; set; }
+        public DateTime Departure { get; set; }
 
         [Required]
         [DataType(DataType.DateTime)]
-        public DateTime LandingTime { get; set; }
+        public DateTime Landing { get; set; }
+
+        [Required]
+        [Display(Name ="Number of seats")]
+        public int NumOfSeats { get; set; }
+
+        [Required]
+        [Display(Name = "Number of free seats")]
+        public int NumOfFreeSeats { get; set; }
 
         [Required]
         public float BasePrice { get; set; }
