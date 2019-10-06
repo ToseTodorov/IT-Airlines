@@ -93,7 +93,7 @@ namespace IT_Airlines.Controllers
             IEnumerable<SelectListItem> selectListAirports = from s in db.Airports.ToList()
                                                              select new SelectListItem
                                                              {
-                                                                 Value = s.Code,
+                                                                 Value = s.Id.ToString(),
                                                                  Text = s.ToString()
                                                              };
             ViewBag.Airports = new SelectList(selectListAirports, "Value", "Text");
@@ -102,7 +102,7 @@ namespace IT_Airlines.Controllers
             IEnumerable<SelectListItem> selectListAirplanes = from s in db.Airplanes.ToList()
                                                               select new SelectListItem
                                                               {
-                                                                  Value = s.Code,
+                                                                  Value = s.Id.ToString(),
                                                                   Text = s.ToString()
                                                               };
             ViewBag.Airplanes = new SelectList(selectListAirplanes, "Value", "Text");
@@ -122,7 +122,35 @@ namespace IT_Airlines.Controllers
             {
                 return HttpNotFound();
             }
-            return View(flight);
+
+            IEnumerable<SelectListItem> selectListAirports = from s in db.Airports.ToList()
+                                                             select new SelectListItem
+                                                             {
+                                                                 Value = s.Id.ToString(),
+                                                                 Text = s.ToString()
+                                                             };
+            ViewBag.Airports = new SelectList(selectListAirports, "Value", "Text");
+
+
+            IEnumerable<SelectListItem> selectListAirplanes = from s in db.Airplanes.ToList()
+                                                              select new SelectListItem
+                                                              {
+                                                                  Value = s.Id.ToString(),
+                                                                  Text = s.ToString()
+                                                              };
+            ViewBag.Airplanes = new SelectList(selectListAirplanes, "Value", "Text");
+
+            FlightViewModel flightToEdit = new FlightViewModel()
+            {
+                Id = flight.Id,
+                AirportFrom = flight.AirportFrom.Id,
+                AirportTo = flight.AirportTo.Id,
+                Airplane = flight.Airplane.Id,
+                Departure = flight.Departure,
+                Landing = flight.Landing,
+                BasePrice = flight.BasePrice
+            };
+            return View(flightToEdit);
         }
 
         // POST: Flights/Edit/5
@@ -130,15 +158,45 @@ namespace IT_Airlines.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Departure,Landing,NumOfSeats,NumOfFreeSeats,BasePrice")] Flight flight)
+        public ActionResult Edit([Bind(Include = "Id,AirportFrom,AirportTo,Airplane,Departure,Landing,BasePrice")] FlightViewModel editedFlight)
         {
             if (ModelState.IsValid)
             {
+                Airplane airplane = db.Airplanes.Find(editedFlight.Airplane);
+
+                Flight flight = db.Flights.Find(editedFlight.Id);
+                flight.Id = editedFlight.Id;
+                flight.AirportFrom = db.Airports.Find(editedFlight.AirportFrom);
+                flight.AirportTo = db.Airports.Find(editedFlight.AirportTo);
+                flight.Airplane = airplane;
+                flight.Departure = editedFlight.Departure;
+                flight.Landing = editedFlight.Landing;
+                flight.NumOfSeats = airplane.NumOfSeats;
+                flight.NumOfFreeSeats = airplane.NumOfSeats;
+                flight.BasePrice = editedFlight.BasePrice;
+
                 db.Entry(flight).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(flight);
+
+            IEnumerable<SelectListItem> selectListAirports = from s in db.Airports.ToList()
+                                                             select new SelectListItem
+                                                             {
+                                                                 Value = s.Id.ToString(),
+                                                                 Text = s.ToString()
+                                                             };
+            ViewBag.Airports = new SelectList(selectListAirports, "Value", "Text");
+
+
+            IEnumerable<SelectListItem> selectListAirplanes = from s in db.Airplanes.ToList()
+                                                              select new SelectListItem
+                                                              {
+                                                                  Value = s.Id.ToString(),
+                                                                  Text = s.ToString()
+                                                              };
+            ViewBag.Airplanes = new SelectList(selectListAirplanes, "Value", "Text");
+            return View(editedFlight);
         }
 
         // GET: Flights/Delete/5

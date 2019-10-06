@@ -12,6 +12,32 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.AirportFrom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AirportFrom.Name),
+            @Html.DisplayFor(model => model.AirportFrom.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AirportTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AirportTo.Name),
+            @Html.DisplayFor(model => model.AirportTo.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Airplane)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Airplane.Code)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Departure)
         </dt>
 
