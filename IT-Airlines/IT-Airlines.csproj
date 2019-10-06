@@ -168,7 +168,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AirplanesController.cs" />
+    <Compile Include="Controllers\AirportsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LuggagesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DataContexts\AirlineDbContext.cs" />
     <Compile Include="DataContexts\AirlineMigrations\201910052029032_InitialMigration.cs" />
@@ -254,6 +257,21 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Airplanes\Create.cshtml" />
+    <Content Include="Views\Airplanes\Delete.cshtml" />
+    <Content Include="Views\Airplanes\Details.cshtml" />
+    <Content Include="Views\Airplanes\Edit.cshtml" />
+    <Content Include="Views\Airplanes\Index.cshtml" />
+    <Content Include="Views\Airports\Create.cshtml" />
+    <Content Include="Views\Airports\Delete.cshtml" />
+    <Content Include="Views\Airports\Details.cshtml" />
+    <Content Include="Views\Airports\Edit.cshtml" />
+    <Content Include="Views\Airports\Index.cshtml" />
+    <Content Include="Views\Luggages\Create.cshtml" />
+    <Content Include="Views\Luggages\Delete.cshtml" />
+    <Content Include="Views\Luggages\Details.cshtml" />
+    <Content Include="Views\Luggages\Edit.cshtml" />
+    <Content Include="Views\Luggages\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
