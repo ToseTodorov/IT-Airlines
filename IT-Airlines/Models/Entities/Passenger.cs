@@ -30,18 +30,6 @@ namespace IT_Airlines.Models.Entities
         [Required]
         public string PassportCode { get; set; }
 
-        [Required]
-        public string Country { get; set; }
-
-        [Required]
-        [DataType(DataType.EmailAddress, ErrorMessage = "Invalid Email Address")]
-        public string Email { get; set; }
-
-        [Display(Name = "Phone Number")]
-        [Required]
-        [DataType(DataType.PhoneNumber,ErrorMessage = "Invalide Phone Number")]
-        public string PhoneNumber { get; set; }
-
         public override string ToString()
         {
             return FirstName + " " + LastName + " - " + PassportCode;

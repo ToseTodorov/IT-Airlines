@@ -15,7 +15,6 @@ namespace IT_Airlines.DataContexts
         public DbSet<Flight> Flights { get; set; } 
         public DbSet<Reservation> Reservations { get; set; } 
         public DbSet<Luggage> Luggages { get; set; } 
-        //public DbSet<Passenger> Passengers { get; set; }  
 
         public AirlineDbContext()
             : base("DefaultConnection")

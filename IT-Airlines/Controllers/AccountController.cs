@@ -153,7 +153,7 @@ namespace IT_Airlines.Controllers
             {
                 var user = new ApplicationUser
                 {
-                    UserName = model.FirstName + " " + model.LastName,
+                    UserName = model.Email,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Email = model.Email,

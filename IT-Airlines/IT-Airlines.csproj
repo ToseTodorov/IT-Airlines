@@ -183,6 +183,18 @@
     <Compile Include="DataContexts\AirlineMigrations\201910061659160_Update Flight1.Designer.cs">
       <DependentUpon>201910061659160_Update Flight1.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataContexts\AirlineMigrations\201910071925584_UpdatedReservations-1.cs" />
+    <Compile Include="DataContexts\AirlineMigrations\201910071925584_UpdatedReservations-1.Designer.cs">
+      <DependentUpon>201910071925584_UpdatedReservations-1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\AirlineMigrations\201910071928091_UpdatedReservations-2.cs" />
+    <Compile Include="DataContexts\AirlineMigrations\201910071928091_UpdatedReservations-2.Designer.cs">
+      <DependentUpon>201910071928091_UpdatedReservations-2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\AirlineMigrations\201910071941147_UpdatedReservations-3.cs" />
+    <Compile Include="DataContexts\AirlineMigrations\201910071941147_UpdatedReservations-3.Designer.cs">
+      <DependentUpon>201910071941147_UpdatedReservations-3.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataContexts\AirlineMigrations\Configuration.cs" />
     <Compile Include="DataContexts\IdentityDbContext.cs" />
     <Compile Include="DataContexts\IdentityMigrations\201910052029337_InitialMigration.cs" />
@@ -303,6 +315,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataContexts\AirlineMigrations\201910061659160_Update Flight1.resx">
       <DependentUpon>201910061659160_Update Flight1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\AirlineMigrations\201910071925584_UpdatedReservations-1.resx">
+      <DependentUpon>201910071925584_UpdatedReservations-1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\AirlineMigrations\201910071928091_UpdatedReservations-2.resx">
+      <DependentUpon>201910071928091_UpdatedReservations-2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\AirlineMigrations\201910071941147_UpdatedReservations-3.resx">
+      <DependentUpon>201910071941147_UpdatedReservations-3.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataContexts\IdentityMigrations\201910052029337_InitialMigration.resx">
       <DependentUpon>201910052029337_InitialMigration.cs</DependentUpon>

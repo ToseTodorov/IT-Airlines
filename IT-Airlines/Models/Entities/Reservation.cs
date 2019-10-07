@@ -9,7 +9,7 @@ namespace IT_Airlines.Models.Entities
         [Required]
         public int Id { get; set; }
 
-        public int AccountId { get; set; }
+        public string AccountEmail { get; set; }
 
         [Required]
         public Passenger Passenger { get; set; }
@@ -28,43 +28,5 @@ namespace IT_Airlines.Models.Entities
 
         public virtual Luggage SecondLuggage { get; set; }
 
-        [Required]
-        public int FirstSeatRow { get; set; }
-        [Required]
-        public int FirstSeatColumn { get; set; }
-
-        public int? SecondSeatRow { get; set; }
-        public int? SecondColumn { get; set; }
-
-
-        /*
-        public float CalculatePrice()
-        {
-            float finalPrice = SumPrice();
-
-            return finalPrice;
-        }
-
-        protected float SumPrice()
-        {
-            float sum = FirstFlight.BasePrice + FirstLuggage.Price;
-
-            if (FirstSeatType == SeatType.FirstClass)
-                sum += 20f;
-            else if (FirstSeatType == SeatType.BusinessClass)
-                sum += 10f;
-
-            if (RoundTrip)
-            {
-                sum += SecondFlight.BasePrice + SecondLuggage.Price;
-
-                if (SecondSeatType == SeatType.FirstClass)
-                    sum += 20f;
-                else if (SecondSeatType == SeatType.BusinessClass)
-                    sum += 10f;
-            }
-            return sum;
-        }
-        */
     }
 }
