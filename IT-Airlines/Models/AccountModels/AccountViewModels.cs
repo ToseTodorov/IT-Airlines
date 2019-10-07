@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using IT_Airlines.Models.Enums;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace IT_Airlines.Models
@@ -79,6 +81,32 @@ namespace IT_Airlines.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Gender")]
+        public Gender Gender { get; set; }
+
+        [Required]
+        [Display(Name = "Birth Date")]
+        public DateTime BirthDate { get; set; }
+
+        [Required]
+        [Display(Name= "Country")]
+        public string Country { get; set; }
+
+
+        [Required]
+        [DataType(DataType.CreditCard)]
+        [Display(Name = "Credit Card")]
+        public string CreditCard { get; set; }
     }
 
     public class ResetPasswordViewModel

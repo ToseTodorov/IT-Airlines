@@ -189,6 +189,10 @@
     <Compile Include="DataContexts\IdentityMigrations\201910052029337_InitialMigration.Designer.cs">
       <DependentUpon>201910052029337_InitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataContexts\IdentityMigrations\201910070916427_UpdatedUserAcc1.cs" />
+    <Compile Include="DataContexts\IdentityMigrations\201910070916427_UpdatedUserAcc1.Designer.cs">
+      <DependentUpon>201910070916427_UpdatedUserAcc1.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataContexts\IdentityMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -302,6 +306,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataContexts\IdentityMigrations\201910052029337_InitialMigration.resx">
       <DependentUpon>201910052029337_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\IdentityMigrations\201910070916427_UpdatedUserAcc1.resx">
+      <DependentUpon>201910070916427_UpdatedUserAcc1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -151,7 +151,18 @@ namespace IT_Airlines.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = model.FirstName + " " + model.LastName,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    Gender = model.Gender,
+                    CreditCard = model.CreditCard,
+                    BirthDate = model.BirthDate,
+                    Country = model.Country
+                };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

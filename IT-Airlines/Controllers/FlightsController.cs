@@ -150,6 +150,7 @@ namespace IT_Airlines.Controllers
                 Landing = flight.Landing,
                 BasePrice = flight.BasePrice
             };
+
             return View(flightToEdit);
         }
 
