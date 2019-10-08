@@ -328,3 +328,7 @@ C:\Users\toset\OneDrive\Documents\it proekt\new proekt\IT-Airlines\IT-Airlines\o
 C:\Users\toset\OneDrive\Documents\it proekt\new proekt\IT-Airlines\IT-Airlines\obj\Debug\IT_Airlines.DataContexts.AirlineMigrations.UpdatedReservations1.resources
 C:\Users\toset\OneDrive\Documents\it proekt\new proekt\IT-Airlines\IT-Airlines\obj\Debug\IT_Airlines.DataContexts.AirlineMigrations.UpdatedReservations2.resources
 C:\Users\toset\OneDrive\Documents\it proekt\new proekt\IT-Airlines\IT-Airlines\obj\Debug\IT_Airlines.DataContexts.AirlineMigrations.UpdatedReservations3.resources
+C:\Users\venko\Documents\Github\IT-Airlines\IT-Airlines\obj\Debug\IT_Airlines.DataContexts.AirlineMigrations.UpdatedReservations1.resources
+C:\Users\venko\Documents\Github\IT-Airlines\IT-Airlines\obj\Debug\IT_Airlines.DataContexts.AirlineMigrations.UpdatedReservations2.resources
+C:\Users\venko\Documents\Github\IT-Airlines\IT-Airlines\obj\Debug\IT_Airlines.DataContexts.AirlineMigrations.UpdatedReservations3.resources
+C:\Users\venko\Documents\Github\IT-Airlines\IT-Airlines\obj\Debug\IT_Airlines.DataContexts.IdentityMigrations.UpdatedUserAcc1.resources
