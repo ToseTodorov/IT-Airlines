@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IT_Airlines.DataContexts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,8 +9,26 @@ namespace IT_Airlines.Controllers
 {
     public class HomeController : Controller
     {
+        private AirlineDbContext db = new AirlineDbContext();
         public ActionResult Index()
         {
+            IEnumerable<SelectListItem> selectListAirports = from s in db.Airports.ToList()
+                                                             select new SelectListItem
+                                                             {
+                                                                 Value = s.Id.ToString(),
+                                                                 Text = s.ToString()
+                                                             };
+            ViewBag.Airports = new SelectList(selectListAirports, "Value", "Text");
+
+
+            IEnumerable<SelectListItem> selectListAirplanes = from s in db.Airplanes.ToList()
+                                                              select new SelectListItem
+                                                              {
+                                                                  Value = s.Id.ToString(),
+                                                                  Text = s.ToString()
+                                                              };
+            ViewBag.Airplanes = new SelectList(selectListAirplanes, "Value", "Text");
+
             return View();
         }
 

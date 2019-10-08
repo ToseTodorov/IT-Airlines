@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace IT_Airlines.Models.ViewModels
+{
+    public class ReservationsViewModel
+    {
+        [Required]
+        [Display(Name ="Origin")]
+        public int AirportFrom { get; set; }
+
+        [Required]
+        [Display(Name = "Destination")]
+        public int AirportTo { get; set; }
+
+        [Required]
+        [Display(Name = "Round Trip")]
+        public bool RoundTrip { get; set; }
+
+        [Required]
+        public DateTime Departure { get; set; }
+
+        [Required]
+        public DateTime Return { get; set; }
+
+        [Required]
+        public int Passengers { get; set; }
+    }
+}
