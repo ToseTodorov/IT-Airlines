@@ -4,42 +4,97 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<style>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Code)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.City)
-        </th>
-        <th></th>
-    </tr>
+    body {
+        background: url("../../Img/log-sign-in.jpg") no-repeat center center fixed;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Code)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.City)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    #content {
+        width: 100%;
+        background-color: white;
+        opacity: 0.9;
+        border-radius: 10px;
+        padding: 5%;
+    }
 
-</table>
+    .flightRow {
+        background-color: lightgray;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 20px;
+        margin-bottom: 30px;
+        /*shadow*/
+        border: 1px solid;
+        padding: 10px;
+        box-shadow: 5px 10px #888888;
+    }
+
+    #tabelaDiv {
+        padding: 15px;
+    }
+
+    .btn-outline-danger {
+        color: white;
+        background-color: #FF5A5A;
+    }
+
+    #content .col-md-3, #content .col-sm-3 {
+        border-left: 2px red solid;
+    }
+
+        #content .col-sm-3:nth-child(1), #content .col-md-3:nth-child(1) {
+            border-left: 0px;
+        }
+</style>
+
+<div id="content">
+
+    <div class="row mb-2">
+        <div class="col-4"></div>
+        <div class="col-4">
+            @Html.ActionLink("Create new airport", "Create", null, new { @class = " btn btn-block btn-danger" })
+        </div>
+        <div class="col-4"></div>
+    </div>
+
+
+    <div id="tabelaDiv" class="row text-danger text-center">
+        <div class="col-sm-3">
+            <b> @Html.DisplayNameFor(model => model.Code)</b>
+        </div>
+        <div class="col-sm-3">
+            <b> @Html.DisplayNameFor(model => model.Name)</b>
+        </div>
+        <div class="col-sm-3">
+            <b>  @Html.DisplayNameFor(model => model.City)</b>
+        </div>
+    </div>
+
+
+    @foreach (var item in Model)
+    {
+        <div class="flightRow text-center">
+            <div class="row">
+                <div class="col-sm-4 col-md-3 mb-2 mt-2">
+                    @Html.DisplayFor(modelItem => item.Code)
+                </div>
+                <div class="col-sm-4 col-md-3 mb-2 mt-2">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </div>
+                <div class="col-sm-4 col-md-3 mb-2 mt-2">
+                    @Html.DisplayFor(modelItem => item.City)
+                </div>
+                <div class="col-sm-12 col-lg-3 mb-2 mt-2">
+                    <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-danger" })
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-danger" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

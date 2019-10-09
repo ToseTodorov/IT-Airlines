@@ -4,81 +4,119 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<style>
+    body {
+        background: url("../../Img/log-sign-in.jpg") no-repeat center center fixed;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+
+    #content {
+        width: 100%;
+        background-color: white;
+        opacity: 0.9;
+        border-radius: 5px;
+        padding: 5%;
+    }
+
+    #detali .col-sm-4{
+        border-right: 1px gray solid;
+    }
+
+    #detali .row{
+        border-bottom: 1px red solid;
+        padding: 10px;
+    }
+
+      #detali > div:nth-child(8),#detali > div:nth-child(9){
+        border-bottom: 0px red solid;
+    }
+
+      #detali .col-sm{
+          font-weight: bold;
+          font-size: 20px;
+          color:#bd1323 !important;
+      }
+
+      .btn-outline-danger {
+        color: white;
+        background-color: #FF5A5A;
+    }
+
+</style>
+
+
+<div id="content">
+    <h4 class="display-4 text-center">Details about the flight:</h4><br>
+    <h1 class="display-4 text-center"><ins><b>@Model.AirportFrom.City - @Model.AirportTo.City</b></ins></h1>
+    <br>
+    <br>
+
+    <div class="row">
+        <div id="detali" class="col-sm-7 mr-auto ml-auto">
+            <div class="row">
+                <div class="col-sm-4"> @Html.DisplayNameFor(model => model.AirportFrom)</div>
+                <div class="col-sm">
+                    @Html.DisplayFor(model => model.AirportFrom.Name),
+                    @Html.DisplayFor(model => model.AirportFrom.City)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 ">@Html.DisplayNameFor(model => model.AirportTo)</div>
+                <div class="col-sm">
+                    @Html.DisplayFor(model => model.AirportTo.Name),
+                    @Html.DisplayFor(model => model.AirportTo.City)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 "> @Html.DisplayNameFor(model => model.Airplane) </div>
+                <div class="col-sm">
+                    @Html.DisplayFor(model => model.Airplane.Code)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 ">@Html.DisplayNameFor(model => model.Departure) </div>
+                <div class="col-sm">
+                    @Html.DisplayFor(model => model.Departure)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 ">@Html.DisplayNameFor(model => model.Landing) </div>
+                <div class="col-sm">
+                    @Html.DisplayFor(model => model.Landing)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 ">@Html.DisplayNameFor(model => model.NumOfSeats) </div>
+                <div class="col-sm">
+                    @Html.DisplayFor(model => model.NumOfSeats)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 ">  @Html.DisplayNameFor(model => model.NumOfFreeSeats)</div>
+                <div class="col-sm">
+                    @Html.DisplayFor(model => model.NumOfFreeSeats)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 "> @Html.DisplayNameFor(model => model.BasePrice) </div>
+                <div class="col-sm">
+                    @Html.DisplayFor(model => model.BasePrice)
+                </div>
+            </div>
+            <div class="row">
+                <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
+                    @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-outline-danger" })
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-outline-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div>
     <h4>Flight</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.AirportFrom)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AirportFrom.Name),
-            @Html.DisplayFor(model => model.AirportFrom.City)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AirportTo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AirportTo.Name),
-            @Html.DisplayFor(model => model.AirportTo.City)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Airplane)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Airplane.Code)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Departure)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Departure)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Landing)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Landing)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NumOfSeats)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NumOfSeats)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NumOfFreeSeats)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NumOfFreeSeats)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BasePrice)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BasePrice)
-        </dd>
-
-    </dl>
+ 
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+

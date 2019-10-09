@@ -6,51 +6,48 @@
 
 <style>
 
-     body {
+    body {
         background: url("../../Img/log-sign-in.jpg") no-repeat center center fixed;
         background-repeat: no-repeat;
         background-size: 100% 100%;
     }
 
-     #content {
+    #content {
         width: 100%;
         background-color: white;
-        opacity: 0.9    ;
+        opacity: 0.9;
         border-radius: 10px;
         padding: 5%;
     }
 
-     .flightRow{
-         background-color:lightgray;
-         padding:15px;
-         border-radius: 10px;
-         margin-top: 20px;
-         margin-bottom: 30px;
+    .flightRow {
+        background-color: lightgray;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 20px;
+        margin-bottom: 30px;
+        /*shadow*/
+        border: 1px solid;
+        padding: 10px;
+        box-shadow: 5px 10px #888888;
+    }
 
-         /*shadow*/
-         border: 1px solid;
-         padding: 10px;
-         box-shadow: 5px 10px #888888;
-     }
+    #tabelaDiv {
+        padding: 15px;
+    }
 
-     #tabelaDiv{
-         padding:15px;
-     }
-
-     .btn-outline-danger {
+    .btn-outline-danger {
         color: white;
         background-color: #FF5A5A;
     }
 
-     #content .col-sm-3{
-         border-left: 2px red solid;
-     }
+    #content .col-sm-3 {
+        border-left: 2px red solid;
+    }
 
-     #content .col-sm-3:nth-child(1){
-         border-left: 0px;
-     }
-
-
+        #content .col-sm-3:nth-child(1) {
+            border-left: 0px;
+        }
 </style>
 
 <div id="content">
@@ -58,16 +55,16 @@
     <div class="row mb-2">
         <div class="col-4"></div>
         <div class="col-4">
-            <a href='@Url.Action("Create","Flights")' class=" btn btn-block btn-danger" >Create new flight</a>
+            <a href='@Url.Action("Create","Flights")' class=" btn btn-block btn-danger">Create new flight</a>
         </div>
         <div class="col-4"></div>
     </div>
 
-    
+
 
     <div id="tabelaDiv" class="row text-danger text-center">
         <div class="col-sm-3">
-           <b> @Html.DisplayNameFor(model => model.AirportFrom)</b>
+            <b> @Html.DisplayNameFor(model => model.AirportFrom)</b>
         </div>
         <div class="col-sm-3">
             <b> @Html.DisplayNameFor(model => model.AirportTo)</b>
@@ -79,47 +76,43 @@
             <b>   @Html.DisplayNameFor(model => model.NumOfFreeSeats)</b>
         </div>
         @*<div class="col-sm-2">
-            <b> @Html.DisplayNameFor(model => model.BasePrice)</b>
-        </div>*@
+                <b> @Html.DisplayNameFor(model => model.BasePrice)</b>
+            </div>*@
 
     </div>
 
     @foreach (var item in Model)
     {
-<div class="flightRow text-center">
-    <div class="row">
-        <div class="col-sm-3">
-            @Html.DisplayFor(modelItem => item.AirportFrom.Name),
-            @Html.DisplayFor(modelItem => item.AirportFrom.City)
-        </div>
-        <div class="col-sm-3">
-            @Html.DisplayFor(modelItem => item.AirportTo.Name),
-            @Html.DisplayFor(modelItem => item.AirportTo.City)
-        </div>
-        <div class="col-sm-3">
-            @Html.DisplayFor(modelItem => item.Departure)
-        </div>
-        <div class="col-sm-3">
-            @Html.DisplayFor(modelItem => item.NumOfFreeSeats)
-        </div>
-        @*<div class="col-sm  -2">
-            @Html.DisplayFor(modelItem => item.BasePrice)
-        </div>*@
+        <div class="flightRow text-center">
+            <div class="row">
+                <div class="col-sm-3">
+                    @Html.DisplayFor(modelItem => item.AirportFrom.Name),
+                    @Html.DisplayFor(modelItem => item.AirportFrom.City)
+                </div>
+                <div class="col-sm-3">
+                    @Html.DisplayFor(modelItem => item.AirportTo.Name),
+                    @Html.DisplayFor(modelItem => item.AirportTo.City)
+                </div>
+                <div class="col-sm-3">
+                    @Html.DisplayFor(modelItem => item.Departure)
+                </div>
+                <div class="col-sm-3">
+                    @Html.DisplayFor(modelItem => item.NumOfFreeSeats)
+                </div>
+                @*<div class="col-sm  -2">
+                        @Html.DisplayFor(modelItem => item.BasePrice)
+                    </div>*@
 
-    </div>
-    <div class="row pl-5 pr-5 pt-4">
+            </div>
+            <div class="row pl-5 pr-5 pt-4">
 
-        <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
-            <a href='@Url.Action("Delete","Flights",  new { id = item.Id })' class=" btn btn-outline-danger">Delete</a>
-            <a href='@Url.Action("Edit","Flights",  new { id = item.Id })' class=" btn btn-outline-danger">Edit</a>
-            <a href='@Url.Action("Details","Flights",  new { id = item.Id })' class=" btn btn-outline-danger">Details</a>
+                <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
+                    <a href='@Url.Action("Delete","Flights",  new { id = item.Id })' class=" btn btn-outline-danger">Delete</a>
+                    <a href='@Url.Action("Edit","Flights",  new { id = item.Id })' class=" btn btn-outline-danger">Edit</a>
+                    <a href='@Url.Action("Details","Flights",  new { id = item.Id })' class=" btn btn-outline-danger">Details</a>
+                </div>
+
+            </div>
         </div>
-
-    </div>
-</div>
     }
-
-
-   
-
 </div>
