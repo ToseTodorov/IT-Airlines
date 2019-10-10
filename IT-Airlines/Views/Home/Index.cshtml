@@ -30,7 +30,7 @@
         <div class="form-group col-md-6 col-sm-12 p-0 text-black-50">
             @Html.LabelFor(model => model.AirportFrom, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-12">
-                @Html.DropDownListFor(model => model.AirportFrom, ViewBag.Airports as SelectList,  new { @class = "form-control w-100" , id = "ddlAirportFrom"})
+                @Html.DropDownListFor(model => model.AirportFrom, ViewBag.Airports as SelectList, "Select Airport" ,  new { @class = "form-control w-100" , id = "ddlAirportFrom"})
                 @Html.ValidationMessageFor(model => model.AirportFrom, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -38,7 +38,7 @@
         <div class="form-group col-md-6 col-sm-12 p-0 text-black-50">
             @Html.LabelFor(model => model.AirportTo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-12">
-                @Html.DropDownListFor(model => model.AirportTo, ViewBag.Airports as SelectList, new { @class = "form-control w-100" , id = "ddlAirportTo"})
+                @Html.DropDownListFor(model => model.AirportTo, ViewBag.Airports as SelectList, "Select Airport", new { @class = "form-control w-100", id = "ddlAirportTo" })
                 @Html.ValidationMessageFor(model => model.AirportTo, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -94,8 +94,8 @@
     <script type="text/javascript">
         $(document).ready(function () {
             ShowReturnDate();
-            HideAirportsFrom($('#ddlAirportFrom').children("option:selected").val());
-            HideAirportsTo($('#ddlAirportTo').children("option:selected").val());
+            /*HideAirportsFrom($('#ddlAirportFrom').children("option:selected").val());
+            HideAirportsTo($('#ddlAirportTo').children("option:selected").val());*/
 
             //Podobro e so Id
             $('#RoundTrip').click(function () {
@@ -112,8 +112,8 @@
 
             //Pri promena na aerodrom da se skrie od AirportFrom
              $('#ddlAirportTo').change(function () {
-                var SelectedItem = $(this).children("option:selected").val();
-
+                 var SelectedItem = $(this).children("option:selected").val();
+                 
                  HideAirportsTo(SelectedItem);
             });
 
@@ -121,9 +121,15 @@
 
         //Se krie Aerodromot za da nemoze da nastane dva isti aerodroma da  se odberat
         function HideAirportsFrom(item) {
+            //Go Krijam Select Airport za da nema greski pri biranjeto
+             $('#ddlAirportFrom option').each(function () {
+                    if ( $(this).val() == "") {
+                        $(this).hide();
+                    }
+                });
              $('#ddlAirportTo option').each(function () {
-                    if ($(this).val() == item) {
-                        $(this).hide()
+                    if ($(this).val() == item || $(this).val() == "") {
+                        $(this).hide();
                     }
                     else {
                         $(this).show();
@@ -132,9 +138,15 @@
         }
 
         function HideAirportsTo(item) {
+            //Go Krijam Select Airport za da nema greski pri biranjeto
+            $('#ddlAirportTo option').each(function () {
+                    if ($(this).val() == "") {
+                        $(this).hide();
+                    }
+                });
              $('#ddlAirportFrom option').each(function () {
-                    if ($(this).val() == item) {
-                        $(this).hide()
+                    if ($(this).val() == item || $(this).val() == "") {
+                        $(this).hide();
                     }
                     else {
                         $(this).show();
