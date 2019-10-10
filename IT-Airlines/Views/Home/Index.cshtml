@@ -18,6 +18,9 @@
         border-radius: 5px;
         padding: 5%;
     }
+    input, select, textarea {
+    max-width: 100% !important;
+    }
 </style>
 
 @* Div content vo nego kje bide organizirano se za prebaruvanjeto na let*@
@@ -102,15 +105,74 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#return").hide();
-            $('input[type="checkbox"]').click(function () {
-                if ($(this).prop("checked") == true) {
+            ShowReturnDate();
+            /*HideAirportsFrom($('#ddlAirportFrom').children("option:selected").val());
+            HideAirportsTo($('#ddlAirportTo').children("option:selected").val());*/
+
+            //Podobro e so Id
+            $('#RoundTrip').click(function () {
+                ShowReturnDate();
+            });
+
+            //Pri promena na aerodrom da se skrie od AirportTo
+            $('#ddlAirportFrom').change(function () {
+                var SelectedItem = $(this).children("option:selected").val();
+
+                HideAirportsFrom(SelectedItem);
+
+            });
+
+            //Pri promena na aerodrom da se skrie od AirportFrom
+             $('#ddlAirportTo').change(function () {
+                 var SelectedItem = $(this).children("option:selected").val();
+                 
+                 HideAirportsTo(SelectedItem);
+            });
+
+        });
+
+        //Se krie Aerodromot za da nemoze da nastane dva isti aerodroma da  se odberat
+        function HideAirportsFrom(item) {
+            //Go Krijam Select Airport za da nema greski pri biranjeto
+             $('#ddlAirportFrom option').each(function () {
+                    if ( $(this).val() == "") {
+                        $(this).hide();
+                    }
+                });
+             $('#ddlAirportTo option').each(function () {
+                    if ($(this).val() == item || $(this).val() == "") {
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                });
+        }
+
+        function HideAirportsTo(item) {
+            //Go Krijam Select Airport za da nema greski pri biranjeto
+            $('#ddlAirportTo option').each(function () {
+                    if ($(this).val() == "") {
+                        $(this).hide();
+                    }
+                });
+             $('#ddlAirportFrom option').each(function () {
+                    if ($(this).val() == item || $(this).val() == "") {
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                });
+        }
+
+        function ShowReturnDate() {
+            if ($('#RoundTrip').prop("checked") == true) {
                     $("#return").show();
                 }
-                else if ($(this).prop("checked") == false) {
+                else if ($('#RoundTrip').prop("checked") == false) {
                     $("#return").hide();
                 }
-            });
-        });
+        }
     </script>
 }
