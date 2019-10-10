@@ -1,4 +1,5 @@
 ﻿using IT_Airlines.DataContexts;
+using IT_Airlines.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,15 @@ namespace IT_Airlines.Controllers
             return View();
         }
 
-        public ActionResult About()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(BeginReservationsViewModel model)
+        {
+            return RedirectToAction("Create", "Reservations", model);
+        }
+
+
+            public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
