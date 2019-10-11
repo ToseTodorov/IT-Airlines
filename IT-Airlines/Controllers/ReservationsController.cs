@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using IT_Airlines.DataContexts;
 using IT_Airlines.Models.Entities;
 using IT_Airlines.Models.ViewModels;
+using Microsoft.AspNet.Identity;
 
 namespace IT_Airlines.Controllers
 {
@@ -42,12 +43,15 @@ namespace IT_Airlines.Controllers
         {
             BeginReservationsViewModel model = (BeginReservationsViewModel) Session["model"];
             CreateReservationsViewModel newModel = new CreateReservationsViewModel();
-            newModel.PartialReservation = model;
+            newModel.RoundTrip = model.RoundTrip;
+            newModel.NumPassengers = model.Passengers;
             newModel.Reservations = new List<Reservation>(model.Passengers);
 
-            foreach(Reservation res in newModel.Reservations)
+            for(int i=0;i<newModel.NumPassengers;++i)
             {
+                Reservation res = new Reservation();
                 res.RoundTrip = model.RoundTrip;
+                newModel.Reservations.Add(res);
             }
 
 
@@ -81,6 +85,14 @@ namespace IT_Airlines.Controllers
                 ViewBag.ReturnFlights = new SelectList(selectListReturnFlights, "Value", "Text");
             }
 
+            IEnumerable<SelectListItem> selectListLuggages = from s in db.Luggages.ToList()
+                                                             select new SelectListItem
+                                                             {
+                                                                 Value = s.Id.ToString(),
+                                                                 Text = s.ToString()
+                                                             };
+            ViewBag.Luggages = new SelectList(selectListLuggages, "Value", "Text");
+
             return View(newModel);
         }
 
@@ -95,14 +107,16 @@ namespace IT_Airlines.Controllers
             {
                 Flight flight = db.Flights.Find(model.Flight);
                 Flight returnFlight = null;
-                if (model.PartialReservation.RoundTrip)
+                if (model.RoundTrip)
                 {
                      returnFlight = db.Flights.Find(model.Flight);
                 }
                 foreach (Reservation reservation in model.Reservations)
                 {
+                    reservation.RoundTrip = model.RoundTrip;
                     reservation.FirstFlight = flight;
                     reservation.SecondFlight = returnFlight;
+                    reservation.AccountEmail = User.Identity.GetUserName();
                     db.Reservations.Add(reservation);
                     db.SaveChanges();
                 }

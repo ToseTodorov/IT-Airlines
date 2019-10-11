@@ -17,7 +17,6 @@ namespace IT_Airlines.Models.Entities
         [Required]
         public bool RoundTrip { get; set; } // True ako e povraten bilet, false ako e vo eden pravec
 
-
         [Required]
         public virtual Flight FirstFlight { get; set; }
 
