@@ -38,10 +38,17 @@ namespace IT_Airlines.Controllers
         }
 
         // GET: Reservations/Create
-        public ActionResult Create(BeginReservationsViewModel model)
+        public ActionResult Create()
         {
+            BeginReservationsViewModel model = (BeginReservationsViewModel) Session["model"];
             CreateReservationsViewModel newModel = new CreateReservationsViewModel();
             newModel.PartialReservation = model;
+            newModel.Reservations = new List<Reservation>(model.Passengers);
+
+            foreach(Reservation res in newModel.Reservations)
+            {
+                res.RoundTrip = model.RoundTrip;
+            }
 
 
             IEnumerable<SelectListItem> selectListFlights = 
@@ -50,11 +57,11 @@ namespace IT_Airlines.Controllers
                                     .Where(x => DbFunctions.TruncateTime(x.Departure)==model.Departure.Date)
                                     .Where(x => x.NumOfFreeSeats >= model.Passengers)
                                     .ToList()
-                            select new SelectListItem
-                                {
-                                    Value = s.Id.ToString(),
-                                    Text = s.ToString()
-                                };
+                                    select new SelectListItem
+                                        {
+                                            Value = s.Id.ToString(),
+                                            Text = s.ToString()
+                                        };
             ViewBag.Flights = new SelectList(selectListFlights, "Value", "Text");
 
             if (model.RoundTrip)
@@ -65,11 +72,11 @@ namespace IT_Airlines.Controllers
                                         .Where(x => DbFunctions.TruncateTime(x.Departure) == model.Return.Date)
                                         .Where(x => x.NumOfFreeSeats >= model.Passengers)
                                         .ToList()
-                    select new SelectListItem
-                    {
-                        Value = s.Id.ToString(),
-                        Text = s.ToString()
-                    };
+                                        select new SelectListItem
+                                        {
+                                            Value = s.Id.ToString(),
+                                            Text = s.ToString()
+                                        };
 
                 ViewBag.ReturnFlights = new SelectList(selectListReturnFlights, "Value", "Text");
             }
@@ -82,16 +89,27 @@ namespace IT_Airlines.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CreateReservationsViewModel reservation)
+        public ActionResult Create(CreateReservationsViewModel model)
         {
             if (ModelState.IsValid)
             {
-                //db.Reservations.Add(reservation);
-                //db.SaveChanges();
+                Flight flight = db.Flights.Find(model.Flight);
+                Flight returnFlight = null;
+                if (model.PartialReservation.RoundTrip)
+                {
+                     returnFlight = db.Flights.Find(model.Flight);
+                }
+                foreach (Reservation reservation in model.Reservations)
+                {
+                    reservation.FirstFlight = flight;
+                    reservation.SecondFlight = returnFlight;
+                    db.Reservations.Add(reservation);
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
 
-            return View(reservation);
+            return View(model);
         }
 
         // GET: Reservations/Edit/5

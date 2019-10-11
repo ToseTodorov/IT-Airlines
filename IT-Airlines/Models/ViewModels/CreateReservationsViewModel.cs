@@ -10,8 +10,8 @@ namespace IT_Airlines.Models.ViewModels
     {
         public BeginReservationsViewModel PartialReservation { get; set; }
 
-        public Flight Flight { get; set; }
-        public Flight ReturnFlight { get; set; }
+        public int Flight { get; set; }
+        public int ReturnFlight { get; set; }
         public List<Reservation> Reservations { get; set; }
     }
 }

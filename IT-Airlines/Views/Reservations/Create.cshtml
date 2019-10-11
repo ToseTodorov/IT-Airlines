@@ -7,39 +7,55 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>Reservation</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.Flight, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-12">
-            @Html.DropDownListFor(model => model.Flight, ViewBag.Flights as SelectList, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Flight, "", new { @class = "text-danger" })
+
+    <div class="form-horizontal">
+        <h4>Reservation</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div id="first-page">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Flight, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.Flight, ViewBag.Flights as SelectList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Flight, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @if (Model.PartialReservation.RoundTrip == true)
+            {
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReturnFlight, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.ReturnFlight, ViewBag.ReturnFlights as SelectList, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ReturnFlight, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
         </div>
-    </div>
-    @if (Model.PartialReservation.RoundTrip == true)
-    {
+
+        <div id="second-page">
+            <h1>Second page</h1>
+        </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.ReturnFlight, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-12">
-                @Html.DropDownListFor(model => model.ReturnFlight, ViewBag.ReturnFlights as SelectList, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ReturnFlight, "", new { @class = "text-danger" })
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
-    }
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
+    </div>
+}
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <button id="first-to-second" class="btn btn-danger" onclick="SecondPage()">Continue</button>
     </div>
 </div>
-}
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <button id="back-to-first" class="btn btn-danger" onclick="FirstPage()">Back</button>
+    </div>
+</div>
 
 <div>
     @Html.ActionLink("Back to List", "Index")
@@ -47,4 +63,25 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("#second-page").hide();
+        $("#back-to-first").hide();
+    });
+
+    function SecondPage() {
+        $("#first-page").hide();
+        $("#first-to-second").hide();
+        $("#second-page").show();
+        $("#back-to-first").show();
+    }
+
+    function FirstPage() {
+        $("#first-page").show();
+        $("#first-to-second").show();
+        $("#second-page").hide();
+        $("#back-to-first").hide();
+    }
+
+    </script>
 }

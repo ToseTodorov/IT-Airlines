@@ -37,7 +37,8 @@ namespace IT_Airlines.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(BeginReservationsViewModel model)
         {
-            return RedirectToAction("Create", "Reservations", model);
+            Session["model"] = model;
+            return RedirectToAction("Create", "Reservations");
         }
 
 
