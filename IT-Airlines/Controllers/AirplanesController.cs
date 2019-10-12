@@ -107,7 +107,6 @@ namespace IT_Airlines.Controllers
 
         // POST: Airplanes/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Airplane airplane = db.Airplanes.Find(id);
