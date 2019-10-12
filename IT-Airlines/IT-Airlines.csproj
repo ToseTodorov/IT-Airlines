@@ -196,6 +196,10 @@
     <Compile Include="DataContexts\AirlineMigrations\201910071941147_UpdatedReservations-3.Designer.cs">
       <DependentUpon>201910071941147_UpdatedReservations-3.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataContexts\AirlineMigrations\201910120957396_update-xxx1.cs" />
+    <Compile Include="DataContexts\AirlineMigrations\201910120957396_update-xxx1.Designer.cs">
+      <DependentUpon>201910120957396_update-xxx1.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataContexts\AirlineMigrations\Configuration.cs" />
     <Compile Include="DataContexts\IdentityDbContext.cs" />
     <Compile Include="DataContexts\IdentityMigrations\201910052029337_InitialMigration.cs" />
@@ -332,6 +336,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataContexts\AirlineMigrations\201910071941147_UpdatedReservations-3.resx">
       <DependentUpon>201910071941147_UpdatedReservations-3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\AirlineMigrations\201910120957396_update-xxx1.resx">
+      <DependentUpon>201910120957396_update-xxx1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataContexts\IdentityMigrations\201910052029337_InitialMigration.resx">
       <DependentUpon>201910052029337_InitialMigration.cs</DependentUpon>

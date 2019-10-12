@@ -20,7 +20,9 @@ namespace IT_Airlines.Controllers
         // GET: Reservations
         public ActionResult Index()
         {
-            return View(db.Reservations.ToList());
+            return View(db.Reservations
+                            .Include(r => r.Passenger)
+                            .ToList());
         }
 
         // GET: Reservations/Details/5
@@ -43,15 +45,21 @@ namespace IT_Airlines.Controllers
         {
             BeginReservationsViewModel model = (BeginReservationsViewModel) Session["model"];
             CreateReservationsViewModel newModel = new CreateReservationsViewModel();
+            //newModel.PartialModel = model;
             newModel.RoundTrip = model.RoundTrip;
-            newModel.NumPassengers = model.Passengers;
+            //newModel.NumPassengers = model.Passengers;
             newModel.Reservations = new List<Reservation>(model.Passengers);
+            newModel.Luggages = new List<int>(model.Passengers);
+            newModel.ReturnLuggages = new List<int>(model.Passengers);
 
-            for(int i=0;i<newModel.NumPassengers;++i)
+            for(int i=0;i<model.Passengers;++i)
             {
                 Reservation res = new Reservation();
                 res.RoundTrip = model.RoundTrip;
                 newModel.Reservations.Add(res);
+
+                newModel.Luggages.Add(0);
+                newModel.ReturnLuggages.Add(0);
             }
 
 
@@ -109,14 +117,24 @@ namespace IT_Airlines.Controllers
                 Flight returnFlight = null;
                 if (model.RoundTrip)
                 {
-                     returnFlight = db.Flights.Find(model.Flight);
+                     returnFlight = db.Flights.Find(model.ReturnFlight);
                 }
-                foreach (Reservation reservation in model.Reservations)
+                for(int i=0; i<model.Reservations.Count; ++i)
                 {
+                    Reservation reservation = model.Reservations.ElementAt(i);
                     reservation.RoundTrip = model.RoundTrip;
                     reservation.FirstFlight = flight;
                     reservation.SecondFlight = returnFlight;
                     reservation.AccountEmail = User.Identity.GetUserName();
+                    reservation.FirstLuggage = db.Luggages.Find(model.Luggages.ElementAt(i));
+                    flight.NumOfFreeSeats--;
+                    if(model.RoundTrip)
+                    {
+                        reservation.SecondLuggage = db.Luggages.Find(model.ReturnLuggages.ElementAt(i));
+                        returnFlight.NumOfFreeSeats--;
+                    }
+                    db.Entry(flight).State = EntityState.Modified;
+                    db.Entry(returnFlight).State = EntityState.Modified;
                     db.Reservations.Add(reservation);
                     db.SaveChanges();
                 }
@@ -177,6 +195,7 @@ namespace IT_Airlines.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            // da se implementira vrakjanje na slobodni sedista vo let!!
             Reservation reservation = db.Reservations.Find(id);
             db.Reservations.Remove(reservation);
             db.SaveChanges();

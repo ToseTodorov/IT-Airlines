@@ -14,15 +14,15 @@ namespace IT_Airlines.Models.Entities
         [Required]
         public Passenger Passenger { get; set; }
 
-        [Required]
+        //[Required]
         public bool RoundTrip { get; set; } // True ako e povraten bilet, false ako e vo eden pravec
 
-        [Required]
+        //[Required]
         public virtual Flight FirstFlight { get; set; }
 
         public virtual Flight SecondFlight { get; set; }
 
-        [Required]
+        //[Required]
         public virtual Luggage FirstLuggage { get; set; }
 
         public virtual Luggage SecondLuggage { get; set; }
