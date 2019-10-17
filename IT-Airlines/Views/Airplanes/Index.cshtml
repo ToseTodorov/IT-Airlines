@@ -72,7 +72,7 @@
 
     @foreach (var item in Model)
     {
-        <div class="flightRow text-center row-@item.Id">
+        <div class="flightRow text-center" id="row-@item.Id">
             <div class="row">
                 <div class="col-sm-3">
                     @Html.DisplayFor(modelItem => item.Code)
@@ -141,7 +141,7 @@
                             url: url,
                             method: "POST",
                             success: function () {
-                                $('.row-' + id).hide();
+                                $('#row-' + id).hide();
                             },
                             error: function (error) {
                                 console.error(error);
