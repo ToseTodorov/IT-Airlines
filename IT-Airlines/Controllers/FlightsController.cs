@@ -217,10 +217,18 @@ namespace IT_Airlines.Controllers
 
         // POST: Flights/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Flight flight = db.Flights.Find(id);
+
+            var reservations = db.Reservations.Where(r => r.FirstFlight.Id == flight.Id || r.SecondFlight.Id == flight.Id).ToList();
+
+            for (int i = 0; i < reservations.Count; i++)
+            {
+                db.Reservations.Remove(reservations[i]);
+                db.SaveChanges();
+            }
+
             db.Flights.Remove(flight);
             db.SaveChanges();
             return RedirectToAction("Index");
