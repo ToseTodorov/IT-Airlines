@@ -192,7 +192,6 @@ namespace IT_Airlines.Controllers
 
         // POST: Reservations/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             // da se implementira vrakjanje na slobodni sedista vo let!!
