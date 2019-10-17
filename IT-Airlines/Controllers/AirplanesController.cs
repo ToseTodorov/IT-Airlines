@@ -110,6 +110,24 @@ namespace IT_Airlines.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Airplane airplane = db.Airplanes.Find(id);
+
+            var flights = db.Flights.Where(f => f.Airplane.Id == id).ToList();
+            var flightsId = flights.Select(f => f.Id).ToList();
+            var reservations = new List<Reservation>();
+            reservations = db.Reservations.Where(r => flightsId.Contains(r.FirstFlight.Id) || flightsId.Contains(r.SecondFlight.Id)).ToList();
+
+            for (int i = 0; i < reservations.Count; i++)
+            {
+                db.Reservations.Remove(reservations[i]);
+                db.SaveChanges();
+            }
+
+            for (int i = 0; i < flights.Count; i++)
+            {
+                db.Flights.Remove(flights[i]);
+                db.SaveChanges();
+            }
+
             db.Airplanes.Remove(airplane);
             db.SaveChanges();
             return RedirectToAction("Index");

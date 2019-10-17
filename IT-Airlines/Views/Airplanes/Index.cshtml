@@ -125,8 +125,7 @@
 {
     <script type="text/javascript">
         $(document).ready(function() {
-            bootbox.alert("jQuery and Bootbox are working");
-
+/*            bootbox.alert("jQuery and Bootbox are working");*/
 
             $("button.js-delete").click(function (e) {
                 e.preventDefault();
@@ -137,18 +136,14 @@
 
                         var url = "/Airplanes/Delete/" + id;
 
-                        bootbox.alert(url);
-                        
+/*                        bootbox.alert(url);*/                        
                         $.ajax({
                             url: url,
                             method: "POST",
                             success: function () {
-                                bootbox.alert("hi")
-
                                 $('.row-' + id).hide();
                             },
                             error: function (error) {
-                                bootbox.alert("gomno");
                                 console.error(error);
                             }
                         });
