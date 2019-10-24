@@ -4,11 +4,115 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<style>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+    body {
+        background: url("../../Img/log-sign-in.jpg") no-repeat center center fixed;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+
+    #content {
+        width: 100%;
+        background-color: white;
+        opacity: 0.9;
+        border-radius: 10px;
+        padding: 5%;
+    }
+
+    .flightRow {
+        background-color: lightgray;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 20px;
+        margin-bottom: 30px;
+        /*shadow*/
+        border: 1px solid;
+        padding: 10px;
+        box-shadow: 5px 10px #888888;
+    }
+
+    #tabelaDiv {
+        padding: 15px;
+    }
+
+    .btn-outline-danger {
+        color: white;
+        background-color: #FF5A5A;
+    }
+
+
+
+    #content .col-sm-3:nth-child(1) {
+        border-left: 0px;
+    }
+</style>
+
+<div id="content">
+    <div class="row mb-2">
+        <div class="col-4"></div>
+        <div class="col-4">
+            @Html.ActionLink("Create new reservation", "Index", "Home", null, new { @class = "btn btn-block btn-danger" })
+        </div>
+        <div class="col-4"></div>
+    </div>
+
+    <div id="tabelaDiv" class="row text-danger text-center">
+        <div class="col-sm-10 ml-auto mr-auto text-center">
+            <h1 class="display-4">List of all reservations</h1>
+        </div>
+    </div>
+
+    @foreach (var item in Model)
+    {
+        <div class="flightRow text-center" id="row-@item.Id">
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-3 text-sm-center text-md-right"> @Html.DisplayNameFor(model => model.AccountEmail):</div>
+                        @if (@item.AccountEmail.Equals(""))
+                        {
+                            <div class="col text-md-left text-sm-center"> Email address is not available</div>
+                        }
+                        else
+                        {
+                            <div class="col text-md-left text-sm-center"> @Html.DisplayFor(modelItem => item.AccountEmail)</div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3 text-sm-center text-md-right">  @Html.DisplayNameFor(model => model.Passenger):</div>
+                        <div class="col-sm text-md-left text-sm-center"> <a href="#">@item.Passenger.FirstName @item.Passenger.LastName</a></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3 text-sm-center text-md-right">   @Html.DisplayNameFor(model => model.FirstFlight):</div>
+                        <div class="col text-md-left text-sm-center"> <a href="#">@item.FirstFlight.Departure</a> with luggage of: <b>@item.FirstLuggage</b></div>
+                    </div>
+                    @if (item.RoundTrip)
+                    {
+                        <div class="row">
+                            <div class="col-sm-3 text-sm-center text-md-right">@Html.DisplayNameFor(model => model.SecondFlight):</div>
+                            <div class="col text-md-left text-sm-center">
+                                <a href="#">@item.FirstFlight.Landing</a> with luggage of: <b>@item.SecondLuggage</b>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="col-sm-3">
+                    <div class="col">
+                        @* Kopchinjata da se gore desno za sekoja rezervacija *@
+                            <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
+                                <a href='@Url.Action("Details","Reservations",  new { id = item.Id })' class=" btn btn-outline-danger">Details</a>
+                                <a href='@Url.Action("Edit","Reservations",  new { id = item.Id })' class=" btn btn-outline-danger">Edit</a>
+                                <button class="btn btn-outline-danger js-delete" attr-id="@item.Id">Delete</button>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+
 <table class="table">
     <tr>
         <th>
@@ -80,8 +184,8 @@
 @section scripts
 {
     <script type="text/javascript">
-        $(document).ready(function() {
-/*            bootbox.alert("jQuery and Bootbox are working");*/
+        $(document).ready(function () {
+            /*            bootbox.alert("jQuery and Bootbox are working");*/
 
             $("button.js-delete").click(function (e) {
                 e.preventDefault();
@@ -92,7 +196,7 @@
 
                         var url = "/Flights/Delete/" + id;
 
-/*                        bootbox.alert(url);*/
+                        /*                        bootbox.alert(url);*/
                         $.ajax({
                             url: url,
                             method: "POST",
