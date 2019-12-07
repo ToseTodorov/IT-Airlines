@@ -196,6 +196,14 @@ namespace IT_Airlines.Controllers
         {
             // da se implementira vrakjanje na slobodni sedista vo let!!
             Reservation reservation = db.Reservations.Find(id);
+            reservation.FirstFlight.NumOfFreeSeats++;
+            db.Entry(reservation.FirstFlight).State = EntityState.Modified;
+            if (reservation.RoundTrip)
+            {
+                reservation.SecondFlight.NumOfFreeSeats++;
+                db.Entry(reservation.SecondFlight).State = EntityState.Modified;
+            }
+         
             db.Reservations.Remove(reservation);
             db.SaveChanges();
             return RedirectToAction("Index");
