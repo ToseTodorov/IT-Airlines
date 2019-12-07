@@ -5,150 +5,225 @@
     ViewBag.Title = "Create";
 }
 
+<style>
+
+    body {
+        background: url("../../Img/log-sign-in.jpg") no-repeat center center fixed;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+
+    #content {
+        width: 100%;
+        background-color: white;
+        opacity: 0.9;
+        border-radius: 5px;
+        padding: 5%;
+    }
+
+    .btn-outline-danger {
+        color: white;
+        background-color: #FF5A5A;
+    }
+
+    input, select, textarea {
+        max-width: 100%;
+    }
+</style>
+
+<div class="row">
+    <div class="col-sm-5 ml-auto mr-auto" id="content">
 
 
-<h2>Create</h2>
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-<div class="form-horizontal">
-    <h4>Reservation</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.RoundTrip)
-    <div id="first-page">
-        <div class="form-group">
-            @Html.LabelFor(model => model.Flight, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-12">
-                @Html.DropDownListFor(model => model.Flight, ViewBag.Flights as SelectList, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Flight, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        @if (Model.RoundTrip == true)
+        @using (Html.BeginForm())
         {
-            <div class="form-group">
-                @Html.LabelFor(model => model.ReturnFlight, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-12">
-                    @Html.DropDownListFor(model => model.ReturnFlight, ViewBag.ReturnFlights as SelectList, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.ReturnFlight, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        }
-    </div>
+            @Html.AntiForgeryToken()
 
-    <div id="second-page">
-        @for (int i = 0; i < Model.Reservations.Count; ++i)
-        {
-            string divId = "res-" + i.ToString();
-
-            <div id="@divId">
-                <h2>Enter information for reservation num.@i</h2>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Luggages[i], htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-12">
-                        @Html.DropDownListFor(model => model.Luggages[i], ViewBag.Luggages as SelectList, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Luggages[i], "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                @if (Model.RoundTrip)
-                {
+            <div class="form-horizontal">
+                <h4>Your Reservation</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.RoundTrip)
+                <div id="first-page">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.ReturnLuggages[i], htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.Flight, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-12">
-                            @Html.DropDownListFor(model => model.ReturnLuggages[i], ViewBag.Luggages as SelectList, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.ReturnLuggages[i], "", new { @class = "text-danger" })
+                            @Html.DropDownListFor(model => model.Flight, ViewBag.Flights as SelectList, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Flight, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                }
+                    @if (Model.RoundTrip == true)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ReturnFlight, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.DropDownListFor(model => model.ReturnFlight, ViewBag.ReturnFlights as SelectList, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ReturnFlight, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-12">
+                            <button type="button" id="next-page" class="btn btn-danger btn-block" onclick="SecondPage()">Continue</button>
+                        </div>
+                    </div>
+                </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Reservations[i].Passenger.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-12">
-                        @Html.EditorFor(model => model.Reservations[i].Passenger.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Reservations[i].Passenger.FirstName, "", new { @class = "text-danger" })
+                <div id="second-page">
+                    @for (int i = 0; i < Model.Reservations.Count; ++i)
+                    {
+                        string divId = "res-" + i.ToString();
+
+                    <div id="@divId" style="display:none">
+                        <h2>Enter information for passanger number @(i + 1) </h2>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Luggages[i], htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-12">
+                                @Html.DropDownListFor(model => model.Luggages[i], ViewBag.Luggages as SelectList, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Luggages[i], "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @if (Model.RoundTrip)
+                        {
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ReturnLuggages[i], htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-12">
+                                    @Html.DropDownListFor(model => model.ReturnLuggages[i], ViewBag.Luggages as SelectList, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ReturnLuggages[i], "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        }
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Reservations[i].Passenger.FirstName, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.Reservations[i].Passenger.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Reservations[i].Passenger.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Reservations[i].Passenger.LastName, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.Reservations[i].Passenger.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Reservations[i].Passenger.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Reservations[i].Passenger.Gender, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-12">
+                                @Html.EnumDropDownListFor(model => model.Reservations[i].Passenger.Gender, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Reservations[i].Passenger.Gender, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Reservations[i].Passenger.BirthDate, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.Reservations[i].Passenger.BirthDate, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Reservations[i].Passenger.BirthDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Reservations[i].Passenger.PassportCode, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.Reservations[i].Passenger.PassportCode, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Reservations[i].Passenger.PassportCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class=" row">
+                            @if (i == Model.Reservations.Count - 1)
+                            {
+                                <div class="col-sm">
+                                    <div class="col-md-offset-2 col-md-12">
+                                        <input id="btnSubmit" type="submit" value="Create" class="btn btn-danger btn-block" />
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-sm">
+                                    <div class="col-md-offset-2 col-md-12">
+                                        <button type="button" id="prev-page" class="btn btn-danger btn-block" onclick="goNext(@i)">Next</button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <br>
+                        <div class=" row">
+                            @if (i == 0)
+                            {
+                                <div class="col-sm">
+                                    <div class="col-md-offset-2 col-md-12">
+                                        <button type="button" id="prev-page" class="btn btn-light btn-block" onclick="FirstPage()">Back</button>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-sm">
+                                    <div class="col-md-offset-2 col-md-12">
+                                        <button type="button" id="prev-page" class="btn btn-light btn-block"  onclick="goBack(@i)">Back</button>
+                                    </div>
+                                </div>
+                            }
+                        
+                        </div>
                     </div>
+
+
+                    }
+
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Reservations[i].Passenger.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-12">
-                        @Html.EditorFor(model => model.Reservations[i].Passenger.LastName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Reservations[i].Passenger.LastName, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Reservations[i].Passenger.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-12">
-                        @Html.EnumDropDownListFor(model => model.Reservations[i].Passenger.Gender, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Reservations[i].Passenger.Gender, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Reservations[i].Passenger.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-12">
-                        @Html.EditorFor(model => model.Reservations[i].Passenger.BirthDate, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Reservations[i].Passenger.BirthDate, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Reservations[i].Passenger.PassportCode, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-12">
-                        @Html.EditorFor(model => model.Reservations[i].Passenger.PassportCode, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Reservations[i].Passenger.PassportCode, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+
+
             </div>
-
         }
-
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+        <div>
+            @Html.ActionLink("Back to List", "Index")
         </div>
     </div>
-</div>
-}
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        <button id="first-to-second" class="btn btn-danger" onclick="SecondPage()">Continue</button>
-    </div>
-</div>
-
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        <button id="back-to-first" class="btn btn-danger" onclick="FirstPage()">Back</button>
-    </div>
-</div>
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
-    $(document).ready(function () {
-        $("#second-page").hide();
-        $("#back-to-first").hide();
-    });
+        var x = 0;
 
-    function SecondPage() {
-        $("#first-page").hide();
-        $("#first-to-second").hide();
-        $("#second-page").show();
-        $("#back-to-first").show();
-    }
+        $(document).ready(function () {
+            init();
+        });
 
-    function FirstPage() {
-        $("#first-page").show();
-        $("#first-to-second").show();
-        $("#second-page").hide();
-        $("#back-to-first").hide();
-    }
+        function init() {
+            $("#second-page").hide();
+        }
+
+        function goNext(id) {
+            $("#res-" + id).hide();
+            id += 1;
+            $("#res-" + id).show();
+        }
+
+        function goBack(id) {
+            $("#res-" + id).hide();
+            id -= 1;
+            $("#res-" + id).show();
+        }
+
+        function FirstPage() {
+            $("#second-page").hide();
+            $("#first-page").show();
+        }
+
+        function SecondPage() {
+            $("#first-page").hide();
+            $("#second-page").show();
+            $("#res-0").show();
+        }
+
+
+
+
+
 
     </script>
 }
