@@ -34,7 +34,7 @@
 <div class="row">
     <div class="col-sm-5 ml-auto mr-auto" id="content">
 
-
+        <label>Total price: <span id="total"></span>$</label>
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
@@ -48,7 +48,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Flight, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-12">
-                            @Html.DropDownListFor(model => model.Flight, ViewBag.Flights as SelectList, new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.Flight, ViewBag.Flights as SelectList, new { @class = "form-control", @id = "flight"})
                             @Html.ValidationMessageFor(model => model.Flight, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.ReturnFlight, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-12">
-                                @Html.DropDownListFor(model => model.ReturnFlight, ViewBag.ReturnFlights as SelectList, new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.ReturnFlight, ViewBag.ReturnFlights as SelectList, new { @class = "form-control", @id = "ret-flight" })
                                 @Html.ValidationMessageFor(model => model.ReturnFlight, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -78,9 +78,9 @@
                         <h2>Enter information for passanger number @(i + 1) </h2>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Luggages[i], htmlAttributes: new { @class = "control-label col-md-4" })
+                            @Html.LabelFor(model => model.Luggages[i], "Luggage", htmlAttributes: new { @class = "control-label col-md-4" })
                             <div class="col-md-12">
-                                @Html.DropDownListFor(model => model.Luggages[i], ViewBag.Luggages as SelectList, new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.Luggages[i], ViewBag.Luggages as SelectList, new { @class = "form-control", @id="l-" + i.ToString()})
                                 @Html.ValidationMessageFor(model => model.Luggages[i], "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -135,7 +135,7 @@
                             {
                                 <div class="col-sm">
                                     <div class="col-md-offset-2 col-md-12">
-                                        <input id="btnSubmit" type="submit" value="Create" class="btn btn-danger btn-block" />
+                                        <input id="btnSubmit" type="submit" value="Create" class="btn btn-danger btn-block" onclick="create()" />
                                     </div>
                                 </div>
                             }
@@ -187,10 +187,12 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
-        var x = 0;
+        var sum = 0;
+        var fp_sum = 0;
 
         $(document).ready(function () {
             init();
+            document.getElementById('total').innerHTML = 0;
         });
 
         function init() {
@@ -198,29 +200,49 @@
         }
 
         function goNext(id) {
+            //if isValid(id)
             $("#res-" + id).hide();
+            sum += parseInt($('#l-' + id).children("option:selected").val());  // ajax call
             id += 1;
             $("#res-" + id).show();
+            document.getElementById('total').innerHTML = sum;
         }
 
         function goBack(id) {
             $("#res-" + id).hide();
             id -= 1;
+            sum -= parseInt($('#l-' + id).children("option:selected").val());
             $("#res-" + id).show();
+            document.getElementById('total').innerHTML = sum;
         }
 
         function FirstPage() {
             $("#second-page").hide();
             $("#first-page").show();
+            sum = 0;
+            document.getElementById('total').innerHTML = sum;
         }
 
         function SecondPage() {
             $("#first-page").hide();
             $("#second-page").show();
             $("#res-0").show();
+
+            fp_sum = parseInt($('#flight').children("option:selected").val());
+            if (@Model.RoundTrip.ToString().ToLower()) {
+                fp_sum += parseInt($('#ret-flight').children("option:selected").val());
+            }
+            sum = fp_sum * (@Model.Reservations.Count);
+            document.getElementById('total').innerHTML = sum;
+            
+            console.log(sum);
         }
 
-
+        function create() {
+            //if valid
+            sum += parseInt($('#l-' + (@Model.Reservations.Count-1)).children("option:selected").val());
+            document.getElementById('total').innerHTML = sum;
+        }
 
 
 
