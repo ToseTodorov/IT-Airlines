@@ -13,6 +13,7 @@ namespace IT_Airlines.Controllers
         private AirlineDbContext db = new AirlineDbContext();
         public ActionResult Index()
         {
+            Session.Remove("model");
             IEnumerable<SelectListItem> selectListAirports = from s in db.Airports.ToList()
                                                              select new SelectListItem
                                                              {

@@ -13,6 +13,8 @@ using Microsoft.AspNet.Identity;
 
 namespace IT_Airlines.Controllers
 {
+
+    [Authorize] 
     public class ReservationsController : Controller
     {
         private AirlineDbContext db = new AirlineDbContext();
@@ -44,6 +46,10 @@ namespace IT_Airlines.Controllers
         public ActionResult Create()
         {
             BeginReservationsViewModel model = (BeginReservationsViewModel) Session["model"];
+            if(model == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             CreateReservationsViewModel newModel = new CreateReservationsViewModel();
             //newModel.PartialModel = model;
             newModel.RoundTrip = model.RoundTrip;
@@ -141,6 +147,7 @@ namespace IT_Airlines.Controllers
                 return RedirectToAction("Index");
             }
 
+            Session.Remove("model");
             return View(model);
         }
 
