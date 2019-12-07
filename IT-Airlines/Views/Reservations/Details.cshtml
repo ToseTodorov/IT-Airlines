@@ -102,10 +102,6 @@
                     <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modalFirstFlight">
                         @Model.FirstFlight.AirportFrom.City - @Model.FirstFlight.AirportTo.City, @Model.FirstFlight.Departure
                     </button>
-
-
-                    @*@Html.ActionLink(Model.FirstFlight.AirportFrom.City + " - " + Model.FirstFlight.AirportTo.City + ", " + Model.FirstFlight.Departure, "Details", "Flights", new { id = @Model.FirstFlight.Id }, null)*@
-
                 </div>
             </div>
 
@@ -115,8 +111,9 @@
                 <div class="row">
                     <div class="col-sm-4"> @Html.DisplayNameFor(model => model.SecondFlight)</div>
                     <div class="col-sm">
-
-                        @Html.ActionLink(Model.SecondFlight.AirportFrom.City + " - " + Model.SecondFlight.AirportTo.City + ", " + Model.SecondFlight.Departure, "Details", "Flights", new { id = @Model.SecondFlight.Id }, null)
+                        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modalSecondFlight">
+                            @Model.SecondFlight.AirportFrom.City - @Model.SecondFlight.AirportTo.City, @Model.SecondFlight.Departure
+                        </button>
                     </div>
                 </div>
             }
@@ -135,7 +132,7 @@
                 <div class="row">
                     <div class="col-sm-4"> @Html.DisplayNameFor(model => model.SecondLuggage)</div>
                     <div class="col-sm">
-                        @Html.DisplayFor(model => model.SecondLuggage.MaximumWeight)kg
+                        @Html.DisplayFor(model => model.SecondLuggage.MaximumWeight)kg,
                         @Html.DisplayFor(model => model.SecondLuggage.Price)$
                     </div>
                 </div>
@@ -254,7 +251,7 @@
                 <div class="row">
                     <div class="col-sm-4"> @Html.DisplayNameFor(model => model.FirstFlight.BasePrice):</div>
                     <div class="col-sm">
-                        @Html.DisplayFor(model => model.FirstFlight.BasePrice)
+                        @Html.DisplayFor(model => model.FirstFlight.BasePrice)$
                     </div>
                 </div>
 
@@ -274,10 +271,9 @@
 </div>
 
 
-
 @if(Model.RoundTrip){
 <!-- Modal second flight-->
-<div class="modal fade" id="modalFirstFlight" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalSecondFlight" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -328,7 +324,7 @@
                 <div class="row">
                     <div class="col-sm-4"> @Html.DisplayNameFor(model => model.SecondFlight.BasePrice):</div>
                     <div class="col-sm">
-                        @Html.DisplayFor(model => model.SecondFlight.BasePrice)
+                        @Html.DisplayFor(model => model.SecondFlight.BasePrice)$
                     </div>
                 </div>
 
