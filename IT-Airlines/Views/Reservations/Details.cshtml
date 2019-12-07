@@ -38,19 +38,27 @@
         color: #bd1323 !important;
     }
 
-    #detali .btn-link, #detali a{
+    #detali .btn-link, #detali a {
         font-weight: bold;
         text-decoration: underline;
         font-size: 20px;
         color: #bd1323 !important;
     }
 
- 
+    .modal-body .col-sm-4 {
+        text-align: right;
+    }
 
-    #detailsForPassenger .col-sm-3{
-        font-weight:normal;
+    .modal .col-sm {
+        font-weight: bold;
+        font-size: 20px;
+        color: #bd1323 !important;
+    }
+
+    #detailsForPassenger .col-sm-3 {
+        font-weight: normal;
         font-size: 14px;
-        color:black;
+        color: black;
     }
 
     .btn-outline-danger {
@@ -65,6 +73,7 @@
     <br>
     <br>
     <div class="row">
+
         <div id="detali" class="col-sm-7 mr-auto ml-auto">
 
             @* Email na patnikot *@
@@ -79,22 +88,9 @@
             <div class="row">
                 <div class="col-sm-4"> @Html.DisplayNameFor(model => model.Passenger)</div>
                 <div class="col-sm">
-                    <button class="btn btn-link" onclick="detailsPassanger()">@Model.Passenger.FirstName @Model.Passenger.LastName</button>
-
-                    <div id="detailsForPassenger">
-                        <div class="row">
-                            <div class="col-sm-3" >Gender</div>
-                            <div class="col-sm">@Model.Passenger.Gender</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-3">Birth date</div>
-                            <div class="col-sm">@Model.Passenger.BirthDate</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-3">Passport</div>
-                            <div class="col-sm">@Model.Passenger.PassportCode</div>
-                        </div>
-                    </div>
+                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modalPassenger">
+                        @Model.Passenger.FirstName @Model.Passenger.LastName
+                    </button>
                 </div>
             </div>
 
@@ -102,8 +98,10 @@
             <div class="row">
                 <div class="col-sm-4"> @Html.DisplayNameFor(model => model.FirstFlight)</div>
                 <div class="col-sm">
-                    @Html.ActionLink(Model.FirstFlight.AirportFrom.City + " - " + Model.FirstFlight.AirportTo.City + ", " + Model.FirstFlight.Departure, "Details", "Flights", new { id = @Model.FirstFlight.Id }, null)
-
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modalFirstFlight">
+                        @Model.FirstFlight.AirportFrom.City - @Model.FirstFlight.AirportTo.City, @Model.FirstFlight.Departure
+                    </button>
                 </div>
             </div>
 
@@ -113,7 +111,9 @@
                 <div class="row">
                     <div class="col-sm-4"> @Html.DisplayNameFor(model => model.SecondFlight)</div>
                     <div class="col-sm">
-                        @Html.ActionLink(Model.SecondFlight.AirportFrom.City + " - " + Model.SecondFlight.AirportTo.City + ", " + Model.SecondFlight.Departure, "Details", "Flights", new { id = @Model.SecondFlight.Id }, null)
+                        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modalSecondFlight">
+                            @Model.SecondFlight.AirportFrom.City - @Model.SecondFlight.AirportTo.City, @Model.SecondFlight.Departure
+                        </button>
                     </div>
                 </div>
             }
@@ -132,7 +132,7 @@
                 <div class="row">
                     <div class="col-sm-4"> @Html.DisplayNameFor(model => model.SecondLuggage)</div>
                     <div class="col-sm">
-                        @Html.DisplayFor(model => model.SecondLuggage.MaximumWeight)kg
+                        @Html.DisplayFor(model => model.SecondLuggage.MaximumWeight)kg,
                         @Html.DisplayFor(model => model.SecondLuggage.Price)$
                     </div>
                 </div>
@@ -145,16 +145,208 @@
 
     </div>
     <div class="col-sm-7 mr-auto ml-auto">
-        <div class="row">
-            <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
-                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-outline-danger" })
-                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-outline-danger" })
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-12">
+                <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
+                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-outline-danger" })
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-outline-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+<!-- Modal passenger-->
+<div class="modal fade" id="modalPassenger" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Details about @Model.Passenger.FirstName @Model.Passenger.LastName</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @* Kako da izgleda teloto na modalniot dialog *@
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-4">First name:</div>
+                    <div class="col-sm">@Model.Passenger.FirstName</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">Last name:</div>
+                    <div class="col-sm">@Model.Passenger.LastName</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">Gender:</div>
+                    <div class="col-sm">@Model.Passenger.Gender</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">Birth date:</div>
+                    <div class="col-sm">@Model.Passenger.BirthDate</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">Passport:</div>
+                    <div class="col-sm">@Model.Passenger.PassportCode</div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-block btn-outline-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal first flight-->
+<div class="modal fade" id="modalFirstFlight" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Details about the first flight</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @* Kako da izgleda teloto na modalniot dialog *@
+            <div class="modal-body">
+
+
+                <div class="row">
+                    <div class="col-sm-4"> @Html.DisplayNameFor(model => model.FirstFlight.Airplane):</div>
+                    <div class="col-sm">
+                        @Model.FirstFlight.Airplane.Code
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4"> @Html.DisplayNameFor(model => model.FirstFlight.AirportFrom):</div>
+                    <div class="col-sm">
+                        @Model.FirstFlight.AirportFrom.Name, @Model.FirstFlight.AirportFrom.Code
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4"> @Html.DisplayNameFor(model => model.FirstFlight.Departure):</div>
+                    <div class="col-sm">
+                        @Html.DisplayFor(model => model.FirstFlight.Departure)
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4"> @Html.DisplayNameFor(model => model.FirstFlight.AirportTo):</div>
+                    <div class="col-sm">
+                        @Model.FirstFlight.AirportTo.Name, @Model.FirstFlight.AirportTo.Code
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4"> @Html.DisplayNameFor(model => model.FirstFlight.Landing):</div>
+                    <div class="col-sm">
+                        @Html.DisplayFor(model => model.FirstFlight.Landing)
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4"> @Html.DisplayNameFor(model => model.FirstFlight.BasePrice):</div>
+                    <div class="col-sm">
+                        @Html.DisplayFor(model => model.FirstFlight.BasePrice)$
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4"> @Html.DisplayNameFor(model => model.FirstFlight.NumOfSeats):</div>
+                    <div class="col-sm">
+                        @Html.DisplayFor(model => model.FirstFlight.NumOfSeats)
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-block btn-outline-danger" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 
 
+@if (Model.RoundTrip)
+{
+    <!-- Modal second flight-->
+    <div class="modal fade" id="modalSecondFlight" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Details about the second flight</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @* Kako da izgleda teloto na modalniot dialog *@
+                <div class="modal-body">
+
+
+                    <div class="row">
+                        <div class="col-sm-4"> @Html.DisplayNameFor(model => model.SecondFlight.Airplane):</div>
+                        <div class="col-sm">
+                            @Model.SecondFlight.Airplane.Code
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4"> @Html.DisplayNameFor(model => model.SecondFlight.AirportFrom):</div>
+                        <div class="col-sm">
+                            @Model.SecondFlight.AirportFrom.Name, @Model.SecondFlight.AirportFrom.Code
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4"> @Html.DisplayNameFor(model => model.SecondFlight.Departure):</div>
+                        <div class="col-sm">
+                            @Html.DisplayFor(model => model.SecondFlight.Departure)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4"> @Html.DisplayNameFor(model => model.SecondFlight.AirportTo):</div>
+                        <div class="col-sm">
+                            @Model.SecondFlight.AirportTo.Name, @Model.SecondFlight.AirportTo.Code
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4"> @Html.DisplayNameFor(model => model.SecondFlight.Landing):</div>
+                        <div class="col-sm">
+                            @Html.DisplayFor(model => model.SecondFlight.Landing)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4"> @Html.DisplayNameFor(model => model.SecondFlight.BasePrice):</div>
+                        <div class="col-sm">
+                            @Html.DisplayFor(model => model.SecondFlight.BasePrice)$
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4"> @Html.DisplayNameFor(model => model.SecondFlight.NumOfSeats):</div>
+                        <div class="col-sm">
+                            @Html.DisplayFor(model => model.SecondFlight.NumOfSeats)
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-block btn-outline-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -165,12 +357,9 @@
         });
 
         function init() {
-            $("#detailsForPassenger").hide();
-        }
 
-        function detailsPassanger() {
-            $("#detailsForPassenger").toggle();
         }
 
     </script>
+
 }
