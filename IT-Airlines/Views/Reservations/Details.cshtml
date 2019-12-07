@@ -4,31 +4,124 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<style>
+    body {
+        background: url("../../Img/log-sign-in.jpg") no-repeat center center fixed;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
 
-<div>
-    <h4>Reservation</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.AccountEmail)
-        </dt>
+    #content {
+        width: 100%;
+        background-color: white;
+        opacity: 0.9;
+        border-radius: 5px;
+        padding: 5%;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.AccountEmail)
-        </dd>
+    #detali .col-sm-4 {
+        border-right: 1px gray solid;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.RoundTrip)
-        </dt>
+    #detali .row {
+        border-bottom: 1px red solid;
+        padding: 10px;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.RoundTrip)
-        </dd>
+    #detali > div:nth-child(8), #detali > div:nth-child(9) {
+        border-bottom: 0px red solid;
+    }
 
-    </dl>
+    #detali .col-sm {
+        font-weight: bold;
+        font-size: 20px;
+        color: #bd1323 !important;
+    }
+
+    .btn-outline-danger {
+        color: white;
+        background-color: #FF5A5A;
+    }
+</style>
+
+<div id="content">
+    <h4 class="display-4 text-center">Details about the reservation of:</h4><br>
+    <h1 class="display-4 text-center"><ins><b>@Model.Passenger</b></ins></h1>
+    <br>
+    <br>
+    <div class="row">
+        <div id="detali" class="col-sm-7 mr-auto ml-auto">
+
+            @* Email na patnikot *@
+            <div class="row">
+                <div class="col-sm-4"> @Html.DisplayNameFor(model => model.AccountEmail)</div>
+                <div class="col-sm">
+                    @Html.DisplayFor(model => model.AccountEmail)
+                </div>
+            </div>
+
+            @* Imeto na patnikot *@
+            <div class="row">
+                <div class="col-sm-4"> @Html.DisplayNameFor(model => model.Passenger)</div>
+                <div class="col-sm">
+                    @Html.DisplayFor(model => model.Passenger)
+                </div>
+            </div>
+
+            @* Detali za prviot let *@
+            <div class="row">
+                <div class="col-sm-4"> @Html.DisplayNameFor(model => model.FirstFlight)</div>
+                <div class="col-sm">
+                    @Html.ActionLink(Model.FirstFlight.AirportFrom.City + " - " + Model.FirstFlight.AirportTo.City + ", " + Model.FirstFlight.Departure, "Details", "Flights", new { id = @Model.FirstFlight.Id }, null)
+
+                </div>
+            </div>
+
+            @* Detali za vtoriot let dokolku postoi *@
+            @if (Model.SecondFlight != null)
+            {
+                <div class="row">
+                    <div class="col-sm-4"> @Html.DisplayNameFor(model => model.SecondFlight)</div>
+                    <div class="col-sm">
+                        @Html.ActionLink(Model.SecondFlight.AirportFrom.City + " - " + Model.SecondFlight.AirportTo.City + ", " + Model.SecondFlight.Departure, "Details", "Flights", new { id = @Model.SecondFlight.Id }, null)
+                    </div>
+                </div>
+            }
+
+
+            <div class="row">
+                <div class="col-sm-4"> @Html.DisplayNameFor(model => model.FirstLuggage)</div>
+                <div class="col-sm">
+                    @Html.DisplayFor(model => model.FirstLuggage.MaximumWeight)kg,
+                    @Html.DisplayFor(model => model.FirstLuggage.Price)$
+                </div>
+            </div>
+
+            @if (Model.SecondLuggage != null)
+            {
+                <div class="row">
+                    <div class="col-sm-4"> @Html.DisplayNameFor(model => model.SecondLuggage)</div>
+                    <div class="col-sm">
+                        @Html.DisplayFor(model => model.SecondLuggage.MaximumWeight)kg
+                        @Html.DisplayFor(model => model.SecondLuggage.Price)$
+                    </div>
+                </div>
+            }
+
+
+            <br>
+            <br>
+        </div>
+
+    </div>
+    <div class="col-sm-7 mr-auto ml-auto">
+        <div class="row">
+            <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-outline-danger" })
+                @*</div>
+                    <div class="col-sm">*@
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn  btn-outline-danger" })
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
