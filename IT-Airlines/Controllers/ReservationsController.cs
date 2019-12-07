@@ -32,7 +32,7 @@ namespace IT_Airlines.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Reservation reservation = db.Reservations.Find(id);
+            Reservation reservation = db.Reservations.Include(r => r.Passenger).SingleOrDefault(x => x.Id == id);
             if (reservation == null)
             {
                 return HttpNotFound();
@@ -151,12 +151,28 @@ namespace IT_Airlines.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Reservation reservation = db.Reservations.Find(id);
+            Reservation reservation = db.Reservations.Include(r => r.Passenger).SingleOrDefault(x => x.Id == id);
             if (reservation == null)
             {
                 return HttpNotFound();
             }
-            return View(reservation);
+            EditReservationViewModel editModel = new EditReservationViewModel()
+            {
+                Id = reservation.Id,
+                RoundTrip = reservation.RoundTrip,
+                FirstLuggage = reservation.FirstLuggage.Id,
+                SecondLuggage = reservation.RoundTrip ? reservation.SecondLuggage.Id : -1,
+                Passenger = reservation.Passenger
+            };
+
+            IEnumerable<SelectListItem> selectListLuggages = from s in db.Luggages.ToList()
+                                                             select new SelectListItem
+                                                             {
+                                                                 Value = s.Id.ToString(),
+                                                                 Text = s.ToString()
+                                                             };
+            ViewBag.Luggages = new SelectList(selectListLuggages, "Value", "Text");
+            return View(editModel);
         }
 
         // POST: Reservations/Edit/5
@@ -164,15 +180,27 @@ namespace IT_Airlines.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,AccountEmail,RoundTrip")] Reservation reservation)
+        public ActionResult Edit([Bind(Include = "Id,RoundTrip,FirstLuggage,SecondLuggage,Passenger")] EditReservationViewModel editReservation)
         {
             if (ModelState.IsValid)
             {
+                Reservation reservation = db.Reservations.Find(editReservation.Id);
+                reservation.FirstLuggage = db.Luggages.Find(editReservation.FirstLuggage);
+                reservation.SecondLuggage = reservation.RoundTrip ? db.Luggages.Find(editReservation.SecondLuggage) : null;
+                reservation.Passenger = editReservation.Passenger;
                 db.Entry(reservation).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(reservation);
+
+            IEnumerable<SelectListItem> selectListLuggages = from s in db.Luggages.ToList()
+                                                             select new SelectListItem
+                                                             {
+                                                                 Value = s.Id.ToString(),
+                                                                 Text = s.ToString()
+                                                             };
+            ViewBag.Luggages = new SelectList(selectListLuggages, "Value", "Text");
+            return View(editReservation);
         }
 
         // GET: Reservations/Delete/5
