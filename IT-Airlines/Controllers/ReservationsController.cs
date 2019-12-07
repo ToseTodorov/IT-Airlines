@@ -132,9 +132,9 @@ namespace IT_Airlines.Controllers
                     {
                         reservation.SecondLuggage = db.Luggages.Find(model.ReturnLuggages.ElementAt(i));
                         returnFlight.NumOfFreeSeats--;
+                        db.Entry(returnFlight).State = EntityState.Modified;
                     }
                     db.Entry(flight).State = EntityState.Modified;
-                    db.Entry(returnFlight).State = EntityState.Modified;
                     db.Reservations.Add(reservation);
                     db.SaveChanges();
                 }
