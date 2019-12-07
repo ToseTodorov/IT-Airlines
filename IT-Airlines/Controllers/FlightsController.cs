@@ -221,7 +221,12 @@ namespace IT_Airlines.Controllers
         {
             Flight flight = db.Flights.Find(id);
 
-            var reservations = db.Reservations.Where(r => r.FirstFlight.Id == flight.Id || r.SecondFlight.Id == flight.Id).ToList();
+            if(flight == null)
+            {
+                Console.WriteLine("Flight with id={0} does not exist", id);
+                return RedirectToAction("Index");
+            }
+            var reservations = db.Reservations.Where(r => r.FirstFlight.Id == flight.Id || (r.SecondFlight != null && r.SecondFlight.Id == flight.Id)).ToList();
 
             for (int i = 0; i < reservations.Count; i++)
             {
