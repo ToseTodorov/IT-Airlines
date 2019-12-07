@@ -28,6 +28,7 @@ namespace IT_Airlines.Models
 
         [Required]
         [Display(Name = "Birth Date")]
+        [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
 
         [Required]
