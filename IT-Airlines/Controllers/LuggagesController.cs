@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using IT_Airlines.DataContexts;
 using IT_Airlines.Models.Entities;
+using IT_Airlines.Models.UserRoles;
 
 namespace IT_Airlines.Controllers
 {
@@ -106,13 +107,18 @@ namespace IT_Airlines.Controllers
         }
 
         // POST: Luggages/Delete/5
+        // Ne raboti delete za luggage bidejki vo rezervacii imame foreign key kon nekoj
+        // luggage, zatoa frla exception koga probuvav da go sredam so ajax (by venko)
+        [Authorize(Roles = Roles.Administrator + ", " + Roles.Moderator)]
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Luggage luggage = db.Luggages.Find(id);
-            db.Luggages.Remove(luggage);
-            db.SaveChanges();
+            if (luggage != null)
+            {
+                db.Luggages.Remove((Luggage)luggage);
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 

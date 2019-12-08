@@ -157,7 +157,7 @@ namespace IT_Airlines.Controllers
                     db.Reservations.Add(reservation);
                     db.SaveChanges();
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("MyReservations");
             }
 
             Session.Remove("model");
