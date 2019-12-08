@@ -20,10 +20,22 @@ namespace IT_Airlines.Controllers
         private AirlineDbContext db = new AirlineDbContext();
 
         // GET: Reservations
+        [Authorize(Roles="Administrator,Moderator")]
         public ActionResult Index()
         {
+            ViewBag.AllReservations = true;
             return View(db.Reservations
                             .Include(r => r.Passenger)
+                            .ToList());
+        }
+
+        public ActionResult MyReservations()
+        {
+            ViewBag.AllReservations = false;
+            string email = User.Identity.GetUserName();
+            return View("Index", db.Reservations
+                            .Include(r => r.Passenger)
+                            .Where(x => x.AccountEmail.Equals(email))
                             .ToList());
         }
 
