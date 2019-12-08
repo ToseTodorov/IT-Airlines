@@ -58,13 +58,16 @@
 
 
 <div id="content">
-    <div class="row mb-2">
-        <div class="col-4"></div>
-        <div class="col-4">
-            @Html.ActionLink("Create new Airplane", "Create", null, new { @class = "btn btn-block btn-danger" })
+    @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+    {
+        <div class="row mb-2">
+            <div class="col-4"></div>
+            <div class="col-4">
+                @Html.ActionLink("Create new Airplane", "Create", null, new { @class = "btn btn-block btn-danger" })
+            </div>
+            <div class="col-4"></div>
         </div>
-        <div class="col-4"></div>
-    </div>
+    }
     <div id="tabelaDiv" class="row text-danger text-center">
         <div class="col-sm-3">
             <b> @Html.DisplayNameFor(model => model.Code) </b>
@@ -91,9 +94,15 @@
                         <div class="col-sm-0 col-md-1"></div>
                         <div class="col-sm-12 col-md-6 mr-auto ml-auto">
                             <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
-                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-danger" })
+                                @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+                                {
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-danger" })
+                                }
                                 @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-danger" })
-                                <button class="btn btn-outline-danger js-delete" attr-id="@item.Id">Delete</button>
+                                @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+                                {
+                                    <button class="btn btn-outline-danger js-delete" attr-id="@item.Id">Delete</button>
+                                }
                             </div>
                         </div>
                     </div>

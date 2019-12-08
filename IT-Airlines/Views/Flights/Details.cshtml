@@ -107,7 +107,11 @@
             <div class="row">
                 <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
                     @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-outline-danger" })
-                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-outline-danger" })
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-outline-danger" })
+                    }
+
                 </div>
             </div>
         </div>

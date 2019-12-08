@@ -26,12 +26,13 @@ namespace IT_Airlines.Controllers
         //Zavisnosti na ovoj kod vo modeli AddToRoleModel i View
         //Kod za dodeluvanje ulogi na korisnici, dodadeno od Venko od tuka 
 
+        [Authorize(Roles = Roles.Administrator)]
         public ActionResult AddUserToRole()
         {
             var model = new AddToRoleModel();
-            model.roles.Add("Administrator");
-            model.roles.Add("Manager");
-            model.roles.Add("User");
+            model.roles.Add(Roles.Administrator);
+            model.roles.Add(Roles.Moderator);
+            model.roles.Add(Roles.User);
             return View(model);
         }
 

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using IT_Airlines.DataContexts;
 using IT_Airlines.Models.Entities;
+using IT_Airlines.Models.UserRoles;
 using IT_Airlines.Models.ViewModels;
 
 namespace IT_Airlines.Controllers
@@ -38,6 +39,7 @@ namespace IT_Airlines.Controllers
         }
 
         // GET: Flights/Create
+        [Authorize(Roles = Roles.Administrator + ", " + Roles.Moderator)]
         public ActionResult Create()
         {
             IEnumerable<SelectListItem> selectListAirports = from s in db.Airports.ToList()
@@ -66,6 +68,7 @@ namespace IT_Airlines.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.Administrator + ", " + Roles.Moderator)]
         public ActionResult Create([Bind(Include = "Id,AirportFrom,AirportTo,Airplane,Departure,Landing,BasePrice")] FlightViewModel flightModel)
         {
             if (ModelState.IsValid)
@@ -111,6 +114,7 @@ namespace IT_Airlines.Controllers
         }
 
         // GET: Flights/Edit/5
+        [Authorize(Roles = Roles.Administrator + ", " + Roles.Moderator)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -159,6 +163,7 @@ namespace IT_Airlines.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.Administrator + ", " + Roles.Moderator)]
         public ActionResult Edit([Bind(Include = "Id,AirportFrom,AirportTo,Airplane,Departure,Landing,BasePrice")] FlightViewModel editedFlight)
         {
             if (ModelState.IsValid)
@@ -201,6 +206,7 @@ namespace IT_Airlines.Controllers
         }
 
         // GET: Flights/Delete/5
+        [Authorize(Roles = Roles.Administrator + ", " + Roles.Moderator)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -217,6 +223,7 @@ namespace IT_Airlines.Controllers
 
         // POST: Flights/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = Roles.Administrator + ", " + Roles.Moderator)]
         public ActionResult DeleteConfirmed(int id)
         {
             Flight flight = db.Flights.Find(id);

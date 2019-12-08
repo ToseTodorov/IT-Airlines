@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using IT_Airlines.DataContexts;
 using IT_Airlines.Models.Entities;
+using IT_Airlines.Models.UserRoles;
 using IT_Airlines.Models.ViewModels;
 using Microsoft.AspNet.Identity;
 
@@ -20,7 +21,7 @@ namespace IT_Airlines.Controllers
         private AirlineDbContext db = new AirlineDbContext();
 
         // GET: Reservations
-        [Authorize(Roles="Administrator,Moderator")]
+        [Authorize(Roles= Roles.Administrator + "," + Roles.Moderator )]
         public ActionResult Index()
         {
             ViewBag.AllReservations = true;
