@@ -28,6 +28,7 @@ namespace IT_Airlines.Models.ViewModels
         public DateTime Return { get; set; }
 
         [Required]
+        [Range(1,50)]
         public int Passengers { get; set; }
     }
 }

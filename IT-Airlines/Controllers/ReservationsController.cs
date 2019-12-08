@@ -93,7 +93,7 @@ namespace IT_Airlines.Controllers
                                             Text = s.ToString()
                                         };
             ViewBag.Flights = new SelectList(selectListFlights, "Value", "Text");
-
+            ViewBag.ReturnFlights = new SelectList(new List<string>());
             if (model.RoundTrip)
             { 
                 IEnumerable<SelectListItem> selectListReturnFlights =
@@ -190,6 +190,7 @@ namespace IT_Airlines.Controllers
                                                                  Value = s.Id.ToString(),
                                                                  Text = s.ToString()
                                                              };
+
             ViewBag.Luggages = new SelectList(selectListLuggages, "Value", "Text");
             return View(editModel);
         }

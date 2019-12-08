@@ -33,6 +33,11 @@
     .err {
         color: red;
     }
+
+    .err-no-flights{
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
 </style>
 
 <div class="row">
@@ -48,30 +53,36 @@
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.RoundTrip)
-                <div id="first-page">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Flight, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-12">
-                            @Html.DropDownListFor(model => model.Flight, ViewBag.Flights as SelectList, new { @class = "form-control", @id = "flight" })
-                            @Html.ValidationMessageFor(model => model.Flight, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    @if (Model.RoundTrip == true)
-                    {
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.ReturnFlight, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-12">
-                                @Html.DropDownListFor(model => model.ReturnFlight, ViewBag.ReturnFlights as SelectList, new { @class = "form-control", @id = "ret-flight" })
-                                @Html.ValidationMessageFor(model => model.ReturnFlight, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    }
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-12">
-                            <button type="button" id="next-page" class="btn btn-danger btn-block" onclick="SecondPage()">Continue</button>
-                        </div>
+            <div id="first-page">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Flight, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.Flight, ViewBag.Flights as SelectList, new { @class = "form-control", @id = "flight" })
+                        @Html.ValidationMessageFor(model => model.Flight, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                @if (Model.RoundTrip == true)
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ReturnFlight, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-12">
+                            @Html.DropDownListFor(model => model.ReturnFlight, ViewBag.ReturnFlights as SelectList, new { @class = "form-control", @id = "ret-flight" })
+                            @Html.ValidationMessageFor(model => model.ReturnFlight, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-12">
+                        <button type="button" id="next-page" class="btn btn-danger btn-block" onclick="SecondPage()">Continue</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-12">
+                        <p class="err err-no-flights">Ooops... No flights found for your request.</p>
+                            @Html.ActionLink("Create a new reservation", "Index", "Home", new { }, new { @class = "btn btn-danger btn-block", @id = "new-res"})
+                    </div>
+                </div>
+            </div>
 
                 <div id="second-page">
                     @for (int i = 0; i < Model.Reservations.Count; ++i)
@@ -79,7 +90,7 @@
                         string divId = "res-" + i.ToString();
 
                         <div id="@divId" style="display:none">
-                            <h2>Enter information for passanger number @(i + 1) </h2>
+                            <h2>Enter information for passenger number @(i + 1) </h2>
 
                             <div class="form-group .focus-@i">
                                 @Html.LabelFor(model => model.Luggages[i], "Luggage", htmlAttributes: new { @class = "control-label col-md-4" })
@@ -187,15 +198,12 @@
 
             </div>
         }
-        <div>
-            @Html.ActionLink("Back to List", "Index")
-        </div>
     </div>
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript">
+<script type="text/javascript">
 
         //validation
         function validate(id) {
@@ -264,12 +272,25 @@
 
         $(document).ready(function () {
             init();
-            document.getElementById('total').innerHTML = 0;
         });
 
         function init() {
             $("#second-page").hide();
             $(".err").hide();
+            $("#new-res").hide();
+            document.getElementById('total').innerHTML = 0;
+
+            if (@((ViewBag.Flights as SelectList).Count()) == 0) {
+                $("#next-page").attr("disabled", true);
+                $(".err-no-flights").show();
+                $("#new-res").show();
+            } else if (@Model.RoundTrip.ToString().ToLower()) {
+                if (@((ViewBag.ReturnFlights as SelectList).Count()) == 0) {
+                    $("#next-page").attr("disabled", true);
+                    $(".err-no-flights").show();
+                    $("#new-res").show();
+                }
+         }
         }
 
         function goNext(id) {
@@ -365,5 +386,5 @@
             document.getElementById('total').innerHTML = sum;
         }
 
-    </script>
+</script>
 }
