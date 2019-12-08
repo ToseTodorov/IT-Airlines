@@ -41,7 +41,7 @@ namespace IT_Airlines.Models.Entities
 
         public override string ToString()
         {
-            return string.Format("{0} - {1}-{2}", Id, AirportFrom.City, AirportTo.City);
+            return string.Format("{1}-{2} - {3}$ - {4}", Id, AirportFrom.City, AirportTo.City, BasePrice, Departure);
         }
     }
 }

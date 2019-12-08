@@ -62,8 +62,9 @@
                         @User.Identity.GetUserName()
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                         @Html.ActionLink("Change your password", "ChangePassword","Manage",null, new { @class = "dropdown-item" })
-                        <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                        @Html.ActionLink("My Reservations", "MyReservations", "Reservations", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Change password", "ChangePassword", "Manage", null, new { @class = "dropdown-item" })
+                        <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Log out</a>
                     </div>
                 </div>
             </li>

@@ -116,6 +116,13 @@ namespace IT_Airlines.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult getPrice(int id)
+        {
+            Luggage luggage = db.Luggages.Find(id);
+            float price = luggage != null ? luggage.Price : 0;
+            return Json(price.ToString(), JsonRequestBehavior.AllowGet);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

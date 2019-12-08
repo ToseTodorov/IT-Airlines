@@ -39,9 +39,13 @@
                     <li><a class="btn btn-link text-white" href='@Url.Action("Index","Home")'>Home</a></li>
                     <li><a class="btn btn-link text-white" href='@Url.Action("About","Home")'>About</a></li>
                     <li><a class="btn btn-link text-white" href='@Url.Action("Contact","Home")'>Contact</a></li>
+                    @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Moderator"))
+                    {
+                        <li><a class="btn btn-link text-white" href='@Url.Action("Index","Reservations")'>Reservations</a></li>
+                    }
                     <li><a class="btn btn-link text-white" href='@Url.Action("Index","Flights")'>Flights</a></li>
-                        <li><a class="btn btn-link text-white" href='@Url.Action("Index","Airplanes")'>Airplanes</a></li>
-                        <li><a class="btn btn-link text-white" href='@Url.Action("Index","Airports")'>Airports</a></li>
+                    <li><a class="btn btn-link text-white" href='@Url.Action("Index","Airplanes")'>Airplanes</a></li>
+                    <li><a class="btn btn-link text-white" href='@Url.Action("Index","Airports")'>Airports</a></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

@@ -276,7 +276,9 @@
             if (validate(id)) {
                 //if isValid(id)
             $("#res-" + id).hide();
-            sum += parseInt($('#l-' + id).children("option:selected").val());  // ajax call
+            ajaxLuggagePrice(parseInt($('#l-' + id).children("option:selected").val())).done(function (value) {
+                sum += parseFloat(value);
+            });
             id += 1;
             $("#res-" + id).show();
             document.getElementById('total').innerHTML = sum;
@@ -288,7 +290,9 @@
         function goBack(id) {
             $("#res-" + id).hide();
             id -= 1;
-            sum -= parseInt($('#l-' + id).children("option:selected").val());
+            ajaxLuggagePrice(parseInt($('#l-' + id).children("option:selected").val())).done(function (value) {
+                sum -= parseFloat(value);
+            });
             $("#res-" + id).show();
             document.getElementById('total').innerHTML = sum;
         }
@@ -305,14 +309,54 @@
             $("#second-page").show();
             $("#res-0").show();
 
-            fp_sum = parseInt($('#flight').children("option:selected").val());
+            ajaxFlightPrice(parseInt($('#flight').children("option:selected").val())).done(function (value) {
+                fp_sum = parseFloat(value);
+            });
             if (@Model.RoundTrip.ToString().ToLower()) {
-                fp_sum += parseInt($('#ret-flight').children("option:selected").val());
+                ajaxFlightPrice(parseInt($('#ret-flight').children("option:selected").val())).done(function (value) {
+                fp_sum += parseFloat(value);
+            });
             }
             sum = fp_sum * (@Model.Reservations.Count);
             document.getElementById('total').innerHTML = sum;
+        }
 
-            console.log(sum);
+        function ajaxFlightPrice(id) {
+            var url = "../Flights/getPrice/" + id;
+             return $.ajax({
+                            url: url,
+                            method: "GET",
+                            dataType: "json",
+                            async: false,
+                            contentType: "application/json; charset=utf-8",
+
+                            success: function (result) {
+                                data = result;
+                                return data;
+                            },
+                            error: function (error) {
+                                console.error(error);
+                            }
+             });
+        }
+
+        function ajaxLuggagePrice(id) {
+            var url = "../Luggages/getPrice/" + id;
+             return $.ajax({
+                            url: url,
+                            method: "GET",
+                            dataType: "json",
+                            async: false,
+                            contentType: "application/json; charset=utf-8",
+
+                            success: function (result) {
+                                data = result;
+                                return data;
+                            },
+                            error: function (error) {
+                                console.error(error);
+                            }
+             });
         }
 
         function create() {

@@ -239,6 +239,13 @@ namespace IT_Airlines.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult getPrice(int id)
+        {
+            Flight flight = db.Flights.Find(id);
+            float price = flight != null ? flight.BasePrice : 0;
+            return Json(price.ToString(), JsonRequestBehavior.AllowGet);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
