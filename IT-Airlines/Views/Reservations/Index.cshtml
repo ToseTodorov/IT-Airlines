@@ -114,7 +114,7 @@
                             <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
                                 <a href='@Url.Action("Details","Reservations",  new { id = item.Id })' class=" btn btn-outline-danger">Details</a>
                                 <a href='@Url.Action("Edit","Reservations",  new { id = item.Id })' class=" btn btn-outline-danger">Edit</a>
-                                <button class="btn btn-outline-danger js-delete" attr-id="@item.Id">Delete</button>
+                                <button class="btn btn-outline-danger js-delete" attr-id="@item.Id">Cancel</button>
                             </div>
                     </div>
                 </div>
@@ -136,7 +136,7 @@
             $("button.js-delete").click(function (e) {
                 e.preventDefault();
                 var button = $(this);
-                bootbox.confirm("Are you sure you want to delete this reservation?", function (answer) {
+                bootbox.confirm("Are you sure you want to cancel this reservation?", function (answer) {
                     if (answer) {
                         var id = button.attr("attr-id");
 

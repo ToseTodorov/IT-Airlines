@@ -211,7 +211,7 @@ namespace IT_Airlines.Controllers
                 reservation.Passenger = editReservation.Passenger;
                 db.Entry(reservation).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("MyReservations");
             }
 
             IEnumerable<SelectListItem> selectListLuggages = from s in db.Luggages.ToList()
@@ -255,7 +255,7 @@ namespace IT_Airlines.Controllers
          
             db.Reservations.Remove(reservation);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("MyReservations");
         }
 
         protected override void Dispose(bool disposing)

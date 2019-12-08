@@ -100,7 +100,14 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-12">
                     <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
-                        @Html.ActionLink("Back", "Index", null, new { @class = "btn  btn-outline-danger" })
+                        @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+                        {
+                            @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-outline-danger" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Back", "MyReservations", null, new { @class = "btn btn-outline-danger" })
+                        }
                         <input type="submit" value="Save" class="btn btn-outline-danger" />
                     </div>
                 </div>
