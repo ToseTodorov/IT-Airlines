@@ -81,7 +81,7 @@
                         <div id="@divId" style="display:none">
                             <h2>Enter information for passanger number @(i + 1) </h2>
 
-                            <div class="form-group">
+                            <div class="form-group .focus-@i">
                                 @Html.LabelFor(model => model.Luggages[i], "Luggage", htmlAttributes: new { @class = "control-label col-md-4" })
                                 <div class="col-md-12">
                                     @Html.DropDownListFor(model => model.Luggages[i], ViewBag.Luggages as SelectList, new { @class = "form-control", @id = "l-" + i.ToString() })
@@ -152,8 +152,8 @@
                                 {
                                     <div class="col-sm">
                                         <div class="col-md-offset-2 col-md-12">
-                                            <button type="button" id="prev-page" class="btn btn-danger btn-block" onclick="goNext(@i)">Next</button>
-                                        </div>
+                                            <a href="#"><button type="button" id="prev-page" class="btn btn-danger btn-block" onclick="goNext(@i)">Next</button></a>
+</div>
                                     </div>
                                 }
                             </div>
@@ -171,7 +171,7 @@
                                 {
                                     <div class="col-sm">
                                         <div class="col-md-offset-2 col-md-12">
-                                            <button type="button" id="prev-page" class="btn btn-light btn-block" onclick="goBack(@i)">Back</button>
+                                            <a href="#"><button type="button" id="prev-page" class="btn btn-light btn-block" onclick="goBack(@i)">Back</button></a>
                                         </div>
                                     </div>
                                 }
@@ -274,16 +274,16 @@
 
         function goNext(id) {
             if (validate(id)) {
-                //if isValid(id)
-            $("#res-" + id).hide();
-            ajaxLuggagePrice(parseInt($('#l-' + id).children("option:selected").val())).done(function (value) {
-                sum += parseFloat(value);
-            });
-            id += 1;
-            $("#res-" + id).show();
-            document.getElementById('total').innerHTML = sum;
+                $("#res-" + id).hide();
+                ajaxLuggagePrice(parseInt($('#l-' + id).children("option:selected").val())).done(function (value) {
+                    sum += parseFloat(value);
+                });
+                id += 1;
+                $("#res-" + id).show();
+                document.getElementById('total').innerHTML = sum;
+                $(".focus-" + (id + 1)).focus();
             }
-
+            $(".focus-" + (id)).focus();
 
         }
 
