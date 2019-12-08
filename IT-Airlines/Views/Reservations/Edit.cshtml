@@ -44,8 +44,8 @@
             @Html.HiddenFor(model => model.Passenger.Id)
 
             <div class="form-group">
-                @Html.LabelFor(model => model.FirstLuggage, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-10">
+                @Html.LabelFor(model => model.FirstLuggage, htmlAttributes: new { @class = "control-label col-md" })
+                <div class="col-md">
                     @Html.DropDownListFor(model => model.FirstLuggage, ViewBag.Luggages as SelectList, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.FirstLuggage, "", new { @class = "text-danger" })
                 </div>

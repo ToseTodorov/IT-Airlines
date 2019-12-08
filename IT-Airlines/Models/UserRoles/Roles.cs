@@ -7,9 +7,10 @@ namespace IT_Airlines.Models.UserRoles
 {
     public static class Roles
     {
-        public static string Administrator { get; } = "Administrator";
+        public const string Administrator = "Administrator";
 
-        public static string Moderator { get; } = "Moderator";
-        public static string User { get; } = "User";
+        public const string Moderator = "Moderator";
+
+        public const string User  = "User";
     }
 }

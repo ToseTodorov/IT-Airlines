@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using IT_Airlines.DataContexts;
 using IT_Airlines.Models.Entities;
+using IT_Airlines.Models.UserRoles;
 
 namespace IT_Airlines.Controllers
 {
@@ -35,8 +36,10 @@ namespace IT_Airlines.Controllers
             }
             return View(airplane);
         }
+        
 
         // GET: Airplanes/Create
+        [Authorize(Roles = Roles.Administrator + ", " + Roles.Moderator)]
         public ActionResult Create()
         {
             return View();
@@ -47,6 +50,7 @@ namespace IT_Airlines.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.Administrator + ", " + Roles.Moderator)]
         public ActionResult Create([Bind(Include = "Id,Code,NumOfSeats")] Airplane airplane)
         {
             if (ModelState.IsValid)
@@ -60,6 +64,7 @@ namespace IT_Airlines.Controllers
         }
 
         // GET: Airplanes/Edit/5
+        [Authorize(Roles = Roles.Administrator + ", " + Roles.Moderator)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -79,6 +84,7 @@ namespace IT_Airlines.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.Administrator + ", " + Roles.Moderator)]
         public ActionResult Edit([Bind(Include = "Id,Code,NumOfSeats")] Airplane airplane)
         {
             if (ModelState.IsValid)
@@ -91,6 +97,7 @@ namespace IT_Airlines.Controllers
         }
 
         // GET: Airplanes/Delete/5
+        [Authorize(Roles = Roles.Administrator + ", " + Roles.Moderator)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -106,6 +113,7 @@ namespace IT_Airlines.Controllers
         }
 
         // POST: Airplanes/Delete/5
+        [Authorize(Roles = Roles.Administrator + ", " + Roles.Moderator)]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {

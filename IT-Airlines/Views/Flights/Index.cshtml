@@ -56,13 +56,17 @@
 
 <div id="content">
 
-    <div class="row mb-2">
-        <div class="col-4"></div>
-        <div class="col-4">
-            <a href='@Url.Action("Create","Flights")' class=" btn btn-block btn-danger">Create new flight</a>
+    @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+    {
+        <div class="row mb-2">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <a href='@Url.Action("Create","Flights")' class=" btn btn-block btn-danger">Create new flight</a>
+            </div>
+            <div class="col-4"></div>
         </div>
-        <div class="col-4"></div>
-    </div>
+    }
+
 
 
 
@@ -112,8 +116,12 @@
 
                 <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
                     <a href='@Url.Action("Details","Flights",  new { id = item.Id })' class=" btn btn-outline-danger">Details</a>
-                    <a href='@Url.Action("Edit","Flights",  new { id = item.Id })' class=" btn btn-outline-danger">Edit</a>
-                    <button class="btn btn-outline-danger js-delete" attr-id="@item.Id">Delete</button>
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+                    {
+                        <a href='@Url.Action("Edit","Flights",  new { id = item.Id })' class=" btn btn-outline-danger">Edit</a>
+                        <button class="btn btn-outline-danger js-delete" attr-id="@item.Id">Delete</button>
+                    }
+
 
                 </div>
 
