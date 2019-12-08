@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using IT_Airlines.Models;
+using IT_Airlines.Models.UserRoles;
 
 namespace IT_Airlines.Controllers
 {
@@ -21,6 +22,35 @@ namespace IT_Airlines.Controllers
         public AccountController()
         {
         }
+
+        //Zavisnosti na ovoj kod vo modeli AddToRoleModel i View
+        //Kod za dodeluvanje ulogi na korisnici, dodadeno od Venko od tuka 
+
+        public ActionResult AddUserToRole()
+        {
+            var model = new AddToRoleModel();
+            model.roles.Add("Administrator");
+            model.roles.Add("Manager");
+            model.roles.Add("User");
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddUserToRole(AddToRoleModel model)
+        {
+            try
+            {
+                var user = UserManager.FindByEmail(model.Email);
+                UserManager.AddToRole(user.Id, model.selectedRole);
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                return HttpNotFound();
+            }
+        }
+
+        // do tuka
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
