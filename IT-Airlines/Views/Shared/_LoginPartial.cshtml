@@ -1,4 +1,53 @@
 ﻿@using Microsoft.AspNet.Identity
+
+
+<style type="text/css">
+    .dropdown-item {
+        color:#dc3545;
+    }
+
+    .dropdown-item:hover {
+        color:white !important;
+    }
+
+    .dropdown-item.active, .dropdown-item:active,.dropdown-item:hover, .dropdown-item:focus {
+        text-decoration: none;
+        background-color: #dc3545;
+    }
+
+    
+
+    #logoutForm > ul > li > div:hover,#logoutForm > ul > li > div:focus{
+        border-radius:2px;
+        background-color:white;
+    }
+
+    #logoutForm > ul > li > div:hover > .btn,#logoutForm > ul > li > div:focus > .btn{
+        color:red !important;
+        text-decoration:none;
+    }
+
+   
+
+    /*#logoutForm > ul > li > div:hover{
+        background-color:white !important;
+        border-radius:2px;
+    }
+
+    #logoutForm > ul > li > div a:hover, #logoutForm > ul > li > div button:hover{
+        color:red !important;
+        text-decoration:dotted;
+    }
+
+    #logoutForm > .btn-link:focus, .btn-link.focus {
+        text-decoration: none;
+        box-shadow: none;
+        color:black !important;
+        
+    }*/
+</style>
+
+
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -6,10 +55,18 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
+            
             <li>
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                <div class="btn-group">
+                    <button type="button" class="btn btn-link dropdown-toggle text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @User.Identity.GetUserName()
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                         @Html.ActionLink("Change your password", "ChangePassword","Manage",null, new { @class = "dropdown-item" })
+                        <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                    </div>
+                </div>
             </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
     }
 }
