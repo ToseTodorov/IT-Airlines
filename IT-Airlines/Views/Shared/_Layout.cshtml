@@ -42,6 +42,7 @@
                     @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Moderator"))
                     {
                         <li><a class="btn btn-link text-white" href='@Url.Action("Index","Reservations")'>Reservations</a></li>
+                        <li><a class="btn btn-link text-white" href='@Url.Action("Index","Luggages")'>Luggages</a></li>
                     }
                     <li><a class="btn btn-link text-white" href='@Url.Action("Index","Flights")'>Flights</a></li>
                     <li><a class="btn btn-link text-white" href='@Url.Action("Index","Airplanes")'>Airplanes</a></li>
