@@ -44,7 +44,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.AirportFrom, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-12">
-                        @Html.DropDownListFor(model => model.AirportFrom, ViewBag.Airports as SelectList, new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.AirportFrom, ViewBag.Airports as SelectList, new { @class = "form-control", id="ddlAirportFrom" })
                         @Html.ValidationMessageFor(model => model.AirportFrom, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.AirportTo, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-12">
-                        @Html.DropDownListFor(model => model.AirportTo, ViewBag.Airports as SelectList, new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.AirportTo, ViewBag.Airports as SelectList, new { @class = "form-control", id="ddlAirportTo" })
                         @Html.ValidationMessageFor(model => model.AirportTo, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -147,6 +147,63 @@
                 },
                 controlType: 'select',
             }).attr('readonly', 'readonly');
+
+            //Gi menam na pocetokot da ne se isti
+            children = $("#ddlAirportTo").children("option").last().val();
+            $("#ddlAirportTo").val(children);
+            
+        //Pri promena na aerodrom da se skrie od AirportTo
+            $('#ddlAirportFrom').change(function () {
+                var SelectedItem = $(this).children("option:selected").val();
+
+                HideAirportsFrom(SelectedItem);
+
+            });
+
+            //Pri promena na aerodrom da se skrie od AirportFrom
+            $('#ddlAirportTo').change(function () {
+                var SelectedItem = $(this).children("option:selected").val();
+
+                HideAirportsTo(SelectedItem);
+            });
+            
+       
+
+        //Se krie Aerodromot za da nemoze da nastane dva isti aerodroma da  se odberat
+        function HideAirportsFrom(item) {
+            //Go Krijam Select Airport za da nema greski pri biranjeto
+            $('#ddlAirportFrom option').each(function () {
+                if ($(this).val() == "") {
+                    $(this).hide();
+                }
+            });
+            $('#ddlAirportTo option').each(function () {
+                if ($(this).val() == item || $(this).val() == "") {
+                    $(this).hide();
+                }
+                else {
+                    $(this).show();
+                }
+            });
+        }
+
+        function HideAirportsTo(item) {
+            //Go Krijam Select Airport za da nema greski pri biranjeto
+            $('#ddlAirportTo option').each(function () {
+                if ($(this).val() == "") {
+                    $(this).hide();
+                }
+            });
+            $('#ddlAirportFrom option').each(function () {
+                if ($(this).val() == item || $(this).val() == "") {
+                    $(this).hide();
+                }
+                else {
+                    $(this).show();
+                }
+            });
+        }
+
         });
     </script>
 }

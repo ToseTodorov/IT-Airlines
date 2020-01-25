@@ -101,9 +101,13 @@
             const format = "mm/dd/yy";
 
              $("#birthday").datepicker({
-                maxDate: new Date(),
-                dateFormat: format,
-                }).attr('readonly', 'readonly');
+                 maxDate: new Date(),
+                 minDate: new Date(1930, 01, 01),
+                 setDate: new Date(1990, 01, 01),
+                 changeMonth: true,
+                 changeYear: true,
+                 dateFormat: format,
+             }).attr('readonly', 'readonly');
 
         });
     </script>

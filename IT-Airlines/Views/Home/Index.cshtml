@@ -107,11 +107,14 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
         $(document).ready(function () {
+
             const format = "mm/dd/yy";
 
             $("#departure-datepicker").datepicker({
                 minDate: new Date(),
                 format: format,
+                changeMonth: true,
+                changeYear: true,
                 onSelect: function () {
                     var date = $(this).datepicker('getDate');
 
@@ -123,6 +126,8 @@
 
             $("#return-datepicker").datepicker({
                 minDate: new Date(),
+                changeMonth: true,
+                changeYear: true,
                 numberOfMonths: 3
             }).attr('readonly', 'readonly');
 
@@ -135,7 +140,7 @@
             $('#RoundTrip').on('click',function () {
                 ShowReturnDate();
             });
-
+            
             //Pri promena na aerodrom da se skrie od AirportTo
             $('#ddlAirportFrom').change(function () {
                 var SelectedItem = $(this).children("option:selected").val();
@@ -153,50 +158,50 @@
 
        
 
-        //Se krie Aerodromot za da nemoze da nastane dva isti aerodroma da  se odberat
-        function HideAirportsFrom(item) {
-            //Go Krijam Select Airport za da nema greski pri biranjeto
-            $('#ddlAirportFrom option').each(function () {
-                if ($(this).val() == "") {
-                    $(this).hide();
-                }
-            });
-            $('#ddlAirportTo option').each(function () {
-                if ($(this).val() == item || $(this).val() == "") {
-                    $(this).hide();
-                }
-                else {
-                    $(this).show();
-                }
-            });
-        }
+            //Se krie Aerodromot za da nemoze da nastane dva isti aerodroma da  se odberat
+            function HideAirportsFrom(item) {
+                //Go Krijam Select Airport za da nema greski pri biranjeto
+                $('#ddlAirportFrom option').each(function () {
+                    if ($(this).val() == "") {
+                        $(this).hide();
+                    }
+                });
+                $('#ddlAirportTo option').each(function () {
+                    if ($(this).val() == item || $(this).val() == "") {
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                });
+            }
 
-        function HideAirportsTo(item) {
-            //Go Krijam Select Airport za da nema greski pri biranjeto
-            $('#ddlAirportTo option').each(function () {
-                if ($(this).val() == "") {
-                    $(this).hide();
-                }
-            });
-            $('#ddlAirportFrom option').each(function () {
-                if ($(this).val() == item || $(this).val() == "") {
-                    $(this).hide();
-                }
-                else {
-                    $(this).show();
-                }
-            });
-        }
+            function HideAirportsTo(item) {
+                //Go Krijam Select Airport za da nema greski pri biranjeto
+                $('#ddlAirportTo option').each(function () {
+                    if ($(this).val() == "") {
+                        $(this).hide();
+                    }
+                });
+                $('#ddlAirportFrom option').each(function () {
+                    if ($(this).val() == item || $(this).val() == "") {
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                });
+            }
 
-        function ShowReturnDate() {
-            if ($('#RoundTrip').prop("checked") == true) {
-                $("#return-datepicker").attr("disabled",false);
-            }
-            else if ($('#RoundTrip').prop("checked") == false) {
-                $("#return-datepicker").attr("disabled", true);
-                $("#return-datepicker").val("");
-            }
-            }
+            function ShowReturnDate() {
+                if ($('#RoundTrip').prop("checked") == true) {
+                    $("#return-datepicker").attr("disabled",false);
+                }
+                else if ($('#RoundTrip').prop("checked") == false) {
+                    $("#return-datepicker").attr("disabled", true);
+                    $("#return-datepicker").val("");
+                }
+                }
         });
     </script>
 }

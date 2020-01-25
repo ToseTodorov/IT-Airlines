@@ -103,6 +103,7 @@
                         @if (Model.RoundTrip)
                         {
                             <div class="form-group">
+                                <!-- TUKA E PROBLEMOT IMA PECATNA GRESKA KOGA IMA ROUND TRIP-->
                                 @Html.LabelFor(model => model.ReturnLuggages[i], htmlAttributes: new { @class = "control-label col-md-4" })
                                 <div class="col-md-12">
                                     @Html.DropDownListFor(model => model.ReturnLuggages[i], ViewBag.Luggages as SelectList, new { @class = "form-control" })
@@ -290,6 +291,16 @@
         $(document).ready(function () {
             init();
 
+            const format = "mm/dd/yy";
+
+            $(".birthday").datepicker({
+                maxDate: new Date(),
+                minDate: new Date(1930,01,01)
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: format,
+            }).attr('readonly', 'readonly');
+
 
         });
 
@@ -363,7 +374,7 @@
         }
 
         function ajaxFlightPrice(id) {
-            var url = "../Flights/getPrice/" + id;
+             var url = "../Flights/getPrice/" + id;
              return $.ajax({
                             url: url,
                             method: "GET",
