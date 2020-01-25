@@ -75,4 +75,19 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            const format = "mm/dd/yy";
+
+             $("#birthday").datepicker({
+                 maxDate: new Date(),
+                 minDate: new Date(1930, 01, 01),
+                 setDate: new Date(1990, 01, 01),
+                 changeMonth: true,
+                 changeYear: true,
+                 dateFormat: format,
+             }).attr('readonly', 'readonly');
+
+        });
+    </script>
 }

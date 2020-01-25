@@ -117,19 +117,23 @@
             $("#departure-datepicker").datepicker({
                 minDate: new Date(),
                 format: format,
+                changeMonth: true,
+                changeYear: true,
                 onSelect: function () {
                     var date = $(this).datepicker('getDate');
 
                     $("#return-datepicker").datepicker('option', 'minDate', date);
                 },
                 numberOfMonths: 3
-            });
+            }).attr('readonly', 'readonly');
 
 
             $("#return-datepicker").datepicker({
                 minDate: new Date(),
+                changeMonth: true,
+                changeYear: true,
                 numberOfMonths: 3
-            });
+            }).attr('readonly', 'readonly');
 
 
             ShowReturnDate();
@@ -140,7 +144,7 @@
             $('#RoundTrip').on('click', function () {
                 ShowReturnDate();
             });
-
+            
             //Pri promena na aerodrom da se skrie od AirportTo
             $('#ddlAirportFrom').change(function () {
                 var SelectedItem = $(this).children("option:selected").val();
