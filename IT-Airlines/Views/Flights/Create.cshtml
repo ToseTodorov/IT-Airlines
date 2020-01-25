@@ -68,7 +68,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Departure, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-12">
-                        @Html.EditorFor(model => model.Departure, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Departure, new { htmlAttributes = new { @class = "form-control", id="departure-datepicker" } })
                         @Html.ValidationMessageFor(model => model.Departure, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -76,7 +76,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Landing, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-12">
-                        @Html.EditorFor(model => model.Landing, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Landing, new { htmlAttributes = new { @class = "form-control", id="return-datepicker" } })
                         @Html.ValidationMessageFor(model => model.Landing, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -104,4 +104,49 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+
+            const formatDate = 'mm/dd/yy'
+            const formatTime = 'HH:mm'
+
+
+            $("#departure-datepicker").datetimepicker({
+                minDate: new Date(),
+                minTime: new Date(),
+                dateFormat: formatDate,
+                timeFormat: formatTime,
+                onSelect: function () {
+                    departureDate = $(this).datetimepicker('getDate');
+                    dateNow = new Date()
+                    if (departureDate < dateNow) {
+                        departureDate.setMinute(departureDate.getMinute()+5)
+                    }
+                    $("#return-datepicker").datetimepicker('setDate', departureDate)
+                    $("#return-datepicker").datetimepicker('option', 'minDate', departureDate)
+                    $("#return-datepicker").datetimepicker('option', 'minTime', departureDate)
+                    
+                },
+                controlType: 'select',
+            }).attr('readonly', 'readonly');
+
+
+            $("#return-datepicker").datetimepicker({
+                minDate: new Date(),
+                minTime: new Date(),
+                dateFormat: formatDate,
+                timeFormat: formatTime,
+                onSelect: function () {
+                    returnDate = $(this).datetimepicker('getDate');
+                    departureDate = $("#departure-datepicker").datetimepicker('getDate');
+
+                    if (returnDate < departureDate) {
+                        $(this).datetimepicker('setDate', departureDate)
+                    }
+                },
+                controlType: 'select',
+            }).attr('readonly', 'readonly');
+        });
+    </script>
 }

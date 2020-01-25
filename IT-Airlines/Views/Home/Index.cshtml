@@ -118,13 +118,13 @@
                     $("#return-datepicker").datepicker('option', 'minDate', date);
                 },
                 numberOfMonths: 3
-            });
+            }).attr('readonly', 'readonly');
 
 
             $("#return-datepicker").datepicker({
                 minDate: new Date(),
                 numberOfMonths: 3
-            });
+            }).attr('readonly', 'readonly');
 
 
             ShowReturnDate();
