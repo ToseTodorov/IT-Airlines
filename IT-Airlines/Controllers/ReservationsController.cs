@@ -81,6 +81,21 @@ namespace IT_Airlines.Controllers
                 newModel.ReturnLuggages.Add(0);
             }
 
+            IEnumerable<Flight> flights = (from f in db.Flights.Where(x => x.AirportFrom.Id.Equals(model.AirportFrom))
+                                    .Where(x => x.AirportTo.Id.Equals(model.AirportTo))
+                                    .Where(x => DbFunctions.TruncateTime(x.Departure) == model.Departure.Date)
+                                    .Where(x => x.NumOfFreeSeats >= model.Passengers)
+                                    .ToList()
+                                    select f);
+            ViewBag.f = flights;
+
+            IEnumerable<Flight> rflights = (from f in db.Flights.Where(x => x.AirportFrom.Id.Equals(model.AirportTo))
+                                        .Where(x => x.AirportTo.Id.Equals(model.AirportFrom))
+                                        .Where(x => DbFunctions.TruncateTime(x.Departure) == model.Return.Date)
+                                        .Where(x => x.NumOfFreeSeats >= model.Passengers)
+                                        .ToList()
+                                           select f);
+            ViewBag.rf = rflights;
 
             IEnumerable<SelectListItem> selectListFlights = 
                 from s in db.Flights.Where(x => x.AirportFrom.Id.Equals(model.AirportFrom))

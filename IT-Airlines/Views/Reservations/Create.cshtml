@@ -38,6 +38,30 @@
         font-size: 1.5rem;
         font-weight: bold;
     }
+
+    .radio_item{
+        display: none !important;
+    }
+
+    .label_item {
+    opacity: 0.1;
+    }
+
+    .radio_item:checked + label {
+    opacity: 1;
+    }
+
+    .radio_item_2{
+        display: none !important;
+    }
+
+    .label_item_2 {
+    opacity: 0.1;
+    }
+
+    .radio_item_2:checked + label {
+    opacity: 1;
+    }
 </style>
 
 <div class="row">
@@ -56,9 +80,13 @@
             <div id="first-page">
                 <div class="form-group">
                     @Html.LabelFor(model => model.Flight, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-12">
-                        @Html.DropDownListFor(model => model.Flight, ViewBag.Flights as SelectList, new { @class = "form-control", @id = "flight" })
-                        @Html.ValidationMessageFor(model => model.Flight, "", new { @class = "text-danger" })
+                    <div class="col-md-12 radio-toolbar">
+                        @foreach (var item in ViewBag.f)
+                        {
+                            <input type="radio" name="Flight" value="@item.Id" id="@item.Id" class="radio_item" />
+                            <label  style="border: 3px solid blue" class="label_item" for="@item.Id"><div>@item.AirportFrom - @item.AirportTo</div><p>@item.BasePrice</p></label>
+                        }
+                      
                     </div>
                 </div>
                 @if (Model.RoundTrip == true)
@@ -66,8 +94,11 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.ReturnFlight, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-12">
-                            @Html.DropDownListFor(model => model.ReturnFlight, ViewBag.ReturnFlights as SelectList, new { @class = "form-control", @id = "ret-flight" })
-                            @Html.ValidationMessageFor(model => model.ReturnFlight, "", new { @class = "text-danger" })
+                            @foreach (var item in ViewBag.rf)
+                            {
+                                <input type="radio" name="ReturnFlight" value="@item.Id" id="@item.Id" class="radio_item_2" />
+                                <label style="border: 3px solid blue" class="label_item_2" for="@item.Id"><div>@item.AirportFrom - @item.AirportTo</div><p>@item.BasePrice</p></label>
+                            }
                         </div>
                     </div>
                 }
@@ -103,9 +134,9 @@
                         @if (Model.RoundTrip)
                         {
                             <div class="form-group">
-                                @Html.LabelFor(model => model.ReturnLuggages[i], htmlAttributes: new { @class = "control-label col-md-4" })
+                                @Html.LabelFor(model => model.ReturnLuggages[i], "Luggage", htmlAttributes: new { @class = "control-label col-md-4" })
                                 <div class="col-md-12">
-                                    @Html.DropDownListFor(model => model.ReturnLuggages[i], ViewBag.Luggages as SelectList, new { @class = "form-control" })
+                                    @Html.DropDownListFor(model => model.ReturnLuggages[i], ViewBag.Luggages as SelectList, new { @class = "form-control", @id = "rl-" + i.ToString() })
                                     @Html.ValidationMessageFor(model => model.ReturnLuggages[i], "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -221,7 +252,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 <script type="text/javascript">
-
+   
         //validation
         function validate(id) {
             var validated = true;
@@ -316,6 +347,11 @@
                 ajaxLuggagePrice(parseInt($('#l-' + id).children("option:selected").val())).done(function (value) {
                     sum += parseFloat(value);
                 });
+                if (@Model.RoundTrip.ToString().ToLower()) {
+                    ajaxLuggagePrice(parseInt($('#rl-' + id).children("option:selected").val())).done(function (value) {
+                        sum += parseFloat(value);
+                    });
+                }
                 id += 1;
                 $("#res-" + id).show();
                 document.getElementById('total').innerHTML = sum;
@@ -332,6 +368,11 @@
             ajaxLuggagePrice(parseInt($('#l-' + id).children("option:selected").val())).done(function (value) {
                 sum -= parseFloat(value);
             });
+            if (@Model.RoundTrip.ToString().ToLower()) {
+                ajaxLuggagePrice(parseInt($('#rl-' + id).children("option:selected").val())).done(function (value) {
+                    sum -= parseFloat(value);
+                });
+            }
             $("#res-" + id).show();
             document.getElementById('total').innerHTML = sum;
         }
@@ -348,11 +389,12 @@
             $("#second-page").show();
             $("#res-0").show();
 
-            ajaxFlightPrice(parseInt($('#flight').children("option:selected").val())).done(function (value) {
+            console.log($('.radio_item:checked').attr('value'));
+            ajaxFlightPrice(parseInt($('.radio_item:checked').attr('value'))).done(function (value) {
                 fp_sum = parseFloat(value);
             });
             if (@Model.RoundTrip.ToString().ToLower()) {
-                ajaxFlightPrice(parseInt($('#ret-flight').children("option:selected").val())).done(function (value) {
+                ajaxFlightPrice(parseInt($('.radio_item_2:checked').attr('value'))).done(function (value) {
                 fp_sum += parseFloat(value);
             });
             }
@@ -400,7 +442,7 @@
 
         function create() {
             //if valid
-            sum += parseInt($('#l-' + (@Model.Reservations.Count-1)).children("option:selected").val());
+            //sum += parseInt($('#l-' + (@Model.Reservations.Count-1)).children("option:selected").val());  wtf? xD
             document.getElementById('total').innerHTML = sum;
         }
 
