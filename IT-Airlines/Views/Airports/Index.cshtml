@@ -4,55 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<style>
-
-    body {
-        background: url("../../Img/log-sign-in.jpg") no-repeat center center fixed;
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-    }
-
-    #content {
-        width: 100%;
-        background-color: white;
-        opacity: 0.9;
-        border-radius: 10px;
-        padding: 5%;
-    }
-
-    .flightRow {
-        background-color: lightgray;
-        padding: 15px;
-        border-radius: 10px;
-        margin-top: 20px;
-        margin-bottom: 30px;
-        /*shadow*/
-        border: 1px solid;
-        padding: 10px;
-        box-shadow: 5px 10px #888888;
-    }
-
-    #tabelaDiv {
-        padding: 15px;
-    }
-
-    .btn-outline-danger {
-        color: white;
-        background-color: #FF5A5A;
-    }
-
-    #content .col-md-3, #content .col-sm-3 {
-        border-left: 2px red solid;
-    }
-
-        #content .col-sm-3:nth-child(1), #content .col-md-3:nth-child(1) {
-            border-left: 0px;
-        }
-
-        body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-footer > button.btn.btn-primary{
-            background-color:#dc3545;
-        }
-</style>
+@Styles.Render("~/Content/css_Airports/Airports_index.css")
 
 <div id="content">
     @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
@@ -110,14 +62,10 @@
     }
 </div>
 
-
-
 @section scripts
 {
     <script type="text/javascript">
-        $(document).ready(function() {
-/*            bootbox.alert("jQuery and Bootbox are working");*/
-
+        $(document).ready(function () {
             $("button.js-delete").click(function (e) {
                 e.preventDefault();
                 var button = $(this);
@@ -127,7 +75,6 @@
 
                         var url = "/Airports/Delete/" + id;
 
-/*                        bootbox.alert(url);*/
                         $.ajax({
                             url: url,
                             method: "POST",
@@ -141,7 +88,6 @@
                     }
                 })
                 e.preventDefault();
-
             });
         });
     </script>

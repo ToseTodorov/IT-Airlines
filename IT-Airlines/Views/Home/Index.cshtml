@@ -3,25 +3,7 @@
     ViewBag.Title = "Home Page";
 }
 
-<style>
-
-    #content {
-        width: 100%;
-        background-color: white;
-        opacity: 0.9;
-        border-radius: 5px;
-        padding: 5%;
-    }
-
-    input, select, textarea {
-        max-width: 100% !important;
-    }
-
-    #carouselExampleIndicators img{
-        border-radius: 10px;
-    }
-
-</style>
+@Styles.Render("~/Content/css_Home/Home_index.css")
 
 @* Div content vo nego kje bide organizirano se za prebaruvanjeto na let*@
 <br>
@@ -33,9 +15,9 @@
         <div class="row">
             <div class="form-group col-md-5 col-sm-12 p-0 text-black-50">
                 @Html.LabelFor(model => model.AirportFrom, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-12"> 
+                <div class="col-md-12">
                     @Html.DropDownListFor(model => model.AirportFrom, ViewBag.Airports as SelectList, "Select Airport", new { @class = "form-control w-100", id = "ddlAirportFrom" })
-                    @Html.ValidationMessageFor(model => model.AirportFrom, "", new { @class = "text-danger" })           
+                    @Html.ValidationMessageFor(model => model.AirportFrom, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -59,7 +41,7 @@
             <div class="form-group col-md-5 p-0 text-black-50">
                 @Html.LabelFor(model => model.Departure, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-12">
-                    @Html.EditorFor(model => model.Departure, new { htmlAttributes = new { @class = "form-control w-100 p-0", id="departure-datepicker", type="text", placeholder="Choose date..."} })
+                    @Html.EditorFor(model => model.Departure, new { htmlAttributes = new { @class = "form-control w-100 p-0", id = "departure-datepicker", type = "text", placeholder = "Choose date..." } })
                     @Html.ValidationMessageFor(model => model.Departure, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -67,7 +49,7 @@
             <div id="return" class="form-group col-md-5 p-0 text-black-50">
                 @Html.LabelFor(model => model.Return, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-12">
-                    @Html.EditorFor(model => model.Return, new { htmlAttributes = new { @class = "form-control w-100 p-0", id="return-datepicker", type="text", placeholder="Choose date..."} })
+                    @Html.EditorFor(model => model.Return, new { htmlAttributes = new { @class = "form-control w-100 p-0", id = "return-datepicker", type = "text", placeholder = "Choose date..." } })
                     @Html.ValidationMessageFor(model => model.Return, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -75,7 +57,7 @@
             <div class="form-group col-md-2 p-0 text-black-50">
                 @Html.LabelFor(model => model.Passengers, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-7">
-                    @Html.EditorFor(model => model.Passengers, new { htmlAttributes = new { @class = "form-control w-100", min = 1, max = 50} })
+                    @Html.EditorFor(model => model.Passengers, new { htmlAttributes = new { @class = "form-control w-100", min = 1, max = 50 } })
                     @Html.ValidationMessageFor(model => model.Passengers, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -92,24 +74,9 @@
             </div>
         </div>
     }
-
-
-    <!--
-        <div class="col-3 text-black-50">
-            <label for="from">From< /label>
-            <input id="from" type="text" class="form-control" placeholder="From" />
-        </div>
-        <div class="col-3">
-            <label for="to">Destination</label>
-            <input id="from" type="text" class="form-control" placeholder="Destination" />
-        </div>
-    -->
 </div>
 <br>
 <br>
-
-
-
 <div id="carouselExampleIndicators" data-interval="6000" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -138,7 +105,7 @@
 </div>
 
 
-</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -170,7 +137,7 @@
             HideAirportsTo($('#ddlAirportTo').children("option:selected").val());*/
 
             //Podobro e so Id
-            $('#RoundTrip').on('click',function () {
+            $('#RoundTrip').on('click', function () {
                 ShowReturnDate();
             });
 
@@ -189,51 +156,51 @@
                 HideAirportsTo(SelectedItem);
             });
 
-       
 
-        //Se krie Aerodromot za da nemoze da nastane dva isti aerodroma da  se odberat
-        function HideAirportsFrom(item) {
-            //Go Krijam Select Airport za da nema greski pri biranjeto
-            $('#ddlAirportFrom option').each(function () {
-                if ($(this).val() == "") {
-                    $(this).hide();
-                }
-            });
-            $('#ddlAirportTo option').each(function () {
-                if ($(this).val() == item || $(this).val() == "") {
-                    $(this).hide();
-                }
-                else {
-                    $(this).show();
-                }
-            });
-        }
 
-        function HideAirportsTo(item) {
-            //Go Krijam Select Airport za da nema greski pri biranjeto
-            $('#ddlAirportTo option').each(function () {
-                if ($(this).val() == "") {
-                    $(this).hide();
-                }
-            });
-            $('#ddlAirportFrom option').each(function () {
-                if ($(this).val() == item || $(this).val() == "") {
-                    $(this).hide();
-                }
-                else {
-                    $(this).show();
-                }
-            });
-        }
-
-        function ShowReturnDate() {
-            if ($('#RoundTrip').prop("checked") == true) {
-                $("#return-datepicker").attr("disabled",false);
+            //Se krie Aerodromot za da nemoze da nastane dva isti aerodroma da  se odberat
+            function HideAirportsFrom(item) {
+                //Go Krijam Select Airport za da nema greski pri biranjeto
+                $('#ddlAirportFrom option').each(function () {
+                    if ($(this).val() == "") {
+                        $(this).hide();
+                    }
+                });
+                $('#ddlAirportTo option').each(function () {
+                    if ($(this).val() == item || $(this).val() == "") {
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                });
             }
-            else if ($('#RoundTrip').prop("checked") == false) {
-                $("#return-datepicker").attr("disabled", true);
-                $("#return-datepicker").val("");
+
+            function HideAirportsTo(item) {
+                //Go Krijam Select Airport za da nema greski pri biranjeto
+                $('#ddlAirportTo option').each(function () {
+                    if ($(this).val() == "") {
+                        $(this).hide();
+                    }
+                });
+                $('#ddlAirportFrom option').each(function () {
+                    if ($(this).val() == item || $(this).val() == "") {
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                });
             }
+
+            function ShowReturnDate() {
+                if ($('#RoundTrip').prop("checked") == true) {
+                    $("#return-datepicker").attr("disabled", false);
+                }
+                else if ($('#RoundTrip').prop("checked") == false) {
+                    $("#return-datepicker").attr("disabled", true);
+                    $("#return-datepicker").val("");
+                }
             }
         });
 

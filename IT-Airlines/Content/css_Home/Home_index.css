@@ -1,0 +1,15 @@
+﻿#content {
+    width: 100%;
+    background-color: white;
+    opacity: 0.9;
+    border-radius: 5px;
+    padding: 5%;
+}
+
+input, select, textarea {
+    max-width: 100% !important;
+}
+
+#carouselExampleIndicators img {
+    border-radius: 10px;
+}

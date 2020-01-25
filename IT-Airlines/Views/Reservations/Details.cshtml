@@ -4,68 +4,7 @@
     ViewBag.Title = "Details";
 }
 
-<style>
-    body {
-        background: url("../../Img/log-sign-in.jpg") no-repeat center center fixed;
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-    }
-
-    #content {
-        width: 100%;
-        background-color: white;
-        opacity: 0.9;
-        border-radius: 5px;
-        padding: 5%;
-    }
-
-    #detali .col-sm-4 {
-        border-right: 1px gray solid;
-    }
-
-    #detali .row {
-        border-bottom: 1px red solid;
-        padding: 10px;
-    }
-
-    #detali > div:nth-child(8), #detali > div:nth-child(9) {
-        border-bottom: 0px red solid;
-    }
-
-    #detali .col-sm {
-        font-weight: bold;
-        font-size: 20px;
-        color: #bd1323 !important;
-    }
-
-    #detali .btn-link, #detali a {
-        font-weight: bold;
-        text-decoration: underline;
-        font-size: 20px;
-        color: #bd1323 !important;
-    }
-
-    .modal-body .col-sm-4 {
-        text-align: right;
-    }
-
-    .modal .col-sm {
-        font-weight: bold;
-        font-size: 20px;
-        color: #bd1323 !important;
-    }
-
-    #detailsForPassenger .col-sm-3 {
-        font-weight: normal;
-        font-size: 14px;
-        color: black;
-    }
-
-    .btn-outline-danger {
-        color: white;
-        background-color: #FF5A5A;
-    }
-</style>
+@Styles.Render("~/Content/css_Reservations/Reservations_details.css")
 
 <div id="content">
     <h4 class="display-4 text-center">Details about the reservation of:</h4><br>
@@ -161,7 +100,7 @@
             </div>
         </div>
     </div>
-    
+
 </div>
 
 

@@ -1,0 +1,55 @@
+﻿body {
+    background: url("../../Img/log-sign-in.jpg") no-repeat center center fixed;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+#content {
+    width: 100%;
+    background-color: white;
+    opacity: 0.9;
+    border-radius: 5px;
+    padding: 5%;
+}
+
+.btn-outline-danger {
+    color: white;
+    background-color: #FF5A5A;
+}
+
+input, select, textarea {
+    max-width: 100%;
+}
+
+.err {
+    color: red;
+}
+
+.err-no-flights {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.radio_item {
+    display: none !important;
+}
+
+.label_item {
+    opacity: 0.1;
+}
+
+.radio_item:checked + label {
+    opacity: 1;
+}
+
+.radio_item_2 {
+    display: none !important;
+}
+
+.label_item_2 {
+    opacity: 0.1;
+}
+
+.radio_item_2:checked + label {
+    opacity: 1;
+}

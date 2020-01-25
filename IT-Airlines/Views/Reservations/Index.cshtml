@@ -4,53 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<style>
-
-    body {
-        background: url("../../Img/log-sign-in.jpg") no-repeat center center fixed;
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-    }
-
-    #content {
-        width: 100%;
-        background-color: white;
-        opacity: 0.9;
-        border-radius: 10px;
-        padding: 5%;
-    }
-
-    .flightRow {
-        background-color: lightgray;
-        padding: 15px;
-        border-radius: 10px;
-        margin-top: 20px;
-        margin-bottom: 30px;
-        /*shadow*/
-        border: 1px solid;
-        padding: 10px;
-        box-shadow: 5px 10px #888888;
-    }
-
-    #tabelaDiv {
-        padding: 15px;
-    }
-
-    .btn-outline-danger {
-        color: white;
-        background-color: #FF5A5A;
-    }
-
-    body > div.bootbox.modal.fade.bootbox-confirm.show > div > div > div.modal-footer > button.btn.btn-primary{
-            background-color:#dc3545;
-        }
-
-    #content .col-sm-3:nth-child(1) {
-        border-left: 0px;
-    }
-}
-
-</style>
+@Styles.Render("~/Content/css_Reservations/Reservations_index.css")
 
 <div id="content">
     <div class="row mb-2">
@@ -111,11 +65,11 @@
                 <div class="col-sm-3">
                     <div class="col">
                         @* Kopchinjata da se gore desno za sekoja rezervacija *@
-                            <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
-                                <a href='@Url.Action("Details","Reservations",  new { id = item.Id })' class=" btn btn-outline-danger">Details</a>
-                                <a href='@Url.Action("Edit","Reservations",  new { id = item.Id })' class=" btn btn-outline-danger">Edit</a>
-                                <button class="btn btn-outline-danger js-delete" attr-id="@item.Id">Cancel</button>
-                            </div>
+                        <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
+                            <a href='@Url.Action("Details","Reservations",  new { id = item.Id })' class=" btn btn-outline-danger">Details</a>
+                            <a href='@Url.Action("Edit","Reservations",  new { id = item.Id })' class=" btn btn-outline-danger">Edit</a>
+                            <button class="btn btn-outline-danger js-delete" attr-id="@item.Id">Cancel</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -129,7 +83,7 @@
 @section scripts
 {
     <script type="text/javascript">
-       
+
         $(document).ready(function () {
             /*            bootbox.alert("jQuery and Bootbox are working");*/
 
@@ -158,7 +112,7 @@
                 e.preventDefault();
 
             });
-            
+
         });
     </script>
 }
