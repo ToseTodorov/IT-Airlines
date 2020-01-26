@@ -72,18 +72,19 @@
                                     @Html.DropDownListFor(model => model.Luggages[i], ViewBag.Luggages as SelectList, new { @class = "form-control", @id = "l-" + i.ToString() })
                                     @Html.ValidationMessageFor(model => model.Luggages[i], "", new { @class = "text-danger" })
 
+                            </div>
+                        </div>
+                        @if (Model.RoundTrip)
+                        {
+                            <div class="form-group">
+                                <!-- TUKA E PROBLEMOT IMA PECATNA GRESKA KOGA IMA ROUND TRIP-->
+                                @Html.LabelFor(model => model.ReturnLuggages[i], htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-12">
+                                    @Html.DropDownListFor(model => model.ReturnLuggages[i], ViewBag.Luggages as SelectList, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ReturnLuggages[i], "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                            @if (Model.RoundTrip)
-                            {
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.ReturnLuggages[i], "Luggage", htmlAttributes: new { @class = "control-label col-md-4" })
-                                    <div class="col-md-12">
-                                        @Html.DropDownListFor(model => model.ReturnLuggages[i], ViewBag.Luggages as SelectList, new { @class = "form-control", @id = "rl-" + i.ToString() })
-                                        @Html.ValidationMessageFor(model => model.ReturnLuggages[i], "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                            }
+                        }
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Reservations[i].Passenger.FirstName, htmlAttributes: new { @class = "control-label col-md-4" })
@@ -111,7 +112,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.Reservations[i].Passenger.BirthDate, htmlAttributes: new { @class = "control-label col-md-4" })
                             <div class="col-md-12">
-                                @Html.EditorFor(model => model.Reservations[i].Passenger.BirthDate, new { htmlAttributes = new { @class = "form-control val-" + @i + "-birthdate birthday", type="text"} })
+                                @Html.EditorFor(model => model.Reservations[i].Passenger.BirthDate, new { htmlAttributes = new { @class = "form-control val-" + @i + "-birthdate" } })
                                 @Html.ValidationMessageFor(model => model.Reservations[i].Passenger.BirthDate, "", new { @class = "text-danger" })
                                 <span class="err err-@i-birthdate">Birth date field is required</span>
                             </div>

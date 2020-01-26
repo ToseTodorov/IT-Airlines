@@ -45,7 +45,7 @@
                     @Html.LabelFor(model => model.Departure, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-12">
                         @Html.EditorFor(model => model.Departure, new { htmlAttributes = new { @class = "form-control", id="departure-datepicker" } })
-                        @Html.ValidationMessageFor(model => model.Departure, "", new { @class = "text-danger" })
+
                     </div>
                 </div>
 
@@ -53,7 +53,7 @@
                     @Html.LabelFor(model => model.Landing, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-12">
                         @Html.EditorFor(model => model.Landing, new { htmlAttributes = new { @class = "form-control", id="return-datepicker" } })
-                        @Html.ValidationMessageFor(model => model.Landing, "", new { @class = "text-danger" })
+                       
                     </div>
                 </div>
 
@@ -84,8 +84,9 @@
     <script>
         $(document).ready(function () {
 
-            const formatDate = 'mm/dd/yy'
-            const formatTime = 'HH:mm'
+            const formatDate = 'dd/mm/yy';
+            const formatTime = 'HH:mm';
+            //const altFormatDate = 'mm-dd-yy';
 
 
             $("#departure-datepicker").datetimepicker({
@@ -93,6 +94,7 @@
                 minTime: new Date(),
                 dateFormat: formatDate,
                 timeFormat: formatTime,
+                //altFormat: altFormatDate,
                 onSelect: function () {
                     departureDate = $(this).datetimepicker('getDate');
                     dateNow = new Date()
