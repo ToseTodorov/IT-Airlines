@@ -70,7 +70,14 @@
                     <a href='@Url.Action("Details","Flights",  new { id = item.Id })' class=" btn btn-outline-danger">Details</a>
                     @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
                     {
-                        <a href='@Url.Action("Edit","Flights",  new { id = item.Id })' class=" btn btn-outline-danger">Edit</a>
+                        if (item.Departure > DateTime.Now)
+                        {
+                            <a href='@Url.Action("Edit","Flights",  new { id = item.Id })' class=" btn btn-outline-danger">Edit</a>
+                        }
+                        else
+                        {
+                            <button class=" btn btn-outline-danger btn-notactive">Edit</button>
+                        }
                         <button class="btn btn-outline-danger js-delete" attr-id="@item.Id">Delete</button>
                     }
 
@@ -88,6 +95,11 @@
     <script type="text/javascript">
         $(document).ready(function () {
             /*            bootbox.alert("jQuery and Bootbox are working");*/
+
+            $('.btn-notactive').click(function () {
+                bootbox.alert("The flight ended or started!");
+            });
+
 
             $("button.js-delete").click(function (e) {
                 e.preventDefault();

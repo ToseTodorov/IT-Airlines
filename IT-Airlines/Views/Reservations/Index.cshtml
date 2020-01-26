@@ -67,8 +67,17 @@
                         @* Kopchinjata da se gore desno za sekoja rezervacija *@
                         <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
                             <a href='@Url.Action("Details","Reservations",  new { id = item.Id })' class=" btn btn-outline-danger">Details</a>
-                            <a href='@Url.Action("Edit","Reservations",  new { id = item.Id })' class=" btn btn-outline-danger">Edit</a>
-                            <button class="btn btn-outline-danger js-delete" attr-id="@item.Id">Cancel</button>
+                            @if (item.FirstFlight.Departure > DateTime.Now.AddDays(-1) || User.IsInRole("Administrator"))
+                            {
+                                <a href='@Url.Action("Edit","Reservations",  new { id = item.Id })' class=" btn btn-outline-danger">Edit</a>
+                                <button class="btn btn-outline-danger js-delete" attr-id="@item.Id">Cancel</button>
+                            }
+                            else
+                            {
+                                <button class=" btn btn-outline-danger btn-notactive">Edit</button>
+                                <button class="btn btn-outline-danger btn-notactive" attr-id="@item.Id">Cancel</button>
+                            }
+
                         </div>
                     </div>
                 </div>
@@ -86,6 +95,10 @@
 
         $(document).ready(function () {
             /*            bootbox.alert("jQuery and Bootbox are working");*/
+
+            $('.btn-notactive').click(function () {
+                bootbox.alert("The flight ended or is about to start");
+            });
 
             $("button.js-delete").click(function (e) {
                 e.preventDefault();

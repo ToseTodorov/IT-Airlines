@@ -117,6 +117,7 @@
             $("#departure-datepicker").datepicker({
                 minDate: new Date(),
                 dateFormat: format,
+                defaultTime: "00:00:00",
                 changeMonth: true,
                 changeYear: true,
                 onSelect: function () {
@@ -131,8 +132,14 @@
             $("#return-datepicker").datepicker({
                 minDate: new Date(),
                 dateFormat: format,
+                defaultTime: "00:00:00",
                 changeMonth: true,
                 changeYear: true,
+                onSelect: function () {
+                    var date = $(this).datepicker('getDate');
+
+                    $("#departure-datepicker").datepicker('option', 'maxDate', date);
+                },
                 numberOfMonths: 3
             }).attr('readonly', 'readonly');
 

@@ -61,8 +61,8 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Passenger.BirthDate, htmlAttributes: new { @class = "control-label col-md" })
                 <div class="col-md-12">
-                    @Html.EditorFor(model => model.Passenger.BirthDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Passenger.BirthDate, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Passenger.BirthDate, new { htmlAttributes = new { @class = "form-control", type="text",id="birthday"  } })
+                    @Html.ValidationMessageFor(model => model.Passenger.BirthDate, "", new { @class = "text-danger"})
                 </div>
             </div>
             <div class="form-group">
@@ -95,4 +95,18 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    
+    <script>
+        $(document).ready(function () {
+            const format = "mm/dd/yy";
+            $("#birthday").datepicker({
+                maxDate: new Date(),
+                minDate: new Date(1930, 01, 01),
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: format,
+            }).attr('readonly', 'readonly');
+        })
+
+    </script>
 }
