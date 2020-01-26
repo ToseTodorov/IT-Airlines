@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -73,7 +74,7 @@ namespace IT_Airlines.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+
                 Airplane airplane = db.Airplanes.Find(flightModel.Airplane);
                 Flight flight = new Flight()
                 {
@@ -81,8 +82,8 @@ namespace IT_Airlines.Controllers
                     AirportFrom = db.Airports.Find(flightModel.AirportFrom),
                     AirportTo = db.Airports.Find(flightModel.AirportTo),
                     Airplane = airplane,
-                    Departure = flightModel.Departure,
-                    Landing = flightModel.Landing,
+                    Departure = DateTime.Parse(flightModel.Departure, CultureInfo.CreateSpecificCulture("en-US")),
+                    Landing = DateTime.Parse(flightModel.Landing, CultureInfo.CreateSpecificCulture("en-US")),
                     NumOfSeats = airplane.NumOfSeats,
                     NumOfFreeSeats = airplane.NumOfSeats,
                     BasePrice = flightModel.BasePrice
@@ -150,8 +151,8 @@ namespace IT_Airlines.Controllers
                 AirportFrom = flight.AirportFrom.Id,
                 AirportTo = flight.AirportTo.Id,
                 Airplane = flight.Airplane.Id,
-                Departure = flight.Departure,
-                Landing = flight.Landing,
+                Departure = flight.Departure.ToString("MM/dd/yyyy HH:mm"),
+                Landing = flight.Landing.ToString("MM/dd/yyyy HH:mm"),
                 BasePrice = flight.BasePrice
             };
 
@@ -175,8 +176,8 @@ namespace IT_Airlines.Controllers
                 flight.AirportFrom = db.Airports.Find(editedFlight.AirportFrom);
                 flight.AirportTo = db.Airports.Find(editedFlight.AirportTo);
                 flight.Airplane = airplane;
-                flight.Departure = editedFlight.Departure;
-                flight.Landing = editedFlight.Landing;
+                flight.Departure = DateTime.Parse(editedFlight.Departure, CultureInfo.CreateSpecificCulture("en-US"));
+                flight.Landing = DateTime.Parse(editedFlight.Landing, CultureInfo.CreateSpecificCulture("en-US"));
                 flight.NumOfSeats = airplane.NumOfSeats;
                 flight.NumOfFreeSeats = airplane.NumOfSeats;
                 flight.BasePrice = editedFlight.BasePrice;
@@ -228,7 +229,7 @@ namespace IT_Airlines.Controllers
         {
             Flight flight = db.Flights.Find(id);
 
-            if(flight == null)
+            if (flight == null)
             {
                 Console.WriteLine("Flight with id={0} does not exist", id);
                 return RedirectToAction("Index");
