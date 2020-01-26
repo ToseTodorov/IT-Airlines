@@ -84,17 +84,16 @@
     <script>
         $(document).ready(function () {
 
-            const formatDate = 'dd/mm/yy';
+            const formatDate = 'mm/dd/yy';
             const formatTime = 'HH:mm';
             //const altFormatDate = 'mm-dd-yy';
 
 
             $("#departure-datepicker").datetimepicker({
-                minDate: new Date(),
-                minTime: new Date(),
+                minDate: new Date().getDate + 1,
+                minTime: new Date().getHours + 1,
                 dateFormat: formatDate,
                 timeFormat: formatTime,
-                //altFormat: altFormatDate,
                 onSelect: function () {
                     departureDate = $(this).datetimepicker('getDate');
                     dateNow = new Date()

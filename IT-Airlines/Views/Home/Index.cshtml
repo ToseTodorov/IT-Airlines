@@ -77,7 +77,7 @@
 </div>
 <br>
 <br>
-<div id="carouselExampleIndicators" data-interval="6000" class="carousel slide" data-ride="carousel">
+<div id="carouselExampleIndicators" data-interval="3000" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -116,7 +116,7 @@
 
             $("#departure-datepicker").datepicker({
                 minDate: new Date(),
-                format: format,
+                dateFormat: format,
                 changeMonth: true,
                 changeYear: true,
                 onSelect: function () {
@@ -130,6 +130,7 @@
 
             $("#return-datepicker").datepicker({
                 minDate: new Date(),
+                dateFormat: format,
                 changeMonth: true,
                 changeYear: true,
                 numberOfMonths: 3
