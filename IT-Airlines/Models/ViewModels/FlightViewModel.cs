@@ -20,13 +20,13 @@ namespace IT_Airlines.Models.ViewModels
         [Required]
         public int Airplane { get; set; }
 
-        [Required]
-        [DataType(DataType.DateTime)]
-        public DateTime Departure { get; set; }
+        //[Required]
+        //[DataType(DataType.DateTime)]
+        public String Departure { get; set; }
 
-        [Required]
-        [DataType(DataType.DateTime)]
-        public DateTime Landing { get; set; }
+        //[Required]
+        //[DataType(DataType.DateTime)]
+        public String Landing { get; set; }
 
         [Required]
         public float BasePrice { get; set; }
