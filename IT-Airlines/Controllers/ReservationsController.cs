@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -81,9 +82,16 @@ namespace IT_Airlines.Controllers
                 newModel.ReturnLuggages.Add(0);
             }
 
+            DateTime departure = DateTime.Parse(model.Departure, CultureInfo.CreateSpecificCulture("en-US"));
+            DateTime returnDate = new DateTime(0);
+            if (model.RoundTrip)
+            {
+                DateTime.Parse(model.Return, CultureInfo.CreateSpecificCulture("en-US"));
+            }
+
             IEnumerable<Flight> flights = (from f in db.Flights.Where(x => x.AirportFrom.Id.Equals(model.AirportFrom))
                                     .Where(x => x.AirportTo.Id.Equals(model.AirportTo))
-                                    .Where(x => DbFunctions.TruncateTime(x.Departure) == model.Departure.Date)
+                                    .Where(x => DbFunctions.TruncateTime(x.Departure) == departure)
                                     .Where(x => x.NumOfFreeSeats >= model.Passengers)
                                     .ToList()
                                     select f);
@@ -91,7 +99,7 @@ namespace IT_Airlines.Controllers
 
             IEnumerable<Flight> rflights = (from f in db.Flights.Where(x => x.AirportFrom.Id.Equals(model.AirportTo))
                                         .Where(x => x.AirportTo.Id.Equals(model.AirportFrom))
-                                        .Where(x => DbFunctions.TruncateTime(x.Departure) == model.Return.Date)
+                                        .Where(x => DbFunctions.TruncateTime(x.Departure) == returnDate)
                                         .Where(x => x.NumOfFreeSeats >= model.Passengers)
                                         .ToList()
                                            select f);
@@ -100,7 +108,7 @@ namespace IT_Airlines.Controllers
             IEnumerable<SelectListItem> selectListFlights = 
                 from s in db.Flights.Where(x => x.AirportFrom.Id.Equals(model.AirportFrom))
                                     .Where(x => x.AirportTo.Id.Equals(model.AirportTo))
-                                    .Where(x => DbFunctions.TruncateTime(x.Departure)==model.Departure.Date)
+                                    .Where(x => DbFunctions.TruncateTime(x.Departure) == departure)
                                     .Where(x => x.NumOfFreeSeats >= model.Passengers)
                                     .ToList()
                                     select new SelectListItem
@@ -115,7 +123,7 @@ namespace IT_Airlines.Controllers
                 IEnumerable<SelectListItem> selectListReturnFlights =
                     from s in db.Flights.Where(x => x.AirportFrom.Id.Equals(model.AirportTo))
                                         .Where(x => x.AirportTo.Id.Equals(model.AirportFrom))
-                                        .Where(x => DbFunctions.TruncateTime(x.Departure) == model.Return.Date)
+                                        .Where(x => DbFunctions.TruncateTime(x.Departure) == returnDate)
                                         .Where(x => x.NumOfFreeSeats >= model.Passengers)
                                         .ToList()
                                         select new SelectListItem

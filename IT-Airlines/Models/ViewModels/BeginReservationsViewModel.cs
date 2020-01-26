@@ -21,11 +21,11 @@ namespace IT_Airlines.Models.ViewModels
         public bool RoundTrip { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
-        public DateTime Departure { get; set; }
+        //[DataType(DataType.Date)]
+        public String Departure { get; set; }
 
-        [DataType(DataType.Date)]
-        public DateTime Return { get; set; }
+        //[DataType(DataType.Date)]
+        public String Return { get; set; }
 
         [Required]
         [Range(1,50)]
