@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using IT_Airlines.DataContexts;
 using IT_Airlines.Models.Entities;
 using IT_Airlines.Models.UserRoles;
+using PagedList;
+using PagedList.Mvc;
 
 namespace IT_Airlines.Controllers
 {
@@ -17,9 +19,28 @@ namespace IT_Airlines.Controllers
         private AirlineDbContext db = new AirlineDbContext();
 
         // GET: Airplanes
-        public ActionResult Index()
+        public ActionResult Index(string search, int? page, string sortBy)
         {
-            return View(db.Airplanes.ToList());
+            ViewBag.SortCodeParameter = sortBy == "asc" ? "desc" : "asc";
+
+            var airplanes = db.Airplanes.AsQueryable();
+
+            if (! string.IsNullOrEmpty(search))
+            {
+                airplanes = airplanes.Where(a => a.Code.ToLower().StartsWith(search.ToLower()));
+            }
+
+            switch (sortBy)
+            {
+                case "asc":
+                    airplanes = airplanes.OrderBy(c => c.Code);
+                    break;
+                default:
+                    airplanes = airplanes.OrderByDescending(c => c.Code);
+                    break;
+            }
+
+            return View(airplanes.ToPagedList(page ?? 1, 5));
         }
 
         // GET: Airplanes/Details/5

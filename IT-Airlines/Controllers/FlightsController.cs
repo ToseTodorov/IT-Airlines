@@ -23,10 +23,10 @@ namespace IT_Airlines.Controllers
         // GET: Flights
         public ActionResult Index(string searchBy, string search, int? page, string sortBy)
         {
-            ViewBag.SortAirportFromParameter = sortBy == "Airport From desc" ? "Airport From desc":"Airport From asc";
-            ViewBag.SortAirportToParameter = sortBy == "Airport To desc" ? "Airport To desc":"Airport To asc";
-            ViewBag.SortDepartureParameter = sortBy == "Departure desc" ? "Departure desc" : "Departure asc";
-            ViewBag.SortLandingParameter = sortBy == "Landing desc" ? "Landing desc" : "Landing asc";
+            ViewBag.SortAirportFromParameter = sortBy == "Airport From asc" ? "Airport From desc":"Airport From asc";
+            ViewBag.SortAirportToParameter = sortBy == "Airport To asc" ? "Airport To desc":"Airport To asc";
+            ViewBag.SortDepartureParameter = sortBy == "Departure asc" ? "Departure desc" : "Departure asc";
+            ViewBag.SortLandingParameter = sortBy == "Landing asc" ? "Landing desc" : "Landing asc";
 
             var flights = db.Flights.AsQueryable();
             if (string.IsNullOrEmpty(search))
