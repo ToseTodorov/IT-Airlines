@@ -13,7 +13,7 @@
     <div id="content">
 
         @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
-        {
+{
             <div class="row mb-2">
                 <div class="col-4"></div>
                 <div class="col-4">
@@ -21,10 +21,10 @@
                 </div>
                 <div class="col-4"></div>
             </div>
-        }
+}
 
         @using (Html.BeginForm("Index", "Flights", FormMethod.Get))
-        {
+{
             <div class="row text-center">
                 <div class="col-12 form-group">
                     <label for="searchBy">Search By: </label>
@@ -43,22 +43,22 @@
 
                 </div>
             </div>
-        }
+}
 
 
 
         <div id="tabelaDiv" class="row text-danger text-center">
-            <div class="col-sm-3">
-                <b> @Html.DisplayNameFor(model => model.First().AirportFrom)</b>
+            <div class="col-sm-3 border-0">
+                <b> @Html.ActionLink("Airport From", "Index", new { sortBy = ViewBag.SortAirportFromParameter, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"] })</b>
             </div>
             <div class="col-sm-3" style="border-left: 1px red solid">
-                <b> @Html.DisplayNameFor(model => model.First().AirportTo)</b>
+                <b> @Html.ActionLink("Airport To", "Index", new { sortBy = ViewBag.SortAirportToParameter, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"] })</b>
             </div>
             <div class="col-sm-2" style="border-left: 1px red solid">
-                <b>  @Html.DisplayNameFor(model => model.First().Departure)</b>
+                <b> @Html.ActionLink("Departure", "Index", new { sortBy = ViewBag.SortDepartureParameter, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"] })</b>
             </div>
             <div class="col-sm-2" style="border-left: 1px red solid">
-                <b>  @Html.DisplayNameFor(model => model.First().Landing)</b>
+                <b> @Html.ActionLink("Landing", "Index", new { sortBy = ViewBag.SortLandingParameter, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"] })</b>
             </div>
             <div class="col-sm-2" style="border-left: 1px red solid">
                 <b>   @Html.DisplayNameFor(model => model.First().NumOfFreeSeats)</b>
@@ -80,7 +80,7 @@
             {
                 <div class="flightRow text-center" id="row-@item.Id">
                     <div class="row">
-                        <div class="col-sm-3">
+                        <div class="col-sm-3 border-0">
                             @Html.DisplayFor(modelItem => item.AirportFrom.Name),
                             @Html.DisplayFor(modelItem => item.AirportFrom.City)
                         </div>

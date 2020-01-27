@@ -21,20 +21,92 @@ namespace IT_Airlines.Controllers
         private AirlineDbContext db = new AirlineDbContext();
 
         // GET: Flights
-        public ActionResult Index(string searchBy, string search, int? page)
+        public ActionResult Index(string searchBy, string search, int? page, string sortBy)
         {
-            if(search == null || search == "")
+            ViewBag.SortAirportFromParameter = sortBy == "Airport From desc" ? "Airport From desc":"Airport From asc";
+            ViewBag.SortAirportToParameter = sortBy == "Airport To desc" ? "Airport To desc":"Airport To asc";
+            ViewBag.SortDepartureParameter = sortBy == "Departure desc" ? "Departure desc" : "Departure asc";
+            ViewBag.SortLandingParameter = sortBy == "Landing desc" ? "Landing desc" : "Landing asc";
+
+            var flights = db.Flights.AsQueryable();
+            if (string.IsNullOrEmpty(search))
             {
-                return View(db.Flights.ToList().OrderByDescending(d => d.Departure).ToPagedList(page ?? 1, 5));
+                flights = flights.OrderByDescending(d => d.Departure);
+                switch (sortBy)
+                {
+                    case "Airport From desc":
+                        flights = flights.OrderByDescending(x => x.AirportFrom.Name);
+                        break;
+                    case "Airport To desc":
+                        flights = flights.OrderByDescending(x => x.AirportTo.Name);
+                        break;
+                    case "Landing asc":
+                        flights = flights.OrderBy(x => x.Departure);
+                        break;
+                    case "Landing desc":
+                        flights = flights.OrderBy(x => x.Departure);
+                        break;
+                    case "Departure asc":
+                        flights = flights.OrderBy(x => x.Departure);
+                        break;
+                    default:
+                        flights = flights.OrderByDescending(x => x.Departure);
+                        break;
+                }
             }
-            if (searchBy == "Name")
+            else if (searchBy == "Name")
             {
-                return View(db.Flights.Where(x => x.AirportFrom.Name.ToLower().StartsWith(search.ToLower())).ToList().OrderByDescending(d => d.Departure).ToPagedList(page ?? 1, 5));
+                flights = flights.Where(x => x.AirportFrom.Name.ToLower().StartsWith(search.ToLower())).OrderByDescending(d => d.Departure);
+                switch (sortBy)
+                {
+                    case "Airport From desc":
+                        flights = flights.OrderByDescending(x => x.AirportFrom.Name);
+                        break;
+                    case "Airport To desc":
+                        flights = flights.OrderByDescending(x => x.AirportTo.Name);
+                        break;
+                    case "Landing asc":
+                        flights = flights.OrderBy(x => x.Departure);
+                        break;
+                    case "Landing desc":
+                        flights = flights.OrderBy(x => x.Departure);
+                        break;
+                    case "Departure asc":
+                        flights = flights.OrderBy(x => x.Departure);
+                        break;
+                    default:
+                        flights = flights.OrderByDescending(x => x.Departure);
+                        break;
+                }
             }
             else
             {
-                return View(db.Flights.Where(x => x.AirportFrom.City.ToLower().StartsWith(search.ToLower())).ToList().OrderByDescending(d => d.Departure).ToPagedList(page ?? 1, 5));
+                flights = flights.Where(x => x.AirportFrom.City.ToLower().StartsWith(search.ToLower())).OrderByDescending(d => d.Departure);
+                switch (sortBy)
+                {
+                    case "Airport From desc":
+                        flights = flights.OrderByDescending(x => x.AirportFrom.City);
+                        break;
+                    case "Airport To desc":
+                        flights = flights.OrderByDescending(x => x.AirportTo.City);
+                        break;
+                    case "Landing asc":
+                        flights = flights.OrderBy(x => x.Departure);
+                        break;
+                    case "Landing desc":
+                        flights = flights.OrderBy(x => x.Departure);
+                        break;
+                    case "Departure asc":
+                        flights = flights.OrderBy(x => x.Departure);
+                        break;
+                    default:
+                        flights = flights.OrderByDescending(x => x.Departure);
+                        break;
+                }
             }
+
+            return View(flights.ToPagedList(page ?? 1, 5));
+
         }
 
 
