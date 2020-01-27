@@ -53,5 +53,7 @@ input, select, textarea {
 }
 
 .radio_item_2:checked + label {
+    border: 1px solid lightgray !important;
+    background-color: whitesmoke;
     opacity: 1;
 }
