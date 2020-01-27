@@ -1,4 +1,7 @@
-﻿@model IEnumerable<IT_Airlines.Models.Entities.Airport>
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<IT_Airlines.Models.Entities.Airport>
 
 @{
     ViewBag.Title = "Index";
@@ -6,66 +9,116 @@
 
 @Styles.Render("~/Content/css_Airports/Airports_index.css")
 
-<div id="content">
-    @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
-    {
-        <div class="row mb-2">
-            <div class="col-4"></div>
-            <div class="col-4">
-                @Html.ActionLink("Create new airport", "Create", null, new { @class = " btn btn-block btn-danger" })
+    <div id="content">
+        @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+        {
+            <div class="row mb-2">
+                <div class="col-4"></div>
+                <div class="col-4">
+                    @Html.ActionLink("Create new airport", "Create", null, new { @class = " btn btn-block btn-danger" })
+                </div>
+                <div class="col-4"></div>
             </div>
-            <div class="col-4"></div>
-        </div>
-    }
-    <div id="tabelaDiv" class="row text-danger text-center">
-        <div class="col-sm-3">
-            <b> @Html.DisplayNameFor(model => model.Code)</b>
-        </div>
-        <div class="col-sm-3">
-            <b> @Html.DisplayNameFor(model => model.Name)</b>
-        </div>
-        <div class="col-sm-3">
-            <b>  @Html.DisplayNameFor(model => model.City)</b>
-        </div>
-    </div>
+        }
 
 
-    @foreach (var item in Model)
-    {
-        <div class="flightRow text-center" id="row-@item.Id">
-            <div class="row">
-                <div class="col-sm-4 col-md-3 mb-2 mt-2">
-                    @Html.DisplayFor(modelItem => item.Code)
-                </div>
-                <div class="col-sm-4 col-md-3 mb-2 mt-2">
-                    @Html.DisplayFor(modelItem => item.Name)
-                </div>
-                <div class="col-sm-4 col-md-3 mb-2 mt-2">
-                    @Html.DisplayFor(modelItem => item.City)
-                </div>
-                <div class="col-sm-12 col-lg-3 mb-2 mt-2">
-                    <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
-                        @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
-                        {
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-danger" })
-                        }
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-danger" })
-                        @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
-                        {
-                            <button class="btn btn-outline-danger js-delete" attr-id="@item.Id">Delete</button>
-                        }
+        @using (Html.BeginForm("Index", "Airports", FormMethod.Get))
+        {
+            <div class="row text-center">
+                <div class="col-12 form-group">
+                    <label for="searchBy">Search By: </label>
+                    @Html.RadioButton("searchBy", "Name", true)<text> Name</text>
+                    @Html.RadioButton("searchBy", "City")<text> City</text><br />
+                    <div class="input-group justify-content-center">
+                        <div class="input-group-prepend">
+                            <label for="search" class="input-group-text">Search:</label>
+                        </div>
 
+                        <input class="form-control form-group" id="search" name="search" style="display:inline" type="text" value=@Request.QueryString["search"]>
+                        <div class="input-group-append">
+                            <input type="submit" value="Submit" class="btn btn-danger input-group" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+
+
+
+
+        <div id="tabelaDiv" class="row text-danger text-center">
+            <div class="col-sm-3">
+                <b> @Html.ActionLink("Code", "Index", new { sortBy = ViewBag.SortCodeParameter, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"] })</b>
+            </div>
+            <div class="col-sm-3">
+                <b> @Html.ActionLink("Name", "Index", new { sortBy = ViewBag.SortNameParameter, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"] })</b>
+            </div>
+            <div class="col-sm-3">
+                <b> @Html.ActionLink("City", "Index", new { sortBy = ViewBag.SortCityParameter, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"] })</b>
+            </div>
+        </div>
+        @if (Model.Count() == 0)
+        {
+            <div class="row text-center justify-content-center">
+                <h3>No Airport match with that search term.</h3>
+            </div>
+        }
+        else
+        {
+
+            foreach (var item in Model)
+            {
+                <div class="flightRow text-center" id="row-@item.Id">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-3 mb-2 mt-2">
+                            @Html.DisplayFor(modelItem => item.Code)
+                        </div>
+                        <div class="col-sm-4 col-md-3 mb-2 mt-2">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </div>
+                        <div class="col-sm-4 col-md-3 mb-2 mt-2">
+                            @Html.DisplayFor(modelItem => item.City)
+                        </div>
+                        <div class="col-sm-12 col-lg-3 mb-2 mt-2">
+                            <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
+                                @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+                                {
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-danger" })
+                                }
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-danger" })
+                                @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+                                {
+                                    <button class="btn btn-outline-danger js-delete" attr-id="@item.Id">Delete</button>
+                                }
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+        }
+
+
+        <div id="paging" class="row justify-content-center">
+
+            @Html.PagedListPager(Model, page => Url.Action("Index", "Airports", new { page, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"] }),
+           new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded }
+           )
         </div>
-    }
-</div>
+
+
+    </div>
 
 @section scripts
 {
     <script type="text/javascript">
         $(document).ready(function () {
+            $('.pagination li').addClass('page-item');
+            $('.pagination li a').addClass('page-link');
+
+
+
             $("button.js-delete").click(function (e) {
                 e.preventDefault();
                 var button = $(this);

@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using IT_Airlines.DataContexts;
 using IT_Airlines.Models.Entities;
 using IT_Airlines.Models.UserRoles;
+using PagedList;
+using PagedList.Mvc;
 
 namespace IT_Airlines.Controllers
 {
@@ -17,9 +19,46 @@ namespace IT_Airlines.Controllers
         private AirlineDbContext db = new AirlineDbContext();
 
         // GET: Airports
-        public ActionResult Index()
+        public ActionResult Index(string searchBy, string search, int? page, string sortBy = "Code desc")
         {
-            return View(db.Airports.ToList());
+            ViewBag.SortCodeParameter = sortBy == "Code asc" ? "Code desc" : "Code asc";
+            ViewBag.SortNameParameter = sortBy == "Name asc" ? "Name desc" : "Name asc";
+            ViewBag.SortCityParameter = sortBy == "City asc" ? "City desc" : "City asc";
+
+            var airports = db.Airports.AsQueryable();
+
+            if(searchBy == "Name" && !string.IsNullOrEmpty(search))
+            {
+                airports = airports.Where(n => n.Name.ToLower().StartsWith(search.ToLower()));
+            }
+            else if (searchBy == "City" && !string.IsNullOrEmpty(search))
+            {
+                airports = airports.Where(n => n.City.ToLower().StartsWith(search.ToLower()));
+            }
+
+            switch (sortBy)
+            {
+                case "Code desc":
+                    airports = airports.OrderByDescending(d => d.Code);
+                    break;
+                case "Code asc":
+                    airports = airports.OrderBy(d => d.Code);
+                    break;
+                case "Name desc":
+                    airports = airports.OrderByDescending(d => d.Name);
+                    break;
+                case "Name asc":
+                    airports = airports.OrderBy(d => d.Name);
+                    break;
+                case "City desc":
+                    airports = airports.OrderByDescending(d => d.City);
+                    break;
+                default:
+                    airports = airports.OrderBy(d => d.City);
+                    break;
+            }
+
+            return View(airports.ToPagedList(page ?? 1, 5));
         }
 
         // GET: Airports/Details/5
