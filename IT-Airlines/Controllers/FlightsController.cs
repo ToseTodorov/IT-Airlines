@@ -104,8 +104,9 @@ namespace IT_Airlines.Controllers
                         break;
                 }
             }
+            IPagedList<Flight> flights1 = flights.ToPagedList(page ?? 1, 5);
 
-            return View(flights.ToPagedList(page ?? 1, 5));
+            return View(flights1);
 
         }
 

@@ -39,8 +39,9 @@ namespace IT_Airlines.Controllers
                     airplanes = airplanes.OrderByDescending(c => c.Code);
                     break;
             }
+            IPagedList<Airplane> airplanes1 = airplanes.ToPagedList(page ?? 1, 5);
 
-            return View(airplanes.ToPagedList(page ?? 1, 5));
+            return View(airplanes1);
         }
 
         // GET: Airplanes/Details/5

@@ -58,7 +58,8 @@ namespace IT_Airlines.Controllers
                     break;
             }
 
-            return View(airports.ToPagedList(page ?? 1, 5));
+            IPagedList<Airport> airports1 = airports.ToPagedList(page ?? 1, 5);
+            return View(airports1);
         }
 
         // GET: Airports/Details/5

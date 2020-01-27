@@ -29,9 +29,9 @@ namespace IT_Airlines.Controllers
         {
             ViewBag.AllReservations = true;
 
-            return View(db.Reservations
-                            .Include(r => r.Passenger)
-                            .ToList().ToPagedList(page ?? 1, 5));
+            IPagedList<Reservation> reservations = db.Reservations.Include(r => r.Passenger).ToList().ToPagedList(page ?? 1, 5);
+
+            return View(reservations);
         }
 
         public ActionResult MyReservations(int? page)
@@ -39,10 +39,12 @@ namespace IT_Airlines.Controllers
             ViewBag.AllReservations = false;
             string email = User.Identity.GetUserName();
 
-            return View("Index", db.Reservations
+            IPagedList<Reservation> reservations = db.Reservations
                             .Include(r => r.Passenger)
                             .Where(x => x.AccountEmail.Equals(email))
-                            .ToList().ToPagedList(page ?? 1, 5));
+                            .ToPagedList(page ?? 1, 5);
+
+            return View("Index", reservations);
         }
 
         // GET: Reservations/Details/5
