@@ -11,6 +11,8 @@ using IT_Airlines.DataContexts;
 using IT_Airlines.Models.Entities;
 using IT_Airlines.Models.UserRoles;
 using IT_Airlines.Models.ViewModels;
+using PagedList;
+using PagedList.Mvc;
 
 namespace IT_Airlines.Controllers
 {
@@ -19,15 +21,19 @@ namespace IT_Airlines.Controllers
         private AirlineDbContext db = new AirlineDbContext();
 
         // GET: Flights
-        public ActionResult Index(string searchBy, string search)
+        public ActionResult Index(string searchBy, string search, int? page)
         {
+            if(search == null || search == "")
+            {
+                return View(db.Flights.ToList().OrderByDescending(d => d.Departure).ToPagedList(page ?? 1, 5));
+            }
             if (searchBy == "Name")
             {
-                return View(db.Flights.Where(x => x.AirportFrom.Name.StartsWith(search) || search == null).ToList());
+                return View(db.Flights.Where(x => x.AirportFrom.Name.ToLower().StartsWith(search.ToLower())).ToList().OrderByDescending(d => d.Departure).ToPagedList(page ?? 1, 5));
             }
             else
             {
-                return View(db.Flights.Where(x => x.AirportFrom.City.StartsWith(search) || search == null).ToList());
+                return View(db.Flights.Where(x => x.AirportFrom.City.ToLower().StartsWith(search.ToLower())).ToList().OrderByDescending(d => d.Departure).ToPagedList(page ?? 1, 5));
             }
         }
 
