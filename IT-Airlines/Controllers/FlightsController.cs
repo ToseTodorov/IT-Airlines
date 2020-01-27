@@ -19,10 +19,18 @@ namespace IT_Airlines.Controllers
         private AirlineDbContext db = new AirlineDbContext();
 
         // GET: Flights
-        public ActionResult Index()
+        public ActionResult Index(string searchBy, string search)
         {
-            return View(db.Flights.ToList());
+            if (searchBy == "Name")
+            {
+                return View(db.Flights.Where(x => x.AirportFrom.Name.StartsWith(search) || x.AirportTo.Name.StartsWith(search) || search == null).OrderBy(x => x.AirportFrom.Name).ToList());
+            }
+            else
+            {
+                return View(db.Flights.Where(x => x.AirportFrom.City.StartsWith(search) || x.AirportTo.City.StartsWith(search) || search == null).OrderBy(x => x.AirportFrom.Name).ToList());
+            }
         }
+
 
         // GET: Flights/Details/5
         public ActionResult Details(int? id)

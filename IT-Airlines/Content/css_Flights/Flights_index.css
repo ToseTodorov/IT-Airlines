@@ -32,8 +32,9 @@
     color: white;
     background-color: #FF5A5A;
 }
+    
 
-#content .col-sm-3 {
+#content .col-sm-3, .col-sm-2 {
     border-left: 2px red solid;
 }
 

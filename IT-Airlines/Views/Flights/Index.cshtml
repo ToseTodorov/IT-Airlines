@@ -9,37 +9,60 @@
 <div id="content">
 
     @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
-    {
+{
         <div class="row mb-2">
             <div class="col-4"></div>
             <div class="col-4">
-                <a href='@Url.Action("Create","Flights")' class=" btn btn-block btn-danger">Create new flight</a>
+                <a href='@Url.Action("Create", "Flights")' class=" btn btn-block btn-danger">Create new flight</a>
             </div>
             <div class="col-4"></div>
+        </div>
+}
+
+    @using (Html.BeginForm("Index", "Flights", FormMethod.Get))
+{
+        <div class="row text-center">
+            <div class="col-12 form-group">
+                <label for="searchBy">Search By: </label>
+                @Html.RadioButton("searchBy", "Name", true)<text> Name</text>
+                @Html.RadioButton("searchBy", "City")<text> City</text><br />
+            <div class="input-group justify-content-center">
+                <div class="input-group-prepend">
+                    <label for="search" class="input-group-text">Search:</label>
+                </div>
+                @Html.TextBox("search", null, new { @class = "form-control form-group", style = "display:inline" })
+                <div class="input-group-append">
+                    <input type="submit" value="Submit" class="btn btn-danger input-group" />
+                </div>
+            </div>
+            
+            </div>
         </div>
     }
 
 
 
-
-    <div id="tabelaDiv" class="row text-danger text-center">
-        <div class="col-sm-3">
-            <b> @Html.DisplayNameFor(model => model.AirportFrom)</b>
-        </div>
-        <div class="col-sm-3">
-            <b> @Html.DisplayNameFor(model => model.AirportTo)</b>
-        </div>
-        <div class="col-sm-3">
-            <b>  @Html.DisplayNameFor(model => model.Departure)</b>
-        </div>
-        <div class="col-sm-3">
-            <b>   @Html.DisplayNameFor(model => model.NumOfFreeSeats)</b>
-        </div>
-        @*<div class="col-sm-2">
-                <b> @Html.DisplayNameFor(model => model.BasePrice)</b>
-            </div>*@
-
+<div id="tabelaDiv" class="row text-danger text-center">
+    <div class="col-sm-3">
+        <b> @Html.DisplayNameFor(model => model.AirportFrom)</b>
     </div>
+    <div class="col-sm-3">
+        <b> @Html.DisplayNameFor(model => model.AirportTo)</b>
+    </div>
+    <div class="col-sm-2">
+        <b>  @Html.DisplayNameFor(model => model.Departure)</b>
+    </div>
+    <div class="col-sm-2">
+        <b>  @Html.DisplayNameFor(model => model.Landing)</b>
+    </div>
+    <div class="col-sm-2">
+        <b>   @Html.DisplayNameFor(model => model.NumOfFreeSeats)</b>
+    </div>
+    @*<div class="col-sm-2">
+            <b> @Html.DisplayNameFor(model => model.BasePrice)</b>
+        </div>*@
+
+</div>
 
     @foreach (var item in Model)
     {
@@ -53,15 +76,18 @@
                     @Html.DisplayFor(modelItem => item.AirportTo.Name),
                     @Html.DisplayFor(modelItem => item.AirportTo.City)
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     @Html.DisplayFor(modelItem => item.Departure)
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
+                    @Html.DisplayFor(modelItem => item.Landing)
+                </div>
+                <div class="col-sm-2">
                     @Html.DisplayFor(modelItem => item.NumOfFreeSeats)
                 </div>
                 @*<div class="col-sm  -2">
-                        @Html.DisplayFor(modelItem => item.BasePrice)
-                    </div>*@
+            @Html.DisplayFor(modelItem => item.BasePrice)
+        </div>*@
 
             </div>
             <div class="row pl-5 pr-5 pt-4">
