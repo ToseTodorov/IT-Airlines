@@ -12,11 +12,14 @@ namespace IT_Airlines.Models.ViewModels
         [Required]
         public int Id { get; set; }
 
+        [Display(Name = "Round Trip")]
         public bool RoundTrip { get; set; }
 
         [Required]
+        [Display(Name = "First Luggage")]
         public int FirstLuggage { get; set; }
 
+        [Display(Name = "Return Luggage")]
         public int? SecondLuggage { get; set; }
 
         [Required]

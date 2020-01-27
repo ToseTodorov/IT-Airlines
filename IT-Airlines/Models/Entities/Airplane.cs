@@ -12,6 +12,7 @@ namespace IT_Airlines.Models.Entities
         public string Code { get; set; }
         
         [Required]
+        [Display(Name = "Number of Seats")]
         public int NumOfSeats { get; set; }
 
         public override string ToString()

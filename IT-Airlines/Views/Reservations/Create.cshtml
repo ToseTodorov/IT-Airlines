@@ -96,10 +96,9 @@
                     @if (Model.RoundTrip)
                     {
                         <div class="form-group">
-                            <!-- TUKA E PROBLEMOT IMA PECATNA GRESKA KOGA IMA ROUND TRIP
                             @Html.LabelFor(model => model.ReturnLuggages[i], htmlAttributes: new { @class = "control-label col-md-4" })
                             -->
-                            <label for="ReturnLugages_@i _" class="control-label col-md-4">Return Luggages</label>
+                            <label for="ReturnLugages_@i _" class="control-label col-md-4">Return Luggage</label>
                             <div class="col-md-12">
                                 @Html.DropDownListFor(model => model.ReturnLuggages[i], ViewBag.Luggages as SelectList, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.ReturnLuggages[i], "", new { @class = "text-danger" })

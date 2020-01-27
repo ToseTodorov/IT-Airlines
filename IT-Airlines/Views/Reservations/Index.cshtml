@@ -108,7 +108,7 @@
 
         <div id="paging" class="row justify-content-center">
 
-            @Html.PagedListPager(Model, page => Url.Action("Index", "Airports", new { page, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"] }),
+            @Html.PagedListPager(Model, page => Url.Action(@ViewBag.AllReservations ? "Index" : "MyReservations", "Reservations", new { page, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"] }),
            new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded }
            )
         </div>

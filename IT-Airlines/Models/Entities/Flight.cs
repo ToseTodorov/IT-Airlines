@@ -37,6 +37,7 @@ namespace IT_Airlines.Models.Entities
         public int NumOfFreeSeats { get; set; }
 
         [Required]
+        [Display(Name = "Price")]
         public float BasePrice { get; set; }
 
         public override string ToString()

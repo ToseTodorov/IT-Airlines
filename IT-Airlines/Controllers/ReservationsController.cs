@@ -42,6 +42,7 @@ namespace IT_Airlines.Controllers
             IPagedList<Reservation> reservations = db.Reservations
                             .Include(r => r.Passenger)
                             .Where(x => x.AccountEmail.Equals(email))
+                            .ToList()
                             .ToPagedList(page ?? 1, 5);
 
             return View("Index", reservations);
@@ -92,7 +93,7 @@ namespace IT_Airlines.Controllers
             DateTime returnDate = new DateTime(0);
             if (model.RoundTrip)
             {
-                DateTime.Parse(model.Return, CultureInfo.CreateSpecificCulture("en-US"));
+                returnDate = DateTime.Parse(model.Return, CultureInfo.CreateSpecificCulture("en-US"));
             }
 
             IEnumerable<Flight> flights = (from f in db.Flights.Where(x => x.AirportFrom.Id.Equals(model.AirportFrom))
