@@ -21,7 +21,7 @@ namespace IT_Airlines.Controllers
         private AirlineDbContext db = new AirlineDbContext();
 
         // GET: Flights
-        public ActionResult Index(string searchBy, string search, int? page, string sortBy)
+        public ActionResult Index(string searchBy, string search, int? page, string sortBy="Departure desc")
         {
             ViewBag.SortAirportFromParameter = sortBy == "Airport From asc" ? "Airport From desc":"Airport From asc";
             ViewBag.SortAirportToParameter = sortBy == "Airport To asc" ? "Airport To desc":"Airport To asc";

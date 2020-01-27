@@ -19,7 +19,7 @@ namespace IT_Airlines.Controllers
         private AirlineDbContext db = new AirlineDbContext();
 
         // GET: Airplanes
-        public ActionResult Index(string search, int? page, string sortBy)
+        public ActionResult Index(string search, int? page, string sortBy = "asc")
         {
             ViewBag.SortCodeParameter = sortBy == "asc" ? "desc" : "asc";
 
