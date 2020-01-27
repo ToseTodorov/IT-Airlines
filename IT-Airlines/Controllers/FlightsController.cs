@@ -23,11 +23,11 @@ namespace IT_Airlines.Controllers
         {
             if (searchBy == "Name")
             {
-                return View(db.Flights.Where(x => x.AirportFrom.Name.StartsWith(search) || x.AirportTo.Name.StartsWith(search) || search == null).OrderBy(x => x.AirportFrom.Name).ToList());
+                return View(db.Flights.Where(x => x.AirportFrom.Name.StartsWith(search) || search == null).ToList());
             }
             else
             {
-                return View(db.Flights.Where(x => x.AirportFrom.City.StartsWith(search) || x.AirportTo.City.StartsWith(search) || search == null).OrderBy(x => x.AirportFrom.Name).ToList());
+                return View(db.Flights.Where(x => x.AirportFrom.City.StartsWith(search) || search == null).ToList());
             }
         }
 
