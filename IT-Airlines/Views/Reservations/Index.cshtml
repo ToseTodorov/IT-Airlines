@@ -1,4 +1,7 @@
-﻿@model IEnumerable<IT_Airlines.Models.Entities.Reservation>
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<IT_Airlines.Models.Entities.Reservation>
 
 @{
     ViewBag.Title = "Index";
@@ -6,86 +9,112 @@
 
 @Styles.Render("~/Content/css_Reservations/Reservations_index.css")
 
-<div id="content">
-    <div class="row mb-2">
-        <div class="col-4"></div>
-        <div class="col-4">
-            @Html.ActionLink("Create new reservation", "Index", "Home", null, new { @class = "btn btn-block btn-danger" })
+    <div id="content">
+        <div class="row mb-2">
+            <div class="col-4"></div>
+            <div class="col-4">
+                @Html.ActionLink("Create new reservation", "Index", "Home", null, new { @class = "btn btn-block btn-danger" })
+            </div>
+            <div class="col-4"></div>
         </div>
-        <div class="col-4"></div>
-    </div>
 
-    <div id="tabelaDiv" class="row text-danger text-center">
-        <div class="col-sm-10 ml-auto mr-auto text-center">
-            @if (ViewBag.AllReservations)
-            {
-                <h1 class="display-4">List of all reservations</h1>
-            }
-            else
-            {
-                <h1 class="display-4">My reservations</h1>
-            }
+        <div id="tabelaDiv" class="row text-danger text-center">
+            <div class="col-sm-10 ml-auto mr-auto text-center">
+                @if (ViewBag.AllReservations)
+                {
+                    <h1 class="display-4">List of all reservations</h1>
+                }
+                else
+                {
+                    <h1 class="display-4">My reservations</h1>
+                }
+            </div>
         </div>
-    </div>
 
-    @foreach (var item in Model)
-    {
-        <div class="flightRow text-center" id="row-@item.Id">
-            <div class="row">
-                <div class="col-sm-9">
-                    <div class="row">
-                        <div class="col-sm-3 text-sm-center text-md-right"> @Html.DisplayNameFor(model => model.AccountEmail):</div>
-                        @if (@item.AccountEmail.Equals(""))
-                        {
-                            <div class="col text-md-left text-sm-center"> Email address is not available</div>
-                        }
-                        else
-                        {
-                            <div class="col text-md-left text-sm-center"> @Html.DisplayFor(modelItem => item.AccountEmail)</div>
-                        }
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-3 text-sm-center text-md-right">  @Html.DisplayNameFor(model => model.Passenger):</div>
-                        <div class="col-sm text-md-left text-sm-center"> <a href="#">@item.Passenger.FirstName @item.Passenger.LastName</a></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-3 text-sm-center text-md-right">   @Html.DisplayNameFor(model => model.FirstFlight):</div>
-                        <div class="col text-md-left text-sm-center"> <a href="#">@item.FirstFlight.Departure</a> with luggage of: <b>@item.FirstLuggage</b></div>
-                    </div>
-                    @if (item.RoundTrip)
-                    {
+
+        @foreach (var item in Model)
+        {
+            <div class="flightRow text-center" id="row-@item.Id">
+                <div class="row">
+                    <div class="col-sm-9">
                         <div class="row">
-                            <div class="col-sm-3 text-sm-center text-md-right">@Html.DisplayNameFor(model => model.SecondFlight):</div>
-                            <div class="col text-md-left text-sm-center">
-                                <a href="#">@item.FirstFlight.Landing</a> with luggage of: <b>@item.SecondLuggage</b>
-                            </div>
-                        </div>
-                    }
-                </div>
-                <div class="col-sm-3">
-                    <div class="col">
-                        @* Kopchinjata da se gore desno za sekoja rezervacija *@
-                        <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
-                            <a href='@Url.Action("Details","Reservations",  new { id = item.Id })' class=" btn btn-outline-danger">Details</a>
-                            @if (item.FirstFlight.Departure > DateTime.Now.AddDays(-1) || User.IsInRole("Administrator"))
+                            <div class="col-sm-3 text-sm-center text-md-right"> @Html.DisplayNameFor(model => model.First().AccountEmail):</div>
+                            @if (@item.AccountEmail.Equals(""))
                             {
-                                <a href='@Url.Action("Edit","Reservations",  new { id = item.Id })' class=" btn btn-outline-danger">Edit</a>
-                                <button class="btn btn-outline-danger js-delete" attr-id="@item.Id">Cancel</button>
+                                <div class="col text-md-left text-sm-center"> Email address is not available</div>
                             }
                             else
                             {
-                                <button class=" btn btn-outline-danger btn-notactive">Edit</button>
-                                <button class="btn btn-outline-danger btn-notactive" attr-id="@item.Id">Cancel</button>
+                                <div class="col text-md-left text-sm-center"> @Html.DisplayFor(modelItem => item.AccountEmail)</div>
                             }
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 text-sm-center text-md-right">  @Html.DisplayNameFor(model => model.First().Passenger):</div>
+                            <div class="col-sm text-md-left text-sm-center"> <a href="#">@item.Passenger.FirstName @item.Passenger.LastName</a></div>
+                        </div>
+                        @*Od kade do kade*@
+                        <div class="row">
+                            <div class="col-sm-3 text-sm-center text-md-right">   @Html.DisplayNameFor(model => model.First().FirstFlight.AirportFrom):</div>
+                            <div class="col text-md-left text-sm-center"> <a href="#">@item.FirstFlight.AirportFrom.Name - @item.FirstFlight.AirportFrom.City</a></div>
+                        </div>
+                        @if (item.RoundTrip)
+                        {
+                            <div class="row">
+                                <div class="col-sm-3 text-sm-center text-md-right">@Html.DisplayNameFor(model => model.First().FirstFlight.AirportTo):</div>
+                                <div class="col text-md-left text-sm-center">
+                                    <a href="#">@item.FirstFlight.AirportTo.Name - @item.FirstFlight.AirportTo.City</a>
+                                </div>
+                            </div>
+                        }
 
+                        <div class="row">
+                            <div class="col-sm-3 text-sm-center text-md-right">   @Html.DisplayNameFor(model => model.First().FirstFlight):</div>
+                            <div class="col text-md-left text-sm-center"> <a href="#">@item.FirstFlight.Departure</a> with luggage of: <b>@item.FirstLuggage</b></div>
+                        </div>
+                        @if (item.RoundTrip)
+                        {
+                            <div class="row">
+                                <div class="col-sm-3 text-sm-center text-md-right">@Html.DisplayNameFor(model => model.First().SecondFlight):</div>
+                                <div class="col text-md-left text-sm-center">
+                                    <a href="#">@item.FirstFlight.Landing</a> with luggage of: <b>@item.SecondLuggage</b>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="col">
+                            @* Kopchinjata da se gore desno za sekoja rezervacija *@
+                            <div class="btn-group mr-2 btn-block" role="group" aria-label="First group">
+                                <a href='@Url.Action("Details","Reservations",  new { id = item.Id })' class=" btn btn-outline-danger">Details</a>
+                                @if (item.FirstFlight.Departure > DateTime.Now.AddDays(-1) || User.IsInRole("Administrator"))
+                                {
+                                    <a href='@Url.Action("Edit","Reservations",  new { id = item.Id })' class=" btn btn-outline-danger">Edit</a>
+                                    <button class="btn btn-outline-danger js-delete" attr-id="@item.Id">Cancel</button>
+                                }
+                                else
+                                {
+                                    <button class=" btn btn-outline-danger btn-notactive">Edit</button>
+                                    <button class="btn btn-outline-danger btn-notactive" attr-id="@item.Id">Cancel</button>
+                                }
+
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+        }
+
+
+        <div id="paging" class="row justify-content-center">
+
+            @Html.PagedListPager(Model, page => Url.Action("Index", "Airports", new { page, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"] }),
+           new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded }
+           )
         </div>
 
-    }
-</div>
+
+    </div>
 
 
 
@@ -95,6 +124,10 @@
 
         $(document).ready(function () {
             /*            bootbox.alert("jQuery and Bootbox are working");*/
+
+            $('.pagination li').addClass('page-item');
+            $('.pagination li a').addClass('page-link');
+
 
             $('.btn-notactive').click(function () {
                 bootbox.alert("The flight ended or is about to start");

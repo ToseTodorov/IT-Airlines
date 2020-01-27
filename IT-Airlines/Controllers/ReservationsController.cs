@@ -12,6 +12,8 @@ using IT_Airlines.Models.Entities;
 using IT_Airlines.Models.UserRoles;
 using IT_Airlines.Models.ViewModels;
 using Microsoft.AspNet.Identity;
+using PagedList;
+using PagedList.Mvc;
 
 namespace IT_Airlines.Controllers
 {
@@ -23,22 +25,24 @@ namespace IT_Airlines.Controllers
 
         // GET: Reservations
         [Authorize(Roles= Roles.Administrator + "," + Roles.Moderator )]
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             ViewBag.AllReservations = true;
+
             return View(db.Reservations
                             .Include(r => r.Passenger)
-                            .ToList());
+                            .ToList().ToPagedList(page ?? 1, 5));
         }
 
-        public ActionResult MyReservations()
+        public ActionResult MyReservations(int? page)
         {
             ViewBag.AllReservations = false;
             string email = User.Identity.GetUserName();
+
             return View("Index", db.Reservations
                             .Include(r => r.Passenger)
                             .Where(x => x.AccountEmail.Equals(email))
-                            .ToList());
+                            .ToList().ToPagedList(page ?? 1, 5));
         }
 
         // GET: Reservations/Details/5
