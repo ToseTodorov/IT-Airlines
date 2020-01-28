@@ -50,8 +50,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav nav ml-auto">
                     <li><a class="btn btn-link text-white" href='@Url.Action("Index","Home")'>Home</a></li>
-                    <li><a class="btn btn-link text-white" href='@Url.Action("About","Home")'>About</a></li>
-                    <li><a class="btn btn-link text-white" href='@Url.Action("Contact","Home")'>Contact</a></li>
+                    <li><a class="btn btn-link text-white" href='@Url.Action("About","Home")'>About Us</a></li>
                     @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Moderator"))
                     {
                         <li><a class="btn btn-link text-white" href='@Url.Action("Index","Reservations")'>Reservations</a></li>
