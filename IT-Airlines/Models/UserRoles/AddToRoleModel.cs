@@ -10,10 +10,12 @@ namespace IT_Airlines.Models.UserRoles
         public string Email { get; set; }
         public string selectedRole { get; set; }
         public List<String> roles { get; set; }
+        public List<String> mails { get; set; }
 
         public AddToRoleModel()
         {
             roles = new List<string>();
+            mails = new List<string>();
         }
     }
 }

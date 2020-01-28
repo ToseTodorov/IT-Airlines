@@ -62,6 +62,10 @@
                         @User.Identity.GetUserName()
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            @Html.ActionLink("Add to role", "AddUserToRole", "Account", null, new { @class = "dropdown-item" })
+                        }
                         @Html.ActionLink("My Reservations", "MyReservations", "Reservations", null, new { @class = "dropdown-item" })
                         @Html.ActionLink("Change password", "ChangePassword", "Manage", null, new { @class = "dropdown-item" })
                         <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Log out</a>

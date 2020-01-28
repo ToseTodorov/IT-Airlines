@@ -33,6 +33,9 @@ namespace IT_Airlines.Controllers
             model.roles.Add(Roles.Administrator);
             model.roles.Add(Roles.Moderator);
             model.roles.Add(Roles.User);
+
+            model.mails = UserManager.Users.Select(u => u.Email).ToList();
+
             return View(model);
         }
 
@@ -41,7 +44,7 @@ namespace IT_Airlines.Controllers
         {
             try
             {
-                var user = UserManager.FindByEmail(model.Email);
+                var user = UserManager.Users.FirstOrDefault(u => u.Email == model.Email);
                 UserManager.AddToRole(user.Id, model.selectedRole);
                 return RedirectToAction("Index", "Home");
             }
